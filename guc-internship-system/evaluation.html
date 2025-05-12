@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Company Evaluation - GUC Internship System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>GUC Internship System</h1>
+            <nav class="nav">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="internships.html">Internships</a>
+                <a href="my-internships.html">My Internships</a>
+                <a href="#" onclick="logout()">Logout</a>
+            </nav>
+            <span id="userInfo"></span>
+        </div>
+    </header>
+    <div class="container">
+        <h2>Company Evaluation</h2>
+        <div id="companyInfo"></div>
+        
+        <form id="evaluationForm">
+            <div class="rating-section">
+                <label for="rating">Overall Rating:</label>
+                <div class="star-rating">
+                    <input type="radio" id="star5" name="rating" value="5" required>
+                    <label for="star5">★</label>
+                    <input type="radio" id="star4" name="rating" value="4">
+                    <label for="star4">★</label>
+                    <input type="radio" id="star3" name="rating" value="3">
+                    <label for="star3">★</label>
+                    <input type="radio" id="star2" name="rating" value="2">
+                    <label for="star2">★</label>
+                    <input type="radio" id="star1" name="rating" value="1">
+                    <label for="star1">★</label>
+                </div>
+            </div>
+
+            <label for="recommend">Would you recommend this company to other students?</label>
+            <select id="recommend" required>
+                <option value="">Select Option</option>
+                <option value="yes">Yes, I would recommend</option>
+                <option value="no">No, I would not recommend</option>
+            </select>
+
+            <label for="pros">What did you like about the company?</label>
+            <textarea id="pros" rows="4" required placeholder="List the positive aspects of your experience"></textarea>
+
+            <label for="cons">What could be improved?</label>
+            <textarea id="cons" rows="4" required placeholder="List areas that could be improved"></textarea>
+
+            <label for="experience">Overall Experience:</label>
+            <textarea id="experience" rows="6" required placeholder="Describe your overall experience at the company"></textarea>
+
+            <div class="button-group">
+                <button type="submit">Submit Evaluation</button>
+                <button type="button" id="deleteBtn" style="display: none;" onclick="deleteEvaluation()">Delete Evaluation</button>
+            </div>
+        </form>
+        <div id="message"></div>
+    </div>
+    <script src="evaluation.js"></script>
+</body>
+</html> 

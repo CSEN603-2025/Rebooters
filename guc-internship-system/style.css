@@ -1,0 +1,668 @@
+body {
+    background: #f5f7fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.login-container {
+    background: #fff;
+    max-width: 350px;
+    margin: 80px auto;
+    padding: 32px 24px;
+    border-radius: 10px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    text-align: center;
+}
+
+h1 {
+    color: #b80000;
+    margin-bottom: 24px;
+}
+
+label {
+    display: block;
+    margin: 12px 0 4px;
+    text-align: left;
+}
+
+input, select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+button {
+    background: #b80000;
+    color: #fff;
+    border: none;
+    padding: 10px 0;
+    width: 100%;
+    border-radius: 5px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+button:hover {
+    background: #900000;
+}
+
+#loginMessage {
+    margin-top: 16px;
+    color: #388e3c;
+    font-weight: bold;
+}
+.dashboard-container {
+    background: #fff;
+    max-width: 600px;
+    margin: 60px auto;
+    padding: 32px 24px;
+    border-radius: 10px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    text-align: center;
+}
+
+.logout-btn {
+    margin-top: 24px;
+    background: #888;
+    color: #fff;
+    border: none;
+    padding: 10px 0;
+    width: 100%;
+    border-radius: 5px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.logout-btn:hover {
+    background: #b80000;
+}
+header {
+    background: #b80000;
+    color: #fff;
+    padding: 0;
+    margin-bottom: 32px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.header-content {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+}
+.header-content h1 {
+    margin: 0;
+    font-size: 1.5em;
+    letter-spacing: 1px;
+}
+.nav a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 24px;
+    font-weight: 500;
+    transition: text-decoration 0.2s;
+}
+.nav a.active, .nav a:hover {
+    text-decoration: underline;
+}
+#userInfo {
+    margin-left: 32px;
+    font-size: 1em;
+    color: #fff;
+    font-weight: 400;
+}
+.container {
+    max-width: 900px;
+    margin: 40px auto;
+    background: #fff;
+    padding: 32px 24px;
+    border-radius: 10px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+.filters {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+.filters input, .filters select {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 1em;
+}
+.internship-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start;
+}
+.internship-card {
+    background: #f5f7fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    padding: 20px;
+    width: 260px;
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.internship-card h3 {
+    margin-top: 0;
+    color: #b80000;
+}
+.internship-card button {
+    margin-top: 12px;
+    background: #b80000;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.internship-card button:hover {
+    background: #900000;
+}
+form label {
+    display: block;
+    margin: 12px 0 4px;
+    text-align: left;
+}
+form input, form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+}
+form button {
+    background: #b80000;
+    color: #fff;
+    border: none;
+    padding: 10px 0;
+    width: 100%;
+    border-radius: 5px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+form button:hover {
+    background: #900000;
+}
+
+/* Star Rating */
+.rating-section {
+    margin-bottom: 20px;
+}
+
+.star-rating {
+    display: inline-flex;
+    flex-direction: row-reverse;
+    font-size: 24px;
+}
+
+.star-rating input {
+    display: none;
+}
+
+.star-rating label {
+    color: #ddd;
+    cursor: pointer;
+    padding: 0 2px;
+}
+
+.star-rating input:checked ~ label,
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+    color: #ffd700;
+}
+
+/* Button Group */
+.button-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.button-group button {
+    flex: 1;
+}
+
+#deleteBtn {
+    background: #dc3545;
+}
+
+#deleteBtn:hover {
+    background: #c82333;
+}
+
+/* Success Message */
+.success-message {
+    background: #d4edda;
+    color: #155724;
+    padding: 15px;
+    border-radius: 5px;
+    margin: 15px 0;
+    text-align: center;
+}
+
+.success-message button {
+    margin-top: 10px;
+    background: #28a745;
+}
+
+.success-message button:hover {
+    background: #218838;
+}
+
+/* Company Info */
+#companyInfo {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+#companyInfo h3 {
+    color: #b80000;
+    margin: 0 0 10px 0;
+}
+
+#helpfulCoursesCheckboxes {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 10px;
+}
+
+.course-checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1em;
+    /* Optional: add padding for better click area */
+    padding: 2px 0;
+}
+
+.report-status {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-left: 4px solid #6c757d;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+}
+
+.report-status h3 {
+    margin: 0;
+    color: #333;
+}
+
+.report-status.accepted {
+    border-left-color: #28a745;
+    background-color: #f0fff0;
+}
+
+.report-status.rejected {
+    border-left-color: #dc3545;
+    background-color: #fff0f0;
+}
+
+.report-status.flagged {
+    border-left-color: #ffc107;
+    background-color: #fffdf0;
+}
+
+.report-status.pending {
+    border-left-color: #6c757d;
+    background-color: #f8f9fa;
+}
+
+.report-comments {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 4px;
+}
+
+.report-comments h4 {
+    margin: 0 0 5px 0;
+    color: #666;
+}
+
+.report-comments p {
+    margin: 0;
+    color: #333;
+}
+
+.finalized-report-card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.finalized-btn-group {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+.finalized-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.finalized-btn.edit {
+    background-color: #007bff;
+    color: white;
+}
+
+.finalized-btn.delete {
+    background-color: #dc3545;
+    color: white;
+}
+
+.finalized-btn:hover {
+    opacity: 0.9;
+}
+
+#finalizedReportSection h3 {
+    color: #b80000;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.notification-btn {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.notification-btn:hover {
+    background: #45a049;
+}
+
+.notification-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.notification-report_status {
+    border-left-color: #28a745;
+    background-color: #f0fff0;
+}
+
+.notification-report_status h3 {
+    color: #28a745;
+}
+
+.notification-report_status .notification-content {
+    padding: 15px;
+}
+
+.notification-report_status .notification-actions {
+    margin-top: 12px;
+}
+
+.notification-report_status .notification-actions button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: opacity 0.2s;
+}
+
+.notification-report_status .notification-actions button:first-child {
+    background-color: #28a745;
+    color: white;
+}
+
+.notification-report_status .notification-actions button:last-child {
+    background-color: #6c757d;
+    color: white;
+}
+
+.notification-report_status .notification-actions button:hover {
+    opacity: 0.9;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+.notification-pro_badge {
+    border-left-color: #ffc107;
+}
+
+.notification-appointment {
+    border-left-color: #17a2b8;
+}
+
+.notification-call {
+    border-left-color: #dc3545;
+}
+
+.notification-workshop {
+    border-left-color: #6f42c1;
+}
+
+.appeal-section {
+    margin-top: 15px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    border: 1px solid #dee2e6;
+}
+
+.appeal-section h4 {
+    color: #b80000;
+    margin: 0 0 10px 0;
+}
+
+.appeal-section textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    font-family: inherit;
+    resize: vertical;
+}
+
+.appeal-btn {
+    background-color: #b80000;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.appeal-btn:hover {
+    background-color: #900000;
+}
+
+.appeal-status {
+    margin-top: 15px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    border: 1px solid #dee2e6;
+}
+
+.appeal-status h4 {
+    color: #b80000;
+    margin: 0 0 10px 0;
+}
+
+.appeal-status p {
+    margin: 5px 0;
+    color: #333;
+}
+
+.appeal-status p:first-of-type {
+    font-weight: 500;
+    color: #b80000;
+}
+
+/* Add to style.css */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 20px;
+}
+
+.dashboard-section {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.video-container {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+    margin-bottom: 20px;
+}
+
+.video-container video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+}
+
+.video-description {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+.video-description h4 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.video-description p {
+    color: #666;
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Add to style.css */
+.internship-layout {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 20px;
+    padding: 20px;
+}
+
+.internship-video-section {
+    background: white;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 20px;
+    height: fit-content;
+}
+
+.internship-video-section h2 {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.video-container {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+    margin-bottom: 15px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.video-container video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.video-description {
+    background: #f8f9fa;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.4;
+}
+
+.internship-listings {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+@media (max-width: 768px) {
+    .internship-layout {
+        grid-template-columns: 1fr;
+    }
+    
+    .internship-video-section {
+        position: static;
+    }
+}

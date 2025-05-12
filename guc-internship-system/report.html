@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Internship Reports - GUC Internship System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>GUC Internship System</h1>
+            <div class="nav">
+                <button onclick="window.location.href='dashboard.html'">Dashboard</button>
+                <button onclick="window.location.href='internships.html'">Internships</button>
+                <button onclick="window.location.href='applications.html'">My Applications</button>
+                <button onclick="window.location.href='report.html'" class="active">Submit Report</button>
+                <button onclick="window.location.href='profile.html'">Profile</button>
+                <button onclick="logout()">Logout</button>
+            </div>
+            <span id="userInfo"></span>
+        </div>
+    </header>
+    <div class="container">
+        <h2>Submit Internship Report</h2>
+        <form id="reportForm">
+            <label for="reportTitle">Report Title:</label>
+            <input type="text" id="reportTitle" required>
+            <label for="reportIntro">Introduction:</label>
+            <textarea id="reportIntro" rows="3" required></textarea>
+            <label for="reportBody">Body:</label>
+            <textarea id="reportBody" rows="6" required></textarea>
+            <label for="reportFile">Upload Report (PDF or DOCX):</label>
+            <input type="file" id="reportFile" accept=".pdf,.doc,.docx">
+            <label for="majorSelect">Select Your Major:</label>
+            <select id="majorSelect" required>
+                <option value="">-- Select Major --</option>
+                <option value="Business Informatics">Business Informatics</option>
+                <option value="Media Engineering">Media Engineering</option>
+                <option value="Computer Science">Computer Science</option>
+            </select>
+            <label>Courses that helped you during your internship:</label>
+            <div id="helpfulCoursesCheckboxes"></div>
+            <button type="submit">Submit Report</button>
+        </form>
+        <div id="reportMessage"></div>
+        <h3>My Submitted Reports</h3>
+        <div id="submittedReports"></div>
+        <div id="finalizedReportSection" style="display:none;">
+            <h3>Finalized Report</h3>
+            <div id="finalizedReport"></div>
+            <button onclick="downloadPDF()">Download as PDF</button>
+        </div>
+        <div id="reportStatus" class="report-status-container">
+            <!-- Status will be displayed here -->
+        </div>
+    </div>
+    <script src="report.js"></script>
+    <script>
+        function logout() {
+            localStorage.removeItem('internships');
+            window.location.href = "index.html";
+        }
+        
+        // Show user info in header
+        document.addEventListener('DOMContentLoaded', () => {
+            const userInfo = document.getElementById('userInfo');
+            if (userInfo) {
+                const role = localStorage.getItem('userRole') || 'Guest';
+                const email = localStorage.getItem('userEmail') || '';
+                userInfo.textContent = `${role.charAt(0).toUpperCase() + role.slice(1)}${email ? ' (' + email + ')' : ''}`;
+            }
+            renderCourseCheckboxes('');
+            renderReports();
+        });
+
+        // Example course data
+        const coursesByMajor = {
+            "Business Informatics": [
+                "Business Analytics",
+                "Database Systems",
+                "ERP Systems",
+                "Financial Accounting",
+                "Business Process Management",
+                "Information Systems Management",
+                "E-Business",
+                "Project Management",
+                "Data Mining",
+                "Enterprise Architecture"
+            ],
+            "Media Engineering": [
+                "Digital Media",
+                "Signal Processing",
+                "Computer Graphics",
+                "Multimedia Systems",
+                "Audio Engineering",
+                "Video Production",
+                "Animation Techniques"
+            ],
+            "Computer Science": [
+                "Algorithms",
+                "Data Structures",
+                "Operating Systems",
+                "Computer Networks",
+                "Software Engineering",
+                "Artificial Intelligence",
+                "Database Systems",
+                "Web Development"
+            ]
+        };
+
+        function renderCourseCheckboxes(major) {
+            const container = document.getElementById('helpfulCoursesCheckboxes');
+            container.innerHTML = '';
+            if (!major || !coursesByMajor[major]) {
+                container.innerHTML = '<em>Select a major to see courses.</em>';
+                return;
+            }
+            coursesByMajor[major].forEach(course => {
+                const id = 'course_' + course.replace(/\s+/g, '_');
+                container.innerHTML += `
+                    <label class="course-checkbox-label">
+                        <span>${course}</span>
+                        <input type="checkbox" name="helpfulCourses" value="${course}" id="${id}">
+                    </label>
+                `;
+            });
+        }
+
+        document.getElementById('majorSelect').addEventListener('change', function() {
+            renderCourseCheckboxes(this.value);
+        });
+    </script>
+</body>
+</html>
