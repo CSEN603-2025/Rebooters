@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assessments - GUC Internship System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>GUC Internship System</h1>
+            <div class="nav">
+                <button onclick="window.location.href='dashboard.html'">Dashboard</button>
+                <button onclick="window.location.href='assessments.html'" class="active">Assessments</button>
+                <button onclick="logout()">Logout</button>
+            </div>
+            <span id="userInfo"></span>
+        </div>
+    </header>
+    <div class="container">
+        <div id="accessCheck"></div>
+        <div id="assessmentList" style="display:none;">
+            <div class="assessment-controls">
+                <input type="text" id="searchInput" placeholder="Search assessments...">
+                <select id="statusFilter">
+                    <option value="">All Status</option>
+                    <option value="available">Available</option>
+                    <option value="completed">Completed</option>
+                </select>
+            </div>
+            <div class="assessment-grid"></div>
+        </div>
+    </div>
+
+    <!-- Assessment Modal -->
+    <div id="assessmentModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <div id="assessmentContent"></div>
+        </div>
+    </div>
+
+    <script src="assessments.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = localStorage.getItem('userEmail');
+            const profile = JSON.parse(localStorage.getItem('profile_' + user)) || {};
+            const accessCheck = document.getElementById('accessCheck');
+            const assessmentList = document.getElementById('assessmentList');
+
+            if (!profile.proBadge) {
+                accessCheck.innerHTML = `
+                    <div class="access-denied">
+                        <h2>Access Denied</h2>
+                        <p>You need to earn your PRO badge to access online assessments.</p>
+                    </div>
+                `;
+                assessmentList.style.display = 'none';
+            } else {
+                accessCheck.style.display = 'none';
+                assessmentList.style.display = 'block';
+                renderAssessmentList();
+            }
+        });
+
+        function logout() {
+            localStorage.clear();
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+</html> 

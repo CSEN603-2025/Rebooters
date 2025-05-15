@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Video Calls - GUC Internship System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>GUC Internship System</h1>
+            <nav class="nav">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="internships.html">Internships</a>
+                <a href="my-internships.html">My Internships</a>
+                <a href="profile.html">Profile</a>
+                <a href="video-call.html" class="active">Video Calls</a>
+                <a href="#" onclick="logout()">Logout</a>
+            </nav>
+            <span id="userInfo"></span>
+        </div>
+    </header>
+
+    <div class="container">
+        <div id="accessCheck"></div>
+        <div id="videoCallContent" style="display:none;">
+            <div class="pro-section">
+                <h2>Video Call Center <span class="pro-badge">PRO</span></h2>
+                
+                <!-- Appointments Section -->
+                <div class="appointments-section">
+                    <h3>Schedule an Appointment</h3>
+                    <form id="appointmentForm">
+                        <select id="appointmentType" required>
+                            <option value="">Select Appointment Type</option>
+                            <option value="career_guidance">Career Guidance</option>
+                            <option value="report_clarification">Report Clarification</option>
+                        </select>
+                        <input type="date" id="appointmentDate" required>
+                        <select id="appointmentTime" required>
+                            <!-- Time slots will be populated dynamically -->
+                        </select>
+                        <textarea id="appointmentNotes" placeholder="Additional notes or questions..." required></textarea>
+                        <button type="submit">Request Appointment</button>
+                    </form>
+
+                    <h3>My Appointments</h3>
+                    <div id="appointmentsList">
+                        <!-- Appointments will be displayed here -->
+                    </div>
+                </div>
+
+                <!-- Video Call Section -->
+                <div class="video-call-section" style="display: none;">
+                    <div id="video-call-container">
+                        <div class="video-grid">
+                            <div class="video-participant local">
+                                <video id="localVideo" autoplay muted playsinline></video>
+                                <div class="participant-name">You</div>
+                            </div>
+                            <div class="video-participant remote">
+                                <video id="remoteVideo" autoplay playsinline></video>
+                                <div class="participant-name">Advisor</div>
+                            </div>
+                        </div>
+                        <div class="call-controls">
+                            <button id="toggleVideo" class="control-btn">
+                                <span class="icon">🎥</span> Video
+                            </button>
+                            <button id="toggleAudio" class="control-btn">
+                                <span class="icon">🎤</span> Audio
+                            </button>
+                            <button id="toggleScreen" class="control-btn">
+                                <span class="icon">💻</span> Share Screen
+                            </button>
+                            <button id="endCall" class="control-btn end-call">
+                                <span class="icon">❌</span> End Call
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notifications -->
+                <div id="notifications-container"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="video-call.js"></script>
+    <script>
+        // Pro badge access check function
+        function checkProAccess(elementToProtect, message = "You need to earn your PRO badge to access this feature.") {
+            const user = localStorage.getItem('userEmail');
+            const profile = JSON.parse(localStorage.getItem('profile_' + user)) || {};
+            const accessCheck = document.getElementById('accessCheck');
+
+            if (!profile.proBadge) {
+                accessCheck.innerHTML = `
+                    <div class="access-denied">
+                        <h2>Access Denied</h2>
+                        <p>${message}</p>
+                    </div>
+                `;
+                elementToProtect.style.display = 'none';
+                return false;
+            }
+            accessCheck.style.display = 'none';
+            elementToProtect.style.display = 'block';
+            return true;
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            const videoCallContent = document.getElementById('videoCallContent');
+            
+            // Use the checkProAccess function
+            if (checkProAccess(videoCallContent, "You need to earn your PRO badge to access video calls. Complete internships and maintain good performance to earn your PRO badge!")) {
+                // Initialize test data
+                initializeTestData();
+                // Populate time slots
+                populateTimeSlots();
+                // Set minimum date to tomorrow
+                const tomorrow = new Date();
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                document.getElementById('appointmentDate').min = tomorrow.toISOString().split('T')[0];
+                // Display existing appointments
+                displayAppointments();
+
+                // Handle appointment form submission
+                document.getElementById('appointmentForm').addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const appointment = {
+                        id: Date.now().toString(),
+                        type: document.getElementById('appointmentType').value,
+                        date: document.getElementById('appointmentDate').value,
+                        time: document.getElementById('appointmentTime').value,
+                        notes: document.getElementById('appointmentNotes').value,
+                        isVideoCall: true,
+                        status: 'pending',
+                        userId: getCurrentUser(),
+                        created: new Date().toISOString()
+                    };
+
+                    // Get existing appointments
+                    let appointments = JSON.parse(localStorage.getItem('appointments')) || [];
+                    appointments.push(appointment);
+                    localStorage.setItem('appointments', JSON.stringify(appointments));
+
+                    // Reset form and show notification
+                    this.reset();
+                    showNotification('Appointment scheduled successfully!');
+                    
+                    // Refresh appointments display
+                    displayAppointments();
+                });
+            }
+        });
+
+        function populateTimeSlots() {
+            const timeSelect = document.getElementById('appointmentTime');
+            timeSelect.innerHTML = '';
+            
+            // Add time slots (9 AM to 5 PM)
+            for (let hour = 9; hour < 17; hour++) {
+                for (let minute of ['00', '30']) {
+                    const time = `${hour.toString().padStart(2, '0')}:${minute}`;
+                    const option = document.createElement('option');
+                    option.value = time;
+                    option.textContent = time;
+                    timeSelect.appendChild(option);
+                }
+            }
+        }
+
+        function displayAppointments() {
+            const appointmentsList = document.getElementById('appointmentsList');
+            const appointments = JSON.parse(localStorage.getItem('appointments')) || [];
+            const currentUser = getCurrentUser();
+
+            const userAppointments = appointments
+                .filter(apt => apt.userId === currentUser)
+                .sort((a, b) => new Date(a.date + 'T' + a.time) - new Date(b.date + 'T' + b.time));
+
+            appointmentsList.innerHTML = userAppointments.length ? userAppointments.map(apt => `
+                <div class="appointment-card ${apt.status}">
+                    <div class="appointment-header">
+                        <h4>📹 ${apt.type.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}</h4>
+                        <span class="status-badge ${apt.status}">${apt.status}</span>
+                    </div>
+                    <p><strong>Date:</strong> ${new Date(apt.date).toLocaleDateString()}</p>
+                    <p><strong>Time:</strong> ${apt.time}</p>
+                    <p><strong>Notes:</strong> ${apt.notes}</p>
+                    <div class="appointment-actions">
+                        ${apt.status === 'accepted' ? `
+                            <button onclick="initiateVideoCall('${apt.id}')" class="join-call-btn">Join Video Call</button>
+                        ` : ''}
+                        <button onclick="cancelAppointment('${apt.id}')" class="cancel-btn">Cancel</button>
+                    </div>
+                </div>
+            `).join('') : '<p>No appointments scheduled</p>';
+        }
+
+        function getCurrentUser() {
+            return localStorage.getItem('currentUser') || '';
+        }
+
+        function checkProStatus() {
+            const user = getCurrentUser();
+            const profile = JSON.parse(localStorage.getItem(`profile_${user}`)) || {};
+            return profile.proBadge === true;
+        }
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 3000);
+        }
+
+        function cancelAppointment(appointmentId) {
+            if (confirm('Are you sure you want to cancel this appointment?')) {
+                let appointments = JSON.parse(localStorage.getItem('appointments')) || [];
+                appointments = appointments.filter(apt => apt.id !== appointmentId);
+                localStorage.setItem('appointments', JSON.stringify(appointments));
+                displayAppointments();
+                showNotification('Appointment cancelled successfully');
+            }
+        }
+
+        function initiateVideoCall(appointmentId) {
+            const appointments = JSON.parse(localStorage.getItem('appointments')) || [];
+            const appointment = appointments.find(apt => apt.id === appointmentId);
+            
+            if (!appointment) {
+                showNotification('Appointment not found');
+                return;
+            }
+            
+            if (appointment.status !== 'accepted') {
+                showNotification('Cannot join call. Appointment is not accepted.');
+                return;
+            }
+            
+            // Show video call interface
+            document.querySelector('.video-call-section').style.display = 'block';
+            document.querySelector('.appointments-section').style.display = 'none';
+            
+            // Initialize video call
+            setupVideoCall();
+        }
+
+        async function setupVideoCall() {
+            try {
+                // Get user media
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    video: true,
+                    audio: true
+                });
+
+                // Display local video
+                const localVideo = document.getElementById('localVideo');
+                localVideo.srcObject = stream;
+
+                // Setup controls
+                const toggleVideo = document.getElementById('toggleVideo');
+                const toggleAudio = document.getElementById('toggleAudio');
+                const toggleScreen = document.getElementById('toggleScreen');
+                const endCall = document.getElementById('endCall');
+
+                // Video toggle
+                toggleVideo.addEventListener('click', () => {
+                    const videoTrack = stream.getVideoTracks()[0];
+                    videoTrack.enabled = !videoTrack.enabled;
+                    toggleVideo.classList.toggle('disabled');
+                });
+
+                // Audio toggle
+                toggleAudio.addEventListener('click', () => {
+                    const audioTrack = stream.getAudioTracks()[0];
+                    audioTrack.enabled = !audioTrack.enabled;
+                    toggleAudio.classList.toggle('disabled');
+                });
+
+                // Screen sharing
+                toggleScreen.addEventListener('click', async () => {
+                    try {
+                        const screenStream = await navigator.mediaDevices.getDisplayMedia({
+                            video: true
+                        });
+                        const localVideo = document.getElementById('localVideo');
+                        localVideo.srcObject = screenStream;
+
+                        // Handle stop sharing
+                        screenStream.getVideoTracks()[0].onended = () => {
+                            localVideo.srcObject = stream;
+                        };
+                    } catch (error) {
+                        console.error('Error sharing screen:', error);
+                        showNotification('Failed to share screen');
+                    }
+                });
+
+                // End call
+                endCall.addEventListener('click', () => {
+                    stream.getTracks().forEach(track => track.stop());
+                    document.querySelector('.video-call-section').style.display = 'none';
+                    document.querySelector('.appointments-section').style.display = 'block';
+                    showNotification('Call ended');
+                });
+
+                // For testing: Show remote video with local stream
+                const remoteVideo = document.getElementById('remoteVideo');
+                remoteVideo.srcObject = stream.clone();
+
+            } catch (error) {
+                console.error('Error accessing media devices:', error);
+                showNotification('Failed to access camera and microphone. Please check permissions.');
+                document.querySelector('.video-call-section').style.display = 'none';
+                document.querySelector('.appointments-section').style.display = 'block';
+            }
+        }
+
+        function logout() {
+            localStorage.clear();
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+</html> 

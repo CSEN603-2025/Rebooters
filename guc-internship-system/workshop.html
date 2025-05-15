@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workshops - GUC Internship System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Workshops</h1>
+        
+        <div class="workshop-filters">
+            <input type="text" id="searchInput" placeholder="Search workshops...">
+            <select id="categoryFilter">
+                <option value="">All Categories</option>
+                <option value="career">Career Development</option>
+                <option value="technical">Technical Skills</option>
+                <option value="soft">Soft Skills</option>
+            </select>
+        </div>
+        
+        <div class="workshop-grid" id="workshopList">
+            <!-- Workshops will be rendered here -->
+        </div>
+        
+        <div id="workshopDetails" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div id="workshopContent"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="workshop.js"></script>
+</body>
+</html> 
