@@ -1,0 +1,162 @@
+/* Registration Container */
+.registration-container {
+    padding: 30px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.registration-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+}
+
+.registration-header {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.registration-header h2 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.registration-header p {
+    color: #7f8c8d;
+}
+
+/* Form Sections */
+.form-section {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ecf0f1;
+}
+
+.form-section h3 {
+    color: #3498db;
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+}
+
+/* Logo Upload */
+.logo-upload-container {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.logo-preview {
+    width: 120px;
+    height: 120px;
+    border: 2px dashed #bdc3c7;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.logo-preview img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.upload-controls {
+    flex: 1;
+    min-width: 200px;
+}
+
+/* Document Upload */
+.document-upload {
+    margin-top: 20px;
+}
+
+.drop-zone {
+    border: 2px dashed #bdc3c7;
+    border-radius: 5px;
+    padding: 30px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-bottom: 15px;
+}
+
+.drop-zone.highlight {
+    border-color: #3498db;
+    background-color: #f8fafc;
+}
+
+.drop-zone i {
+    font-size: 2rem;
+    color: #3498db;
+    margin-bottom: 10px;
+}
+
+.drop-zone p {
+    margin: 10px 0;
+    color: #7f8c8d;
+}
+
+.document-list {
+    border: 1px solid #ecf0f1;
+    border-radius: 5px;
+    padding: 15px;
+    min-height: 60px;
+}
+
+.document-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 10px;
+    background: #f8f9fa;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
+.document-item i {
+    margin-right: 10px;
+    color: #e74c3c;
+}
+
+.document-item span {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.remove-doc {
+    background: none;
+    border: none;
+    color: #e74c3c;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.empty-message {
+    color: #95a5a6;
+    text-align: center;
+    margin: 10px 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .registration-container {
+        padding: 15px;
+    }
+    
+    .registration-card {
+        padding: 20px;
+    }
+    
+    .logo-upload-container {
+        flex-direction: column;
+    }
+    
+    .upload-controls {
+        width: 100%;
+    }
+}

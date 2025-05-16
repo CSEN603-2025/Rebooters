@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Current Interns | SCAD System</title>
+    <link rel="stylesheet" href="..\..\assets\css\style.css">
+    <link rel="stylesheet" href="..\..\assets\css\dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Top Navigation Bar (same as dashboard) -->
+    <nav class="navbar">
+        <!-- ... same navbar code ... -->
+         <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <img src="../../assets/images/guc-logo.png" alt="SCAD Logo" class="logo">
+                <span class="system-name">Company Applications</span>
+            </div>
+            <div class="nav-menu">
+                <a href="notifications.html" class="nav-link"><i class="fas fa-bell"></i><span class="notification-badge">5</span></a>
+                <a href="#" class="nav-link logout-btn"><i class="fas fa-sign-out-alt"></i></a>
+            </div>
+        </div>
+    </nav>
+    </nav>
+
+    <!-- Dashboard Layout -->
+    <div class="dashboard-container">
+        <div class="user-profile">
+                <img src="../../assets/images/guc-logo.png" alt="Admin Avatar" class="avatar">
+                <div class="profile-status">
+                    <span class="status-badge admin">SCAD Office</span>
+                </div>
+                <h3>Admin User</h3>
+                <p>System Administrator</p>
+            </div>
+        <!-- Sidebar Navigation (same as dashboard) -->
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="dashboard.html" ><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="job-post.html"><i class="fas fa-briefcase"></i> My Internship Posts</a></li>
+                    <li><a href="applications.html" ><i class="fas fa-file-alt"></i> Applications</a></li>
+                    <li><a href="current-interns.html" class="active"><i class="fas fa-users"></i> Current Interns</a></li>
+                    <li><a href="past-interns.html"><i class="fas fa-user-graduate"></i> Past Interns</a></li>
+                    <li><a href="evaluations.html"><i class="fas fa-clipboard-check"></i> Intern Evaluations</a></li>
+                    <li><a href="profile.html"><i class="fas fa-building"></i> Company Profile</a></li>
+                </ul>
+            </nav>
+            <!-- ... same sidebar code ... -->
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="dashboard-header">
+                <h1>Intern Management</h1>
+                <div class="header-actions">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" id="filter-dropdown">
+                            <i class="fas fa-filter"></i> Filter Status
+                        </button>
+                        <div class="dropdown-menu">
+                            <a href="#" class="dropdown-item active">All Interns</a>
+                            <a href="#" class="dropdown-item">Current Interns</a>
+                            <a href="#" class="dropdown-item">Completed Internships</a>
+                        </div>
+                    </div>
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search interns...">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Intern Stats Cards -->
+            <div class="dashboard-cards">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Current Interns</h3>
+                        <span class="badge success">8</span>
+                    </div>
+                    <div class="card-body">
+                        <p>Active in your company</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Interns This Year</h3>
+                        <span class="badge">15</span>
+                    </div>
+                    <div class="card-body">
+                        <p>Total interns in 2023</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Need Evaluation</h3>
+                        <span class="badge warning">3</span>
+                    </div>
+                    <div class="card-body">
+                        <p>Completed internships pending evaluation</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Interns Table -->
+            <div class="dashboard-section">
+                <div class="table-responsive">
+                    <table class="interns-table">
+                        <thead>
+                            <tr>
+                                <th>Intern</th>
+                                <th>Position</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Status</th>
+                                <th>Supervisor</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="intern-info">
+                                        <img src="..\..\assets\images\student-avatar1.png" alt="Intern" class="intern-avatar">
+                                        <div>
+                                            <span class="intern-name">Ahmed Mohamed</span>
+                                            <span class="intern-meta">Computer Science, GUC</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Frontend Developer</td>
+                                <td>2023-11-01</td>
+                                <td>2024-01-31</td>
+                                <td><span class="status-badge active">Active</span></td>
+                                <td>John Smith</td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary view-intern-btn">View</button>
+                                    <div class="dropdown">
+                                        <button class="btn btn-sm btn-secondary dropdown-toggle">Actions</button>
+                                        <div class="dropdown-menu">
+                                            <a href="#" class="dropdown-item"><i class="fas fa-edit"></i> Edit</a>
+                                            <a href="#" class="dropdown-item complete-btn"><i class="fas fa-graduation-cap"></i> Complete</a>
+                                            <a href="#" class="dropdown-item"><i class="fas fa-envelope"></i> Message</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- More rows with different statuses -->
+                            <tr>
+                                <td>...</td>
+                                <td>...</td>
+                                <td>...</td>
+                                <td>...</td>
+                                <td><span class="status-badge completed">Completed</span></td>
+                                <td>...</td>
+                                <td>...</td>
+                            </tr>
+                            <tr>
+                                <td>...</td>
+                                <td>...</td>
+                                <td>...</td>
+                                <td>...</td>
+                                <td><span class="status-badge needs-eval">Needs Evaluation</span></td>
+                                <td>...</td>
+                                <td>...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Pagination -->
+                <div class="pagination">
+                    <button class="btn btn-sm" disabled><i class="fas fa-chevron-left"></i> Previous</button>
+                    <span class="page-info">Page 1 of 2</span>
+                    <button class="btn btn-sm">Next <i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Intern Detail Modal -->
+    <div class="modal" id="intern-modal">
+        <div class="modal-content wide-modal">
+            <div class="modal-header">
+                <h3>Intern Details</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="intern-profile">
+                    <div class="profile-header">
+                        <img src="..\..\assets\images\student-avatar1.png" alt="Intern" class="profile-avatar">
+                        <div class="profile-info">
+                            <h2>Ahmed Mohamed</h2>
+                            <p>Frontend Developer Intern</p>
+                            <p>Computer Science, German University in Cairo</p>
+                            <div class="status-badge-container">
+                                <span class="status-badge active">Active</span>
+                                <div class="dropdown">
+                                    <button class="btn btn-sm btn-secondary dropdown-toggle">Change Status</button>
+                                    <div class="dropdown-menu">
+                                        <a href="#" class="dropdown-item complete-btn"><i class="fas fa-graduation-cap"></i> Complete Internship</a>
+                                        <a href="#" class="dropdown-item terminate-btn"><i class="fas fa-user-slash"></i> Terminate Early</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tabs">
+                        <button class="tab-btn active" data-tab="overview">Overview</button>
+                        <button class="tab-btn" data-tab="documents">Documents</button>
+                        <button class="tab-btn" data-tab="evaluation">Evaluation</button>
+                        <button class="tab-btn" data-tab="notes">Notes</button>
+                    </div>
+                    
+                    <div class="tab-content active" id="overview-tab">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Internship Period</label>
+                                <p>November 1, 2023 - January 31, 2024</p>
+                            </div>
+                            <div class="form-group">
+                                <label>Supervisor</label>
+                                <p>John Smith (Frontend Team Lead)</p>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Internship Type</label>
+                                <p>Paid (800 EGP/month)</p>
+                            </div>
+                            <div class="form-group">
+                                <label>Working Hours</label>
+                                <p>20 hours/week</p>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Internship Description</label>
+                            <div class="internship-description">
+                                <p>Frontend development using React.js, working on the company's customer portal...</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="documents-tab">
+                        <!-- Similar to application documents tab -->
+                    </div>
+                    
+                    <div class="tab-content" id="evaluation-tab">
+                        <div class="evaluation-container">
+                            <div class="evaluation-form">
+                                <h4>Internship Evaluation</h4>
+                                
+                                <div class="form-group">
+                                    <label>Technical Skills</label>
+                                    <div class="rating-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Work Ethic</label>
+                                    <div class="rating-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Teamwork</label>
+                                    <div class="rating-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Overall Performance</label>
+                                    <div class="rating-stars">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Final Evaluation</label>
+                                    <textarea class="form-control" rows="5" placeholder="Write detailed evaluation..."></textarea>
+                                </div>
+                                
+                                <div class="form-actions">
+                                    <button class="btn btn-primary">Save Evaluation</button>
+                                    <button class="btn btn-success">Submit Final Evaluation</button>
+                                </div>
+                            </div>
+                            
+                            <div class="previous-evaluations">
+                                <h4>Previous Evaluations</h4>
+                                <div class="evaluation-item">
+                                    <div class="evaluation-header">
+                                        <span class="evaluation-date">Midterm Evaluation - Dec 15, 2023</span>
+                                        <span class="evaluation-rating">Rating: 4.2/5</span>
+                                    </div>
+                                    <div class="evaluation-comment">
+                                        <p>Ahmed has shown excellent progress in React development and has contributed significantly to the customer portal project.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="notes-tab">
+                        <div class="notes-container">
+                            <div class="notes-form">
+                                <textarea class="form-control" rows="3" placeholder="Add new note..."></textarea>
+                                <button class="btn btn-primary">Add Note</button>
+                            </div>
+                            
+                            <div class="notes-list">
+                                <div class="note-item">
+                                    <div class="note-header">
+                                        <span class="note-author">John Smith</span>
+                                        <span class="note-date">Dec 10, 2023</span>
+                                    </div>
+                                    <div class="note-content">
+                                        <p>Ahmed needs more guidance on state management in large applications.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary close-modal">Close</button>
+                <button class="btn btn-primary"><i class="fas fa-envelope"></i> Message Intern</button>
+                <button class="btn btn-danger terminate-btn"><i class="fas fa-user-slash"></i> Terminate Internship</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="..\..\assets\js\auth.js"></script>
+    <script src="..\..\assets\js\company-dashboard.js"></script>
+    <script>
+        // Intern management scripts
+        document.addEventListener('DOMContentLoaded', function() {
+            // View intern modal
+            const viewButtons = document.querySelectorAll('.view-intern-btn');
+            const internModal = document.getElementById('intern-modal');
+            
+            viewButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    internModal.style.display = 'block';
+                });
+            });
+            
+            // Tab functionality
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    // Remove active class from all tabs and buttons
+                    document.querySelectorAll('.tab-btn, .tab-content').forEach(el => {
+                        el.classList.remove('active');
+                    });
+                    
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+                    document.getElementById(`${tabId}-tab`).classList.add('active');
+                });
+            });
+            
+            // Complete internship button
+            document.querySelectorAll('.complete-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if(confirm('Mark this internship as completed?')) {
+                        alert('Internship marked as completed');
+                        // Update status in UI and backend
+                    }
+                });
+            });
+            
+            // Terminate internship button
+            document.querySelectorAll('.terminate-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if(confirm('Terminate this internship early?')) {
+                        alert('Internship terminated');
+                        // Update status in UI and backend
+                    }
+                });
+            });
+            
+            // Close modal
+            document.querySelectorAll('.close-modal').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.modal').forEach(modal => {
+                        modal.style.display = 'none';
+                    });
+                });
+            });
+            
+            // Star rating functionality
+            const stars = document.querySelectorAll('.rating-stars .fas.fa-star');
+            stars.forEach(star => {
+                star.addEventListener('click', function() {
+                    const starGroup = this.parentElement;
+                    const starIndex = Array.from(starGroup.children).indexOf(this);
+                    
+                    // Update stars in this group
+                    Array.from(starGroup.children).forEach((s, i) => {
+                        if(i <= starIndex) {
+                            s.classList.add('filled');
+                        } else {
+                            s.classList.remove('filled');
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

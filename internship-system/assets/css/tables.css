@@ -1,0 +1,250 @@
+/* Table Styles */
+.table-responsive {
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: var(--box-shadow);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.data-table thead {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.data-table th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+}
+
+.data-table td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--gray-light);
+}
+
+.data-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.data-table tbody tr:hover {
+    background-color: rgba(212, 0, 0, 0.05);
+}
+
+.status-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.status-pending {
+    background-color: rgba(255, 152, 0, 0.2);
+    color: var(--warning-color);
+}
+
+.status-approved {
+    background-color: rgba(76, 175, 80, 0.2);
+    color: var(--success-color);
+}
+
+.status-rejected {
+    background-color: rgba(244, 67, 54, 0.2);
+    color: var(--danger-color);
+}
+
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.action-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0.25rem;
+    border-radius: 4px;
+    transition: var(--transition);
+}
+
+.action-btn.view {
+    color: var(--primary-color);
+}
+
+.action-btn.view:hover {
+    background-color: rgba(212, 0, 0, 0.1);
+}
+
+.action-btn.edit {
+    color: var(--warning-color);
+}
+
+.action-btn.edit:hover {
+    background-color: rgba(255, 152, 0, 0.1);
+}
+
+.action-btn.delete {
+    color: var(--danger-color);
+}
+
+.action-btn.delete:hover {
+    background-color: rgba(244, 67, 54, 0.1);
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.btn-outline {
+    background-color: transparent;
+    border: 1px solid var(--gray-light);
+    color: var(--secondary-color);
+    padding: 0.5rem 1rem;
+}
+
+.btn-outline:hover {
+    background-color: var(--gray-light);
+}
+
+.btn-success {
+    background-color: var(--success-color);
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: #3d8b40;
+}
+
+.btn-danger {
+    background-color: var(--danger-color);
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #d32f2f;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
+}
+
+.search-box input {
+    border: none;
+    padding: 0.5rem 1rem;
+    width: 200px;
+}
+
+.search-box input:focus {
+    outline: none;
+}
+
+.search-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.search-btn:hover {
+    background-color: var(--primary-dark);
+}
+
+.filter-dropdown select {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--gray-light);
+    border-radius: 4px;
+    background-color: white;
+}
+
+/* Modal Styles for Tables */
+.modal.large .modal-content {
+    max-width: 800px;
+}
+
+.company-details {
+    padding: 1rem;
+}
+
+.company-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--gray-light);
+}
+
+.company-logo {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    border: 1px solid var(--gray-light);
+    border-radius: 4px;
+    margin-right: 1.5rem;
+    padding: 0.5rem;
+}
+
+.company-info h3 {
+    margin-bottom: 0.5rem;
+    color: var(--secondary-color);
+}
+
+.company-info p {
+    color: var(--gray-medium);
+    margin-bottom: 0.25rem;
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.detail-item h4 {
+    margin-bottom: 0.5rem;
+    color: var(--secondary-color);
+}
+
+.detail-item p {
+    color: var(--gray-dark);
+}
+
+.document-link {
+    display: inline-flex;
+    align-items: center;
+    color: var(--primary-color);
+    margin-right: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.document-link i {
+    margin-right: 0.5rem;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--gray-light);
+}
