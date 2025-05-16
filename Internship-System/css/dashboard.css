@@ -1,0 +1,22 @@
+.dashboard-container {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    min-height: 100vh;
+}
+
+.sidebar {
+    background-color: #3949ab;
+    color: white;
+    padding: 1em;
+}
+
+.sidebar a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    margin: 10px 0;
+}
+
+.main-content {
+    padding: 20px;
+}

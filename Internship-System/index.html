@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GUC Internship System</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/forms.css">
+</head>
+<body>
+    <div class="login-container">
+        <header>
+            <img src="assets/images/guc-logo.png" alt="GUC Logo" class="logo">
+            <h1>Internship System</h1>
+        </header>
+        
+        <main id="main-content">
+            <!-- Dynamic content will load here -->
+            <section class="login-section">
+                <h2>Welcome</h2>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="role">I am a:</label>
+                        <select id="role" required>
+                            <option value="">Select role</option>
+                            <option value="student">Student</option>
+                            <option value="pro-student">Pro Student</option>
+                            <option value="faculty">Faculty Member</option>
+                            <option value="company">Company</option>
+                            <option value="scad">SCAD Office</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-primary">Login</button>
+                </form>
+                
+                <div class="register-company">
+                    <p>New company? <a href="#" id="register-company-link">Register here</a></p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/mockData.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
