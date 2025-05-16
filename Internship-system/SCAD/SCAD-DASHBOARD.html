@@ -1,0 +1,169 @@
+<!-- In your existing dashboard.html file, update these sections: -->
+
+<!-- 1. First, add this new card to your dashboard-cards section (before the closing </div>) -->
+<div class="card highlight-card">
+    <div class="card-header">
+        <h3>Current Cycle Control</h3>
+        <span class="badge success" id="cycle-status-badge">Active</span>
+    </div>
+    <div class="card-body">
+        <div class="detail-row">
+            <span class="detail-label">Cycle:</span>
+            <span class="detail-value" id="current-cycle-name">Fall 2023</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Dates:</span>
+            <span class="detail-value" id="current-cycle-dates">Oct 1 - Dec 31, 2023</span>
+        </div>
+    </div>
+</div>
+
+<!-- 2. Update your existing modal (keep same ID) -->
+<div class="modal" id="new-cycle-modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="modal-cycle-title">Manage Internship Cycle</h3>
+            <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="cycle-form">
+                <div class="form-group">
+                    <label for="cycle-name">Cycle Name*</label>
+                    <input type="text" id="cycle-name" required placeholder="e.g., Fall 2023">
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="start-date">Start Date*</label>
+                        <input type="date" id="start-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="end-date">End Date*</label>
+                        <input type="date" id="end-date" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="cycle-description">Description</label>
+                    <textarea id="cycle-description" rows="3" placeholder="Optional description"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <div class="form-check">
+                        <input type="checkbox" id="set-as-current" class="form-check-input" checked>
+                        <label for="set-as-current" class="form-check-label">
+                            Set as active cycle
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary close-modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="save-cycle-btn">
+                        Save Cycle
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- 3. Add this JavaScript before the closing </body> tag -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // DOM Elements
+    const newCycleBtn = document.getElementById('new-cycle-btn');
+    const modal = document.getElementById('new-cycle-modal');
+    const closeModalBtns = document.querySelectorAll('.close-modal');
+    const cycleForm = document.getElementById('cycle-form');
+    const modalTitle = document.getElementById('modal-cycle-title');
+    const saveBtn = document.getElementById('save-cycle-btn');
+    
+    // Current cycle data (would come from backend in real app)
+    let currentCycle = {
+        name: "Fall 2023",
+        start: "2023-10-01",
+        end: "2023-12-31",
+        description: "Fall internship program",
+        isCurrent: true
+    };
+    
+    // Initialize display
+    updateCycleDisplay();
+    
+    // Open modal for new cycle
+    newCycleBtn.addEventListener('click', function() {
+        modalTitle.textContent = "Manage Internship Cycle";
+        saveBtn.textContent = "Save Cycle";
+        
+        // Pre-fill form with current data
+        document.getElementById('cycle-name').value = currentCycle.name;
+        document.getElementById('start-date').value = currentCycle.start;
+        document.getElementById('end-date').value = currentCycle.end;
+        document.getElementById('cycle-description').value = currentCycle.description;
+        document.getElementById('set-as-current').checked = currentCycle.isCurrent;
+        
+        modal.style.display = 'flex';
+    });
+    
+    // Form submission
+    cycleForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Get form values
+        const cycleData = {
+            name: document.getElementById('cycle-name').value,
+            start: document.getElementById('start-date').value,
+            end: document.getElementById('end-date').value,
+            description: document.getElementById('cycle-description').value,
+            isCurrent: document.getElementById('set-as-current').checked
+        };
+        
+        // Validate dates
+        if (new Date(cycleData.start) >= new Date(cycleData.end)) {
+            alert("End date must be after start date");
+            return;
+        }
+        
+        // Update current cycle if marked as current
+        if (cycleData.isCurrent) {
+            currentCycle = cycleData;
+            updateCycleDisplay();
+        }
+        
+        // Here you would send to backend in real implementation
+        console.log("Saving cycle:", cycleData);
+        alert(`Cycle ${cycleData.name} saved successfully!`);
+        modal.style.display = 'none';
+    });
+    
+    // Update dashboard display with current cycle
+    function updateCycleDisplay() {
+        document.getElementById('current-cycle-name').textContent = currentCycle.name;
+        document.getElementById('current-cycle-dates').textContent = 
+            `${formatDate(currentCycle.start)} - ${formatDate(currentCycle.end)}`;
+        document.getElementById('cycle-status-badge').textContent = 
+            currentCycle.isCurrent ? "Active" : "Inactive";
+    }
+    
+    // Helper to format dates
+    function formatDate(dateStr) {
+        const options = { month: 'short', day: 'numeric', year: 'numeric' };
+        return new Date(dateStr).toLocaleDateString('en-US', options);
+    }
+    
+    // Close modal
+    closeModalBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+    });
+    
+    // Close modal when clicking outside
+    window.addEventListener('click', function(event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+});
+</script>
