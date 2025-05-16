@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GUC Internship System</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/auth.css"> <!-- New CSS file for auth forms -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <img src="assets/images/guc-logo.png" alt="GUC Logo" class="logo">
+                <span class="system-name">GUC Internship System</span>
+            </div>
+            <div class="hamburger-menu">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="pages/about.html" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="pages/contact.html" class="nav-link">Contact</a></li>
+                <li class="nav-item"><a href="#" class="nav-link login-btn">Login</a></li>
+                <li class="nav-item"><a href="#" class="nav-link signup-btn">Sign Up</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <section class="hero">
+            <div class="hero-content">
+                <h1>GUC Internship System</h1>
+                <p>Connecting students with the best internship opportunities</p>
+                <div class="cta-buttons">
+                    <a href="#" class="btn btn-primary" id="login-btn">Login</a>
+                    <a href="#" class="btn btn-secondary" id="signup-btn">Sign Up</a>
+                    <a href="#" class="btn btn-tertiary" id="register-company-btn">
+                        <i class="fas fa-building"></i> Register Company
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Company Registration Modal -->
+    <!-- Company Registration Modal -->
+<div class="modal" id="company-registration-modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Register Your Company</h3>
+            <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="company-registration-form">
+                <!-- Company Basic Info -->
+                <div class="form-section">
+                    <h4>Company Information</h4>
+                    <div class="form-group">
+                        <label for="reg-company-name">Company Name*</label>
+                        <input type="text" id="reg-company-name" required placeholder="Enter your company name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="reg-company-email">Official Email*</label>
+                        <input type="email" id="reg-company-email" required placeholder="company@example.com">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="reg-company-industry">Industry*</label>
+                            <select id="reg-company-industry" required>
+                                <!-- options... -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="reg-company-size">Company Size*</label>
+                            <select id="reg-company-size" required>
+                                <!-- options... -->
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Logo Upload -->
+                <div class="form-section">
+                    <h4>Company Logo</h4>
+                    <div class="form-group">
+                        <div class="file-upload">
+                            <input type="file" id="reg-company-logo" accept="image/*">
+                            <label for="reg-company-logo" class="file-upload-label">
+                                <i class="fas fa-upload"></i>
+                                <span id="logo-file-name">Choose file (max 2MB)</span>
+                            </label>
+                        </div>
+                        <div class="logo-preview" id="reg-logo-preview" style="display:none;">
+                            <img id="reg-preview-image" src="#" alt="Logo Preview">
+                            <button type="button" id="reg-remove-logo" class="btn btn-sm btn-danger">
+                                <i class="fas fa-times"></i> Remove
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Verification Documents -->
+                <div class="form-section">
+                    <h4>Verification Documents</h4>
+                    <div class="form-group">
+                        <div class="file-upload">
+                            <input type="file" id="reg-verification-docs" multiple accept=".pdf,.doc,.docx,.jpg,.png">
+                            <label for="reg-verification-docs" class="file-upload-label">
+                                <i class="fas fa-file-upload"></i>
+                                <span id="docs-file-name">Upload documents (PDF/Word/Image)</span>
+                            </label>
+                        </div>
+                        <p class="help-text">Upload at least one document proving company legitimacy (tax documents, business license, etc.)</p>
+                    </div>
+                </div>
+                
+                <!-- Terms and Submit -->
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="reg-terms-agreement" required>
+                    <label for="reg-terms-agreement">I agree to the <a href="#">Terms of Service</a></label>
+                </div>
+            </form>
+        </div>
+        <div class="form-actions">
+            <button type="button" class="btn btn-secondary close-modal">Cancel</button>
+            <button type="submit" form="company-registration-form" class="btn btn-primary">Submit Registration</button>
+        </div>
+    </div>
+</div>
+
+    <!-- Login Modal -->
+    <div class="modal" id="login-modal">
+        <!-- Your existing login form -->
+    </div>
+
+    <!-- Signup Modal -->
+    <div class="modal" id="signup-modal">
+        <!-- Your existing signup form -->
+    </div>
+
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/company-registration.js"></script>
+</body>
+</html>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Applications | SCAD System</title>
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <img src="../../assets/images/guc-logo.png" alt="SCAD Logo" class="logo">
+                <span class="system-name">Company Applications</span>
+            </div>
+            <div class="nav-menu">
+                <a href="notifications.html" class="nav-link"><i class="fas fa-bell"></i><span class="notification-badge">5</span></a>
+                <a href="#" class="nav-link logout-btn"><i class="fas fa-sign-out-alt"></i></a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="user-profile">
+                <img src="../../assets/images/guc-logo.png" alt="Admin Avatar" class="avatar">
+                <div class="profile-status">
+                    <span class="status-badge admin">SCAD Office</span>
+                </div>
+                <h3>Admin User</h3>
+                <p>System Administrator</p>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="companies.html" class="active"><i class="fas fa-building"></i> Company Applications</a></li>
+                    <li><a href="students.html"><i class="fas fa-users"></i> Student Management</a></li>
+                    <li><a href="reports.html"><i class="fas fa-file-alt"></i> Internship Reports</a></li>
+                    <li><a href="cycles.html"><i class="fas fa-calendar-alt"></i> Internship Cycles</a></li>
+                    <li><a href="statistics.html"><i class="fas fa-chart-bar"></i> System Statistics</a></li>
+                    <li><a href="workshops.html"><i class="fas fa-chalkboard-teacher"></i> Workshops</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="dashboard-header">
+                <h1>Company Applications</h1>
+                <div class="header-actions">
+                    <div class="filter-group">
+                        <label for="status-filter">Filter by Status:</label>
+                        <select id="status-filter" class="form-control">
+                            <option value="all">All Applications</option>
+                            <option value="pending">Pending</option>
+                            <option value="approved">Approved</option>
+                            <option value="rejected">Rejected</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" id="export-btn"><i class="fas fa-download"></i> Export</button>
+                </div>
+            </div>
+
+            <div class="dashboard-section">
+                <div class="table-responsive">
+                    <table class="companies-table">
+                        <thead>
+                            <tr>
+                                <th>Company Name</th>
+                                <th>Industry</th>
+                                <th>Size</th>
+                                <th>Contact Email</th>
+                                <th>Applied On</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Tech Innovations LLC</td>
+                                <td>Software Development</td>
+                                <td>Medium</td>
+                                <td>contact@techinnovations.com</td>
+                                <td>2023-10-10</td>
+                                <td><span class="status-badge pending">Pending</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary">Review</button>
+                                    <button class="btn btn-sm btn-secondary">Details</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Green Energy Solutions</td>
+                                <td>Renewable Energy</td>
+                                <td>Large</td>
+                                <td>info@greenenergy.com</td>
+                                <td>2023-10-08</td>
+                                <td><span class="status-badge pending">Pending</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary">Review</button>
+                                    <button class="btn btn-sm btn-secondary">Details</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Data Analytics Pro</td>
+                                <td>Data Science</td>
+                                <td>Small</td>
+                                <td>hr@dataanalytics.com</td>
+                                <td>2023-10-05</td>
+                                <td><span class="status-badge approved">Approved</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-secondary">Details</button>
+                                    <button class="btn btn-sm btn-danger">Revoke</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Future Architects</td>
+                                <td>Architecture</td>
+                                <td>Medium</td>
+                                <td>careers@futurearch.com</td>
+                                <td>2023-10-03</td>
+                                <td><span class="status-badge rejected">Rejected</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-secondary">Details</button>
+                                    <button class="btn btn-sm btn-success">Reconsider</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>MediCare Solutions</td>
+                                <td>Healthcare</td>
+                                <td>Large</td>
+                                <td>internships@medicare.com</td>
+                                <td>2023-09-28</td>
+                                <td><span class="status-badge approved">Approved</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-secondary">Details</button>
+                                    <button class="btn btn-sm btn-danger">Revoke</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination">
+                    <button class="btn btn-secondary" disabled>Previous</button>
+                    <span class="page-info">Page 1 of 3</span>
+                    <button class="btn btn-secondary">Next</button>
+                </div>
+            </div>
+
+            <!-- Company Details Modal -->
+            <div class="modal" id="company-details-modal">
+                <div class="modal-content large">
+                    <div class="modal-header">
+                        <h3>Company Details - Tech Innovations LLC</h3>
+                        <button class="close-modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="company-details-grid">
+                            <div class="company-info">
+                                <h4>Basic Information</h4>
+                                <div class="detail-row">
+                                    <span class="detail-label">Company Name:</span>
+                                    <span class="detail-value">Tech Innovations LLC</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Industry:</span>
+                                    <span class="detail-value">Software Development</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Company Size:</span>
+                                    <span class="detail-value">Medium (50-200 employees)</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Website:</span>
+                                    <span class="detail-value"><a href="https://www.techinnovations.com" target="_blank">www.techinnovations.com</a></span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Founded:</span>
+                                    <span class="detail-value">2015</span>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-info">
+                                <h4>Contact Information</h4>
+                                <div class="detail-row">
+                                    <span class="detail-label">Contact Person:</span>
+                                    <span class="detail-value">Sarah Johnson</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Position:</span>
+                                    <span class="detail-value">HR Manager</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Email:</span>
+                                    <span class="detail-value">sarah.johnson@techinnovations.com</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Phone:</span>
+                                    <span class="detail-value">+1 (555) 123-4567</span>
+                                </div>
+                            </div>
+                            
+                            <div class="internship-info">
+                                <h4>Internship Details</h4>
+                                <div class="detail-row">
+                                    <span class="detail-label">Positions Offered:</span>
+                                    <span class="detail-value">5</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Internship Duration:</span>
+                                    <span class="detail-value">3 months</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Stipend:</span>
+                                    <span class="detail-value">$800/month</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Areas:</span>
+                                    <span class="detail-value">Web Development, Mobile Development, Data Science</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="documents-section">
+                            <h4>Attached Documents</h4>
+                            <div class="document-list">
+                                <div class="document-item">
+                                    <i class="fas fa-file-pdf"></i>
+                                    <span>Company_Registration.pdf</span>
+                                    <button class="btn btn-sm btn-secondary">Download</button>
+                                </div>
+                                <div class="document-item">
+                                    <i class="fas fa-file-word"></i>
+                                    <span>Internship_Program.docx</span>
+                                    <button class="btn btn-sm btn-secondary">Download</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="status-section">
+                            <h4>Application Status</h4>
+                            <div class="status-actions">
+                                <div class="current-status">
+                                    <span>Current Status:</span>
+                                    <span class="status-badge pending">Pending</span>
+                                </div>
+                                <div class="status-buttons">
+                                    <button class="btn btn-success">Approve</button>
+                                    <button class="btn btn-danger">Reject</button>
+                                    <button class="btn btn-secondary">Request More Info</button>
+                                </div>
+                            </div>
+                            <div class="status-notes">
+                                <label for="status-notes">Notes:</label>
+                                <textarea id="status-notes" rows="3" placeholder="Add any notes about this application..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary close-modal">Close</button>
+                        <button class="btn btn-primary">Save Changes</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+    <script src="../../assets/js/companies.js"></script>
+</body>
+</html>

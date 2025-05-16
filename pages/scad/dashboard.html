@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCAD Office Dashboard | SCAD System</title>
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <img src="../../assets/images/guc-logo.png" alt="SCAD Logo" class="logo">
+                <span class="system-name">SCAD Office Dashboard</span>
+            </div>
+            <div class="nav-menu">
+                <a href="notifications.html" class="nav-link"><i class="fas fa-bell"></i><span class="notification-badge">5</span></a>
+                <a href="#" class="nav-link logout-btn"><i class="fas fa-sign-out-alt"></i></a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="user-profile">
+                <img src="../../assets/images/guc-logo.png" alt="Admin Avatar" class="avatar">
+                <div class="profile-status">
+                    <span class="status-badge admin">SCAD Office</span>
+                </div>
+                <h3>Admin User</h3>
+                <p>System Administrator</p>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="dashboard.html" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="companies.html"><i class="fas fa-building"></i> Company Applications</a></li>
+                    <li><a href="students.html"><i class="fas fa-users"></i> Student Management</a></li>
+                    <li><a href="reports.html"><i class="fas fa-file-alt"></i> Internship Reports</a></li>
+                    <li><a href="cycles.html"><i class="fas fa-calendar-alt"></i> Internship Cycles</a></li>
+                    <li><a href="statistics.html"><i class="fas fa-chart-bar"></i> System Statistics</a></li>
+                    <li><a href="workshops.html"><i class="fas fa-chalkboard-teacher"></i> Workshops</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="dashboard-header">
+                <h1>SCAD Office Dashboard</h1>
+                <div class="header-actions">
+                    <button class="btn btn-primary" id="new-cycle-btn"><i class="fas fa-plus"></i> New Internship Cycle</button>
+                </div>
+            </div>
+
+            <div class="dashboard-cards">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Pending Company Applications</h3>
+                        <span class="badge warning">7</span>
+                    </div>
+                    <div class="card-body">
+                        <p>7 companies awaiting approval</p>
+                        <a href="companies.html?status=pending" class="card-link">Review Now <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Active Internship Cycle</h3>
+                        <span class="badge success">Fall 2023</span>
+                    </div>
+                    <div class="card-body">
+                        <p>Oct 1, 2023 - Dec 31, 2023</p>
+                        <a href="cycles.html" class="card-link">Manage Cycles <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Pending Reports</h3>
+                        <span class="badge">23</span>
+                    </div>
+                    <div class="card-body">
+                        <p>23 reports awaiting review</p>
+                        <a href="reports.html?status=pending" class="card-link">Review Reports <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-section">
+                <h2>Recent Company Applications</h2>
+                <div class="table-responsive">
+                    <table class="companies-table">
+                        <thead>
+                            <tr>
+                                <th>Company Name</th>
+                                <th>Industry</th>
+                                <th>Size</th>
+                                <th>Applied On</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Tech Innovations LLC</td>
+                                <td>Software Development</td>
+                                <td>Medium</td>
+                                <td>2023-10-10</td>
+                                <td><span class="status-badge pending">Pending</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary">Review</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Green Energy Solutions</td>
+                                <td>Renewable Energy</td>
+                                <td>Large</td>
+                                <td>2023-10-08</td>
+                                <td><span class="status-badge pending">Pending</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary">Review</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="section-footer">
+                    <a href="companies.html" class="btn btn-secondary">View All Companies</a>
+                </div>
+            </div>
+
+            <div class="dashboard-section">
+                <h2>System Statistics</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Internship Reports</h3>
+                        <canvas id="reportsChart" height="200"></canvas>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Top Companies</h3>
+                        <canvas id="companiesChart" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- New Cycle Modal -->
+    <div class="modal" id="new-cycle-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Create New Internship Cycle</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="cycle-form">
+                    <div class="form-group">
+                        <label for="cycle-name">Cycle Name*</label>
+                        <input type="text" id="cycle-name" required placeholder="e.g., Fall 2023">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="start-date">Start Date*</label>
+                            <input type="date" id="start-date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="end-date">End Date*</label>
+                            <input type="date" id="end-date" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="cycle-description">Description</label>
+                        <textarea id="cycle-description" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary close-modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Create Cycle</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+    <script src="../../assets/js/scad-dashboard.js"></script>
+</body>
+</html>

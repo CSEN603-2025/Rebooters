@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internships | GUC Internship System</title>
+    <link rel="stylesheet" href="..\..\assets\css\style.css">
+    <link rel="stylesheet" href="..\..\assets\css\dashboard.css">
+    <link rel="stylesheet" href="..\..\assets\css\tables.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <img src="..\..\assets\images\guc-logo.png" alt="GUC Logo" class="logo">
+                <span class="system-name">GUC Internship System</span>
+            </div>
+            <div class="nav-menu">
+                <a href="notifications.html" class="nav-link"><i class="fas fa-bell"></i></a>
+                <a href="#" class="nav-link logout-btn"><i class="fas fa-sign-out-alt"></i></a>
+            </div>
+            <div class="hamburger-menu">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </div>
+    </nav>
+    <!-- Dashboard Layout -->
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="user-profile">
+                <img src="..\..\assets\images\default-avatar.png" alt="Student Avatar" class="avatar">
+                <div class="profile-status">
+                    <span class="status-badge student">Student</span>
+                </div>
+                <h3>Farah Mokhtar</h3>
+                <p>Business Informatics</p>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="internships.html" class="active"><i class="fas fa-briefcase"></i> Internships</a></li>
+                    <li><a href="applications.html"><i class="fas fa-file-alt"></i> My Applications</a></li>
+                    <li><a href="reports.html"><i class="fas fa-clipboard-list"></i> Reports</a></li>
+                    <li><a href="appointments.html"><i class="fas fa-calendar-check"></i> Appointments</a></li>
+                    <li><a href="workshops.html"><i class="fas fa-chalkboard-teacher"></i> Workshops</a></li>
+                    <li><a href="profile.html" ><i class="fas fa-user-edit"></i> Profile</a></li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <section class="main-content">
+            <div class="dashboard-header">
+                <h1>Available Internships</h1>
+                <div class="dashboard-actions">
+                    <div class="search-box">
+                        <input type="text" placeholder="Search internships..." id="internshipSearch">
+                        <button class="search-btn"><i class="fas fa-search"></i></button>
+                    </div>
+                    <!-- Filters -->
+                     <div class="filter-dropdown">
+                        <select id="internshipFilterIndustry">
+                            <option value="">All Industries</option>
+                            <option value="Technology">Technology</option>
+                            <option value="Finance">Finance</option>
+                            <option value="Healthcare">Healthcare</option>
+                        </select>
+                    </div>
+
+                     <div class="filter-dropdown">
+                        <select id="internshipFilterDuration">
+                            <option value="">All Durations</option>
+                            <option value="1">1 month</option>
+                            <option value="2">2+ months</option>
+                        </select>
+                    </div>
+
+                     <div class="filter-dropdown">
+                        <select id="internshipFilterPaid">
+                            <option value="">All Types</option>
+                            <option value="paid">Paid</option>
+                            <option value="unpaid">Unpaid</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div class="dashboard-section">
+                <div class="internship-list" id="internshipList">
+                    <!-- Internships will be loaded here -->
+                </div>
+                
+                <div class="pagination">
+                    <button class="btn btn-outline" id="prevPage"><i class="fas fa-chevron-left"></i> Previous</button>
+                    <span id="pageInfo">Page 1 of 5</span>
+                    <button class="btn btn-outline" id="nextPage">Next <i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Internship Details Modal -->
+    <div class="modal" id="internshipModal" style="display:none;">
+    <!-- Modal content will be injected here -->
+    </div>
+
+
+    <script src="..\..\assets\js\main.js"></script>
+    <script src="..\..\assets\js\student-internships.js"></script>
+</body>
+</html>

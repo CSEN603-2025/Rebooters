@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard | GUC Internship System</title>
+    <link rel="stylesheet" href="..\..\assets\css\style.css">
+    <link rel="stylesheet" href="..\..\assets\css\dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <img src="..\..\assets\images\guc-logo.png" alt="GUC Logo" class="logo">
+                <span class="system-name">GUC Internship System</span>
+            </div>
+            <div class="nav-menu">
+                <a href="notifications.html" class="nav-link"><i class="fas fa-bell"></i></a>
+                <a href="#" class="nav-link logout-btn"><i class="fas fa-sign-out-alt"></i></a>
+            </div>
+            <div class="hamburger-menu">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Layout -->
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="user-profile">
+                <img src="C:\Users\Farah Mokhtar\OneDrive\Desktop\internship-system\assets\images\default-avatar.png" alt="Student Avatar" class="avatar">
+                <div class="profile-status">
+                    <span class="status-badge student">Student</span>
+                </div>
+                <h3>Farah Mokhtar</h3>
+                <p>Business Informatics</p>
+                
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="dashboard.html" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="internships.html"><i class="fas fa-briefcase"></i> Internships</a></li>
+                    <li><a href="applications.html"><i class="fas fa-file-alt"></i> My Applications</a></li>
+                    <li><a href="reports.html"><i class="fas fa-clipboard-list"></i> Reports</a></li>
+                    
+                    <li><a href="appointments.html"><i class="fas fa-calendar-check"></i> Appointments</a></li>
+                    <li><a href="workshops.html"><i class="fas fa-chalkboard-teacher"></i> Workshops</a></li>
+                    <li><a href="profile.html"><i class="fas fa-user-edit"></i> Profile</a></li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="dashboard-header">
+                <h1>Student Dashboard</h1>
+                
+            </div>
+            
+            <div class="dashboard-cards">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Pending Applications</h3>
+                        <span class="badge">3</span>
+                    </div>
+                    <div class="card-body">
+                        <p>You have 3 internship applications pending review</p>
+                        <a href="applications.html" class="card-link">View Applications <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Current Internship</h3>
+                        <span class="badge success">Active</span>
+                    </div>
+                    <div class="card-body">
+                        <p>You are currently interning at Tech Solutions Inc.</p>
+                        <a href="applications.html" class="card-link">View Details <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Upcoming Deadlines</h3>
+                        <span class="badge warning">2</span>
+                    </div>
+                    <div class="card-body">
+                        <p>2 report deadlines approaching this month</p>
+                        <a href="reports.html" class="card-link">View Deadlines <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-section">
+                <h2>Suggested Internships</h2>
+                <div class="internship-list">
+                    <!-- Internship items will be added here dynamically -->
+                     <div class="internship-card">
+                        <h3>Frontend Developer Intern</h3>
+                        <p class="company">Tech Solutions Inc.</p>
+                        <p class="industry"><strong>Industry:</strong> Software Development</p>
+                        <p class="interest-match"><strong>Matched Interest:</strong> Web Development</p>
+                        <p class="recommendation"><strong>Recommended by:</strong> 5 past interns</p>
+                        <div class="internship-meta">
+                            <span><i class="fas fa-clock"></i> 3 months</span>
+                            <span><i class="fas fa-money-bill-wave"></i> $800/month</span>
+                        </div>
+                        <div class="internship-actions">
+                            <a href="internship-details.html" class="btn btn-primary">View Details</a>
+                            <button class="btn btn-secondary">Apply Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="..\..\assets\js\auth.js"></script>
+    <script src="..\..\assets\js\student-dashboard.js"></script>
+</body>
+</html>

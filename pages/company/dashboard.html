@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Dashboard | SCAD System</title>
+    <link rel="stylesheet" href="..\..\assets\css\style.css">
+    <link rel="stylesheet" href="..\..\assets\css\dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <img src="..\..\assets\images\guc-logo.png" alt="SCAD Logo" class="logo">
+                <span class="system-name">SCAD Internship System</span>
+            </div>
+            <div class="nav-menu">
+                <a href="notifications.html" class="nav-link"><i class="fas fa-bell"></i><span class="notification-badge">3</span></a>
+                <a href="#" class="nav-link logout-btn"><i class="fas fa-sign-out-alt"></i></a>
+            </div>
+            <div class="hamburger-menu">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Layout -->
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="user-profile">
+                <img src="..\..\assets\images\company-avatar.png" alt="Company Logo" class="avatar">
+                <div class="profile-status">
+                    <span class="status-badge company">Company</span>
+                </div>
+                <h3>Tech Solutions Inc.</h3>
+                <p>Software Development</p>
+                <p class="company-size">Large (300 employees)</p>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="dashboard.html" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="job-post.html"><i class="fas fa-briefcase"></i> My Internship Posts</a></li>
+                    <li><a href="applications.html"><i class="fas fa-file-alt"></i> Applications</a></li>
+                    <li><a href="current-interns.html"><i class="fas fa-users"></i> Current Interns</a></li>
+                    <li><a href="past-interns.html"><i class="fas fa-user-graduate"></i> Past Interns</a></li>
+                    <li><a href="evaluations.html"><i class="fas fa-clipboard-check"></i> Intern Evaluations</a></li>
+                    <li><a href="profile.html"><i class="fas fa-building"></i> Company Profile</a></li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="dashboard-header">
+                <h1>Company Dashboard</h1>
+                <div class="header-actions">
+                    <button class="btn btn-primary" id="new-internship-btn"><i class="fas fa-plus"></i> New Internship Post</button>
+                    
+                </div>
+            </div>
+            
+            <!-- Registration Status Alert -->
+            <div class="alert alert-info" id="registration-status" style="display: none;">
+                <i class="fas fa-info-circle"></i>
+                <span id="status-message"></span>
+            </div>
+            
+            <div class="dashboard-cards">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Active Internship Posts</h3>
+                        <span class="badge">5</span>
+                    </div>
+                    <div class="card-body">
+                        <p>You have 5 active internship listings</p>
+                        <a href="job-post.html" class="card-link">View Posts <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3>New Applications</h3>
+                        <span class="badge warning">12</span>
+                    </div>
+                    <div class="card-body">
+                        <p>12 new applications to review</p>
+                        <a href="applications.html" class="card-link">Review Applications <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Current Interns</h3>
+                        <span class="badge success">8</span>
+                    </div>
+                    <div class="card-body">
+                        <p>8 students currently interning at your company</p>
+                        <a href="current-interns.html" class="card-link">View Interns <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Recent Applications Section -->
+            <div class="dashboard-section">
+                <h2>Recent Applications</h2>
+                <div class="table-responsive">
+                    <table class="applications-table">
+                        <thead>
+                            <tr>
+                                <th>Applicant</th>
+                                <th>Internship Position</th>
+                                <th>Status</th>
+                                <th>Date Applied</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="applicant-info">
+                                       
+                                        <span>Ahmed Mohamed</span>
+                                    </div>
+                                </td>
+                                <td>Frontend Developer Intern</td>
+                                <td><span class="status-badge pending">Pending</span></td>
+                                <td>2023-10-15</td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary">View</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="applicant-info">
+                                        
+                                        <span>Mariam Ali</span>
+                                    </div>
+                                </td>
+                                <td>Data Science Intern</td>
+                                <td><span class="status-badge finalized">Finalized</span></td>
+                                <td>2023-10-14</td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary">View</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="section-footer">
+                    <a href="applications.html" class="btn btn-secondary">View All Applications</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- New Internship Post Modal -->
+    <div class="modal" id="new-internship-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Create New Internship Post</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="internship-form">
+                    <div class="form-group">
+                        <label for="job-title">Job Title*</label>
+                        <input type="text" id="job-title" required placeholder="e.g., Frontend Developer Intern">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="duration">Duration (months)*</label>
+                            <input type="number" id="duration" min="1" max="12" required value="3">
+                        </div>
+                        <div class="form-group">
+                            <label for="internship-type">Type*</label>
+                            <select id="internship-type" required>
+                                <option value="">Select type</option>
+                                <option value="paid" selected>Paid</option>
+                                <option value="unpaid">Unpaid</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="salary-group">
+                            <label for="salary">Expected Salary (per month)*</label>
+                            <input type="number" id="salary" min="0" value="800">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="skills">Skills Required* (comma separated)</label>
+                        <textarea id="skills" rows="3" required>HTML, CSS, JavaScript, React</textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="description">Job Description*</label>
+                        <textarea id="description" rows="5" required>We are looking for a frontend developer intern to join our team...</textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary close-modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Post Internship</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Company Registration Modal -->
+    <div class="modal" id="company-registration-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Register New Company</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="company-registration-form">
+                    <div class="form-group">
+                        <label for="reg-company-name">Company Name*</label>
+                        <input type="text" id="reg-company-name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="reg-company-email">Official Email*</label>
+                        <input type="email" id="reg-company-email" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="reg-company-industry">Industry*</label>
+                            <select id="reg-company-industry" required>
+                                <option value="">Select industry</option>
+                                <option value="technology">Technology</option>
+                                <option value="finance">Finance</option>
+                                <option value="healthcare">Healthcare</option>
+                                <option value="education">Education</option>
+                                <option value="manufacturing">Manufacturing</option>
+                                <option value="retail">Retail</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="reg-company-size">Company Size*</label>
+                            <select id="reg-company-size" required>
+                                <option value="">Select size</option>
+                                <option value="small">Small (≤50 employees)</option>
+                                <option value="medium">Medium (51-100 employees)</option>
+                                <option value="large">Large (101-500 employees)</option>
+                                <option value="corporate">Corporate (>500 employees)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="reg-company-logo">Company Logo</label>
+                        <div class="file-upload">
+                            <input type="file" id="reg-company-logo" accept="image/*">
+                            <label for="reg-company-logo" class="file-upload-label">
+                                <i class="fas fa-upload"></i>
+                                <span id="logo-file-name">Choose file (max 2MB)</span>
+                            </label>
+                        </div>
+                        <div class="logo-preview" id="reg-logo-preview" style="display:none;">
+                            <img id="reg-preview-image" src="#" alt="Logo Preview">
+                            <button type="button" id="reg-remove-logo" class="btn btn-sm btn-danger">
+                                <i class="fas fa-times"></i> Remove
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="reg-verification-docs">Verification Documents*</label>
+                        <div class="file-upload">
+                            <input type="file" id="reg-verification-docs" multiple accept=".pdf,.doc,.docx,.jpg,.png">
+                            <label for="reg-verification-docs" class="file-upload-label">
+                                <i class="fas fa-file-upload"></i>
+                                <span id="docs-file-name">Upload documents (PDF/Word/Image)</span>
+                            </label>
+                        </div>
+                        <p class="help-text">Upload at least one document proving company legitimacy</p>
+                    </div>
+                    
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="reg-terms-agreement" required>
+                        <label for="reg-terms-agreement">I agree to the <a href="#">Terms of Service</a></label>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary close-modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Submit Registration</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="..\..\assets\js\auth.js"></script>
+    <script src="..\..\assets\js\company-dashboard.js"></script>
+    <!-- Email Notification Simulation -->
+<div class="email-notification" id="email-notification">
+    <i class="fas fa-envelope"></i>
+    <span id="email-message">New notification received</span>
+</div>
+</body>
+</html>
