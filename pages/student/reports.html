@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Reports | GUC Internship System</title>
+    <link rel="stylesheet" href="..\..\assets\css\style.css">
+    <link rel="stylesheet" href="..\..\assets\css\dashboard.css">
+    <link rel="stylesheet" href="..\..\assets\css\applications.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .report-status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        .status-approved {
+            background: #dcfce7;
+            color: #166534;
+        }
+        .status-pending {
+            background: #fef9c3;
+            color: #854d0e;
+        }
+        .status-flagged {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        .status-rejected {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        .report-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+            background: white;
+        }
+        .report-card h3 {
+            margin: 0 0 8px 0;
+            font-size: 1.1rem;
+        }
+        .report-meta {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 12px;
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+        .report-feedback {
+            background: #f8fafc;
+            border-left: 3px solid #e2e8f0;
+            padding: 12px;
+            margin: 12px 0;
+            font-size: 0.9rem;
+        }
+        .feedback-flagged {
+            border-left-color: #f59e0b;
+            background: #fffbeb;
+        }
+        .feedback-rejected {
+            border-left-color: #ef4444;
+            background: #fef2f2;
+        }
+        .appeal-form {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px dashed #e2e8f0;
+            display: none;
+        }
+        .appeal-form textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            min-height: 100px;
+        }
+        .btn {
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+            border: none;
+        }
+        .btn-outline {
+            background: white;
+            color: #2563eb;
+            border: 1px solid #2563eb;
+        }
+        .btn-danger {
+            background: #dc2626;
+            color: white;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <img src="..\..\assets\images\guc-logo.png" alt="GUC Logo" class="logo">
+                <span class="system-name">GUC Internship System</span>
+            </div>
+            <div class="nav-menu">
+                <a href="notifications.html" class="nav-link active">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge" id="notification-count">0</span>
+                </a>
+                <a href="#" class="nav-link logout-btn" id="logout-btn"><i class="fas fa-sign-out-alt"></i></a>
+            </div>
+            <div class="hamburger-menu">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Layout -->
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="user-profile">
+                <img src="..\..\assets\images\default-avatar.png" alt="Student Avatar" class="avatar">
+                <div class="profile-status">
+                    <span class="status-badge student">Student</span>
+                    <span class="pro-badge" id="pro-badge">PRO</span>
+                </div>
+                <h3>Farah Mokhtar</h3>
+                <p>Business Informatics</p>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="dashboard.html" ><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="internships.html"><i class="fas fa-briefcase"></i> Internships</a></li>
+                    <li><a href="applications.html" ><i class="fas fa-file-alt"></i> My Applications</a></li>
+                    <li><a href="reports.html" class="active"><i class="fas fa-clipboard-list"></i> Reports</a></li>
+                    
+                     <!-- PRO Features (hidden by default) -->
+        <li class="pro-feature" style="display:none;"><a href="appointments.html"><i class="fas fa-calendar-check"></i> Appointments</a></li>
+        <li class="pro-feature" style="display:none;"><a href="assessments.html"><i class="fas fa-tasks"></i> Assessments</a></li>
+        <li class="pro-feature" style="display:none;"><a href="workshops.html"><i class="fas fa-chalkboard-teacher"></i> Workshops</a></li>
+        <li><a href="profile.html"><i class="fas fa-user-edit"></i> Profile</a></li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="dashboard-header">
+                <h1>My Reports</h1>
+                
+            </div>
+            
+            <!-- Report 1 - Flagged -->
+            <div class="report-card">
+                <h3>Internship Report - June 2025</h3>
+                <div class="report-meta">
+                    <span>Submitted: June 30, 2025</span>
+                    <span>Deadline: July 5, 2025</span>
+                    <span class="report-status status-flagged">Flagged</span>
+                </div>
+                
+                <div class="report-feedback feedback-flagged">
+                    <h4><i class="fas fa-flag"></i> Supervisor Comments</h4>
+                    <p>"Your report lacks sufficient detail in the project milestones section. Please provide more specific technical details about your contributions and update the timeline accuracy."</p>
+                    <p><strong>Action Required:</strong> Resubmit with corrections by July 10, 2025</p>
+                </div>
+                
+                <button class="btn btn-outline appeal-toggle">Appeal Decision</button>
+                <button class="btn btn-primary">Resubmit Report</button>
+                
+                <div class="appeal-form">
+                    <h4>Submit Appeal</h4>
+                    <p>Explain why you believe the report should be reconsidered:</p>
+                    <textarea placeholder="Enter your appeal message..."></textarea>
+                    <button class="btn btn-primary">Submit Appeal</button>
+                    <button class="btn btn-outline cancel-appeal">Cancel</button>
+                </div>
+            </div>
+            
+            <!-- Report 2 - Rejected -->
+            <div class="report-card">
+                <h3>Internship Report</h3>
+                <div class="report-meta">
+                    <span>Submitted: August 15, 2024</span>
+                    <span>Deadline: August 20, 2024</span>
+                    <span class="report-status status-rejected">Rejected</span>
+                </div>
+                
+                <div class="report-feedback feedback-rejected">
+                    <h4><i class="fas fa-times-circle"></i> Supervisor Comments</h4>
+                    <p>"This report does not meet the academic standards required. The analysis section is incomplete and lacks critical reflection on your learning outcomes. The formatting also doesn't follow the required template."</p>
+                    <p><strong>Action Required:</strong> Major revisions needed. Resubmit by August 25, 2024</p>
+                </div>
+                
+                <button class="btn btn-outline appeal-toggle">Appeal Decision</button>
+                <button class="btn btn-primary">Resubmit Report</button>
+                
+                <div class="appeal-form">
+                    <h4>Submit Appeal</h4>
+                    <p>Explain why you believe the report should be reconsidered:</p>
+                    <textarea placeholder="Enter your appeal message..."></textarea>
+                    <button class="btn btn-primary">Submit Appeal</button>
+                    <button class="btn btn-outline cancel-appeal">Cancel</button>
+                </div>
+            </div>
+            
+            <!-- Report 3 - Approved -->
+            <div class="report-card">
+                <h3>Internship Report - July 2023</h3>
+                <div class="report-meta">
+                    <span>Submitted: July 31, 2023</span>
+                    <span>Deadline: August 5, 2023</span>
+                    <span class="report-status status-approved">Approved</span>
+                </div>
+            </div>
+            
+            <!-- Report 4 - Pending -->
+            <div class="report-card">
+                <h3>Internship Report - March 2025</h3>
+                <div class="report-meta">
+                    <span>Submitted: March 31, 2025</span>
+                    <span>Deadline: April 5, 2025</span>
+                    <span class="report-status status-pending">Pending Review</span>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Toggle appeal forms
+            const appealButtons = document.querySelectorAll('.appeal-toggle');
+            appealButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const form = this.nextElementSibling.nextElementSibling;
+                    form.style.display = form.style.display === 'block' ? 'none' : 'block';
+                });
+            });
+            
+            // Cancel appeal buttons
+            const cancelButtons = document.querySelectorAll('.cancel-appeal');
+            cancelButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    this.parentElement.style.display = 'none';
+                });
+            });
+            
+            // You would add form submission handling here in a real implementation
+        });
+    </script>
+    
+    <script src="..\..\assets\js\auth.js"></script>
+    <!-- Logout Confirmation Modal -->
+    <div class="modal" id="logout-modal">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header">
+                <h3>Confirm Logout</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to log out?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancel-logout">Cancel</button>
+                <button class="btn btn-danger" id="confirm-logout">Log Out</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

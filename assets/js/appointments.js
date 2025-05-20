@@ -1,197 +1,369 @@
 class AppointmentSystem {
     constructor() {
         this.appointments = [];
-        this.loadAppointments();
+        this.callInProgress = false;
+        this.callTimer = null;
+        this.callDurationTimer = null;
+        this.secondsElapsed = 0;
+        this.localStream = null;
+        this.isMicOn = true;
+        this.isCameraOn = true;
+        this.isSharingScreen = false;
+        this.currentCall = null;
+        
+        this.initDummyData();
+        this.initEventListeners();
+        this.renderAppointments();
     }
-    
-    loadAppointments() {
-        // In real app, this would come from backend
+
+    initDummyData() {
         this.appointments = [
             {
                 id: 1,
-                type: "Career Guidance",
-                date: "2023-06-15",
-                time: "14:00",
-                with: "Dr. Ahmed Mahmoud",
+                title: "Career Guidance",
+                officer: "Dr. Ahmed",
+                date: "2025-06-20",
+                time: "10:00",
+                type: "career",
                 status: "confirmed",
-                notes: "Discuss internship opportunities in Europe"
+                notes: "Discuss career options after graduation",
+                officerOnline: true
             },
-            // Add more appointments...
+            {
+                id: 2,
+                title: "Report Review",
+                officer: "Prof. Sarah",
+                date: "2025-06-22",
+                time: "14:00",
+                type: "report",
+                status: "pending",
+                notes: "Final internship report feedback",
+                officerOnline: false
+            },
+            {
+                id: 3,
+                title: "Internship Discussion",
+                officer: "Mr. Mahmoud",
+                date: "2025-06-25",
+                time: "11:00",
+                type: "internship",
+                status: "requires-action",
+                notes: "Potential internship opportunities",
+                officerOnline: true
+            }
         ];
     }
-    
-    getUpcomingAppointments() {
-        return this.appointments.filter(a => a.status === 'confirmed' && new Date(`${a.date}T${a.time}`) > new Date());
-    }
-    
-    getPastAppointments() {
-        return this.appointments.filter(a => new Date(`${a.date}T${a.time}`) < new Date());
-    }
-    
-    getRequestedAppointments() {
-        return this.appointments.filter(a => a.status === 'pending');
-    }
-    
-    createAppointment(appointmentData) {
-        const newAppointment = {
-            id: Date.now(),
-            ...appointmentData,
-            status: 'pending'
-        };
-        this.appointments.push(newAppointment);
-        return newAppointment;
-    }
-}
 
-// Initialize appointments
-document.addEventListener('DOMContentLoaded', () => {
-    if (document.getElementById('upcomingAppointments')) {
-        const appointmentSystem = new AppointmentSystem();
-        
-        // Render tabs
-        renderAppointments('upcoming', appointmentSystem.getUpcomingAppointments());
-        renderAppointments('past', appointmentSystem.getPastAppointments());
-        renderAppointments('requested', appointmentSystem.getRequestedAppointments());
-        
-        // Tab switching
-        document.querySelectorAll('.appointments-tabs .tab-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const tabId = this.dataset.tab;
-                
-                // Update active tab
-                document.querySelectorAll('.appointments-tabs .tab-btn').forEach(b => b.classList.remove('active'));
-                document.querySelectorAll('.appointments-tabs .tab-content').forEach(c => c.classList.remove('active'));
-                
-                this.classList.add('active');
-                document.getElementById(tabId).classList.add('active');
+    initEventListeners() {
+        // Request appointment modal
+        document.getElementById('requestAppointmentBtn').addEventListener('click', () => {
+            document.getElementById('requestAppointmentModal').style.display = 'flex';
+        });
+
+        // Close modals
+        document.querySelectorAll('.close-modal, .close-modal-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.target.closest('.modal').style.display = 'none';
             });
         });
-        
-        // New appointment button
-        document.getElementById('newAppointmentBtn').addEventListener('click', showNewAppointmentModal);
-    }
-});
 
-function renderAppointments(type, appointments) {
-    const container = document.getElementById(`${type}Appointments`);
-    if (!container) return;
-    
-    container.innerHTML = '';
-    
-    if (appointments.length === 0) {
-        container.innerHTML = '<p class="no-appointments">No appointments found</p>';
-        return;
-    }
-    
-    appointments.forEach(appointment => {
-        const appointmentCard = document.createElement('div');
-        appointmentCard.className = 'appointment-card';
-        appointmentCard.innerHTML = `
-            <div class="appointment-header">
-                <h4>${appointment.type}</h4>
-                <span class="status-badge ${appointment.status}">${appointment.status}</span>
-            </div>
-            <div class="appointment-details">
-                <p><i class="fas fa-calendar-day"></i> ${appointment.date} at ${appointment.time}</p>
-                <p><i class="fas fa-user-tie"></i> With ${appointment.with}</p>
-                ${appointment.notes ? `<p><i class="fas fa-sticky-note"></i> ${appointment.notes}</p>` : ''}
-            </div>
-            <div class="appointment-actions">
-                ${appointment.status === 'pending' ? `
-                    <button class="btn btn-outline cancel-appointment" data-id="${appointment.id}">Cancel</button>
-                ` : ''}
-                ${appointment.status === 'confirmed' ? `
-                    <button class="btn btn-primary start-call" data-id="${appointment.id}">
-                        <i class="fas fa-video"></i> Start Call
-                    </button>
-                ` : ''}
-            </div>
-        `;
-        
-        container.appendChild(appointmentCard);
-    });
-}
+        // Appointment form submission
+        document.getElementById('appointmentForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            this.handleAppointmentRequest();
+        });
 
-function showNewAppointmentModal() {
-    const modal = document.getElementById('appointmentModal');
-    
-    modal.innerHTML = `
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <div class="modal-header">
-                <h2>Request New Appointment</h2>
+        // Call controls
+        document.querySelector('.mic-btn').addEventListener('click', () => this.toggleMic());
+        document.querySelector('.video-btn').addEventListener('click', () => this.toggleCamera());
+        document.querySelector('.screen-btn').addEventListener('click', () => this.toggleScreenShare());
+        document.querySelector('.end-call-btn').addEventListener('click', () => this.endCall(false));
+
+        // Notification controls
+        document.getElementById('closeCallEndedNotification').addEventListener('click', () => {
+            document.getElementById('callEndedNotification').style.display = 'none';
+        });
+        document.querySelector('.close-notification-btn').addEventListener('click', () => {
+            document.getElementById('appointmentNotification').style.display = 'none';
+        });
+
+        // Incoming call controls
+        document.querySelector('.accept-call-btn').addEventListener('click', () => this.acceptIncomingCall());
+        document.querySelector('.reject-call-btn').addEventListener('click', () => this.rejectIncomingCall());
+
+        // Delegate appointment actions
+        document.getElementById('appointmentsList').addEventListener('click', (e) => {
+            if (e.target.closest('.start-call-btn')) {
+                const appointmentId = parseInt(e.target.closest('.start-call-btn').dataset.id);
+                this.startCall(appointmentId);
+            }
+            if (e.target.closest('.accept-appointment-btn')) {
+                const appointmentId = parseInt(e.target.closest('.accept-appointment-btn').dataset.id);
+                this.acceptAppointment(appointmentId);
+            }
+            if (e.target.closest('.reject-appointment-btn')) {
+                const appointmentId = parseInt(e.target.closest('.reject-appointment-btn').dataset.id);
+                this.rejectAppointment(appointmentId);
+            }
+        });
+
+        // Simulate incoming call for testing
+        setTimeout(() => this.simulateIncomingCall(), 10000);
+    }
+
+    renderAppointments() {
+        const container = document.getElementById('appointmentsList');
+        container.innerHTML = this.appointments.map(appointment => `
+            <div class="appointment-card ${appointment.status}">
+                <div class="appointment-header">
+                    <h3>${appointment.title}</h3>
+                    <span class="status-badge ${appointment.status}">${this.formatStatus(appointment.status)}</span>
+                </div>
+                <div class="appointment-details">
+                    <p><i class="fas fa-user"></i> ${appointment.officer} <span class="user-status ${appointment.officerOnline ? 'online' : 'offline'}">
+                        <i class="fas fa-circle"></i> ${appointment.officerOnline ? 'Online' : 'Offline'}
+                    </span></p>
+                    <p><i class="fas fa-calendar-alt"></i> ${this.formatDate(appointment.date)}</p>
+                    <p><i class="fas fa-clock"></i> ${this.formatTime(appointment.time)}</p>
+                    ${appointment.notes ? `<p><i class="fas fa-comment"></i> ${appointment.notes}</p>` : ''}
+                </div>
+                <div class="appointment-actions">
+                    ${this.renderAppointmentActions(appointment)}
+                </div>
             </div>
-            <div class="modal-body">
-                <form id="appointmentForm">
-                    <div class="form-group">
-                        <label for="appointmentType">Appointment Type*</label>
-                        <select id="appointmentType" required>
-                            <option value="">Select type</option>
-                            <option value="Career Guidance">Career Guidance</option>
-                            <option value="Report Clarification">Report Clarification</option>
-                            <option value="Internship Advice">Internship Advice</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="appointmentDate">Date*</label>
-                            <input type="date" id="appointmentDate" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="appointmentTime">Time*</label>
-                            <input type="time" id="appointmentTime" required>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="appointmentWith">With*</label>
-                        <select id="appointmentWith" required>
-                            <option value="">Select officer</option>
-                            <option value="Dr. Ahmed Mahmoud">Dr. Ahmed Mahmoud</option>
-                            <option value="Ms. Fatma Hassan">Ms. Fatma Hassan</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="appointmentNotes">Notes</label>
-                        <textarea id="appointmentNotes" rows="3"></textarea>
-                    </div>
-                    
-                    <div class="form-actions">
-                        <button type="button" class="btn btn-outline close-modal-btn">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Request Appointment</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    `;
-    
-    modal.style.display = 'block';
-    
-    // Close modal handlers
-    document.querySelector('.close-modal').addEventListener('click', () => {
-        modal.style.display = 'none';
-    });
-    
-    document.querySelector('.close-modal-btn').addEventListener('click', () => {
-        modal.style.display = 'none';
-    });
-    
-    // Form submission
-    document.getElementById('appointmentForm').addEventListener('submit', function(e) {
-        e.preventDefault();
+        `).join('');
+    }
+
+    renderAppointmentActions(appointment) {
+        switch(appointment.status) {
+            case 'confirmed':
+                return `<button class="btn btn-primary start-call-btn" data-id="${appointment.id}">
+                    <i class="fas fa-video"></i> Start Call
+                </button>`;
+            case 'pending':
+                return `
+                    <button class="btn btn-secondary">Edit</button>
+                    <button class="btn btn-danger">Cancel</button>
+                `;
+            case 'requires-action':
+                return `
+                    <button class="btn btn-primary accept-appointment-btn" data-id="${appointment.id}">Accept</button>
+                    <button class="btn btn-danger reject-appointment-btn" data-id="${appointment.id}">Decline</button>
+                `;
+            default:
+                return '';
+        }
+    }
+
+    async startCall(appointmentId) {
+        if (this.callInProgress) return;
         
-        const appointmentData = {
-            type: document.getElementById('appointmentType').value,
-            date: document.getElementById('appointmentDate').value,
-            time: document.getElementById('appointmentTime').value,
-            with: document.getElementById('appointmentWith').value,
-            notes: document.getElementById('appointmentNotes').value
+        const appointment = this.appointments.find(a => a.id === appointmentId);
+        if (!appointment) return;
+        
+        try {
+            this.currentCall = appointment;
+            this.callInProgress = true;
+            this.secondsElapsed = 0;
+            
+            // Update UI
+            document.getElementById('videoCallModal').style.display = 'flex';
+            document.getElementById('remoteUserName').textContent = appointment.officer;
+            document.getElementById('callTitle').textContent = appointment.title;
+            
+            // Start timers
+            this.startCallTimer();
+            this.scheduleCallEnd();
+            
+            // Simulate remote participant joining
+            setTimeout(() => {
+                this.showNotification('Call Connected', `${appointment.officer} has joined the call`);
+            }, 2000);
+            
+        } catch (error) {
+            console.error('Error starting call:', error);
+            this.showNotification('Call Failed', 'Could not start the video call');
+        }
+    }
+
+    acceptIncomingCall() {
+        document.getElementById('incomingCallNotification').style.display = 'none';
+        const caller = document.getElementById('incomingCallerName').textContent;
+        this.showNotification('Call Accepted', `You are now connected with ${caller}`);
+        // In real implementation, you would establish the call connection here
+    }
+
+    rejectIncomingCall() {
+        document.getElementById('incomingCallNotification').style.display = 'none';
+        this.showNotification('Call Rejected', 'You declined the incoming call');
+    }
+
+    simulateIncomingCall() {
+        const officers = ['Dr. Ahmed', 'Prof. Sarah', 'Mr. Mahmoud'];
+        const randomOfficer = officers[Math.floor(Math.random() * officers.length)];
+        document.getElementById('incomingCallerName').textContent = randomOfficer;
+        document.getElementById('incomingCallNotification').style.display = 'block';
+    }
+
+    acceptAppointment(appointmentId) {
+        const appointment = this.appointments.find(a => a.id === appointmentId);
+        if (!appointment) return;
+        
+        appointment.status = 'confirmed';
+        this.renderAppointments();
+        this.showNotification('Appointment Accepted', `You accepted the appointment with ${appointment.officer}`);
+    }
+
+    rejectAppointment(appointmentId) {
+        const appointment = this.appointments.find(a => a.id === appointmentId);
+        if (!appointment) return;
+        
+        appointment.status = 'cancelled';
+        this.renderAppointments();
+        this.showNotification('Appointment Declined', `You declined the appointment with ${appointment.officer}`);
+    }
+
+    handleAppointmentRequest() {
+        const type = document.getElementById('appointmentType').value;
+        const officer = document.getElementById('appointmentOfficer').value;
+        const date = document.getElementById('appointmentDate').value;
+        const time = document.getElementById('appointmentTime').value;
+        const notes = document.getElementById('appointmentNotes').value;
+        
+        const newAppointment = {
+            id: Date.now(),
+            title: type === 'career' ? 'Career Guidance' : 
+                  type === 'report' ? 'Report Review' : 'Internship Discussion',
+            officer,
+            date,
+            time,
+            type,
+            status: 'pending',
+            notes,
+            officerOnline: Math.random() > 0.5 // Random online status
         };
         
-        // In real app, would submit to backend
-        alert('Appointment requested successfully!');
-        modal.style.display = 'none';
-    });
+        this.appointments.push(newAppointment);
+        this.renderAppointments();
+        document.getElementById('requestAppointmentModal').style.display = 'none';
+        
+        // Simulate officer accepting appointment after delay
+        setTimeout(() => {
+            if (Math.random() > 0.3) { // 70% chance of acceptance
+                newAppointment.status = 'confirmed';
+                this.renderAppointments();
+                this.showNotification(
+                    'Appointment Confirmed', 
+                    `${officer} has accepted your appointment request`
+                );
+            }
+        }, 3000);
+    }
+
+    toggleMic() {
+        this.isMicOn = !this.isMicOn;
+        const micBtn = document.querySelector('.mic-btn');
+        const icon = micBtn.querySelector('i');
+        
+        micBtn.classList.toggle('active', this.isMicOn);
+        icon.classList.toggle('fa-microphone-slash', !this.isMicOn);
+        icon.classList.toggle('fa-microphone', this.isMicOn);
+    }
+
+    toggleCamera() {
+        this.isCameraOn = !this.isCameraOn;
+        const cameraBtn = document.querySelector('.video-btn');
+        const icon = cameraBtn.querySelector('i');
+        
+        cameraBtn.classList.toggle('active', this.isCameraOn);
+        icon.classList.toggle('fa-video-slash', !this.isCameraOn);
+        icon.classList.toggle('fa-video', this.isCameraOn);
+    }
+
+    async toggleScreenShare() {
+        if (this.isSharingScreen) {
+            this.isSharingScreen = false;
+            document.querySelector('.screen-btn').classList.remove('active');
+        } else {
+            try {
+                // This would actually share screen in a real implementation
+                this.isSharingScreen = true;
+                document.querySelector('.screen-btn').classList.add('active');
+                this.showNotification('Screen Sharing', 'You started sharing your screen');
+            } catch (error) {
+                console.error('Error sharing screen:', error);
+            }
+        }
+    }
+
+    startCallTimer() {
+        this.callTimer = setInterval(() => {
+            this.secondsElapsed++;
+            const minutes = Math.floor(this.secondsElapsed / 60);
+            const seconds = this.secondsElapsed % 60;
+            document.querySelector('.call-timer').textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }, 1000);
+    }
+
+    scheduleCallEnd() {
+        
+        this.callDurationTimer = setTimeout(() => {
+            this.endCall(true); // Ended by other participant
+        }, 10000);
+    }
+
+    endCall(endedByOther) {
+        if (!this.callInProgress) return;
+        
+        clearInterval(this.callTimer);
+        clearTimeout(this.callDurationTimer);
+        
+        document.getElementById('videoCallModal').style.display = 'none';
+        this.callInProgress = false;
+        this.isSharingScreen = false;
+        
+        if (endedByOther && this.currentCall) {
+            const message = `${this.currentCall.officer} has left the call`;
+            document.getElementById('callEndedMessage').textContent = message;
+            document.getElementById('callEndedNotification').style.display = 'block';
+        }
+    }
+
+    showNotification(title, message) {
+        document.getElementById('notificationTitle').textContent = title;
+        document.getElementById('notificationMessage').textContent = message;
+        document.getElementById('appointmentNotification').style.display = 'block';
+        
+        setTimeout(() => {
+            document.getElementById('appointmentNotification').style.display = 'none';
+        }, 5000);
+    }
+
+    formatDate(dateString) {
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return new Date(dateString).toLocaleDateString(undefined, options);
+    }
+
+    formatTime(timeString) {
+        const [hours, minutes] = timeString.split(':');
+        const hour = parseInt(hours);
+        const ampm = hour >= 12 ? 'PM' : 'AM';
+        const displayHour = hour % 12 || 12;
+        return `${displayHour}:${minutes} ${ampm}`;
+    }
+
+    formatStatus(status) {
+        const statusMap = {
+            'confirmed': 'Confirmed',
+            'pending': 'Pending',
+            'requires-action': 'Action Required',
+            'cancelled': 'Cancelled'
+        };
+        return statusMap[status] || status;
+    }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    new AppointmentSystem();
+});

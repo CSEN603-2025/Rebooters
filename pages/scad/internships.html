@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Internships | SCAD System</title>
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <img src="../../assets/images/guc-logo.png" alt="SCAD Logo" class="logo">
+                <span class="system-name">GUC Internship System</span>
+            </div>
+            <div class="nav-menu">
+                <a href="notifications.html" class="nav-link"><i class="fas fa-bell"></i><span class="notification-badge">5</span></a>
+                <a href="#" class="nav-link logout-btn" id="logout-btn"><i class="fas fa-sign-out-alt"></i></a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="user-profile">
+                <img src="../../assets/images/guc-logo.png" alt="Admin Avatar" class="avatar">
+                <div class="profile-status">
+                    <span class="status-badge admin">SCAD Office</span>
+                </div>
+                <h3>Admin User</h3>
+                <p>System Administrator</p>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="dashboard.html" ><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="companies.html" ><i class="fas fa-building"></i> Company Applications</a></li>
+                    <li><a href="students.html"><i class="fas fa-users"></i> Student Management</a></li>
+                    <li><a href="reports.html"><i class="fas fa-file-alt"></i> Internship Reports</a></li>
+                    <li><a href="appointments.html"><i class="fas fa-calendar-alt"></i> Appointments</a></li>
+                    <li><a href="internships.html" class="active"><i class="fas fa-briefcase"></i> Available Internships</a></li>
+                    <li><a href="workshops.html"><i class="fas fa-chalkboard-teacher"></i> Workshops</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="dashboard-header">
+                <h1>Manage Internships</h1>
+                <div class="header-actions">
+                    <button class="btn btn-primary" id="add-internship-btn"><i class="fas fa-plus"></i> Add New</button>
+                </div>
+            </div>
+
+            <!-- Filter Controls -->
+            <div class="filter-controls">
+                <div class="search-group">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="internship-search" class="form-control" placeholder="Search by company or job title...">
+                </div>
+                
+                <div class="filter-group">
+                    <label for="industry-filter">Industry:</label>
+                    <select id="industry-filter" class="form-control">
+                        <option value="all">All Industries</option>
+                        <option value="Technology">Technology</option>
+                        <option value="Finance">Finance</option>
+                        <option value="Healthcare">Healthcare</option>
+                        <option value="Engineering">Engineering</option>
+                        <option value="Business">Business</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="duration-filter">Duration:</label>
+                    <select id="duration-filter" class="form-control">
+                        <option value="all">Any Duration</option>
+                        <option value="1-3">1-3 months</option>
+                        <option value="3-6">3-6 months</option>
+                        <option value="6+">6+ months</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="payment-filter">Payment:</label>
+                    <select id="payment-filter" class="form-control">
+                        <option value="all">All</option>
+                        <option value="paid">Paid</option>
+                        <option value="unpaid">Unpaid</option>
+                    </select>
+                </div>
+                
+                <button class="btn btn-secondary" id="reset-filters">
+                    <i class="fas fa-undo"></i> Reset
+                </button>
+            </div>
+
+            <div class="dashboard-section">
+                <div class="table-responsive">
+                    <table class="internships-table" id="internships-table">
+                        <thead>
+                            <tr>
+                                <th class="col-company">Company</th>
+                                <th class="col-title">Job Title</th>
+                                <th class="col-industry">Industry</th>
+                                <th class="col-duration">Duration</th>
+                                <th class="col-payment">Payment</th>
+                                <th class="col-status">Status</th>
+                                <th class="col-actions">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Sample internship listings -->
+                            <tr data-id="1" data-industry="Technology" data-duration="3-6" data-payment="paid" data-status="active">
+                                <td>Tech Solutions Inc.</td>
+                                <td>Software Developer Intern</td>
+                                <td>Technology</td>
+                                <td>4 months</td>
+                                <td><span class="payment-badge paid">Paid</span></td>
+                                <td><span class="status-badge active">Active</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary btn-view">
+                                        <i class="fas fa-eye"></i> View
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr data-id="2" data-industry="Finance" data-duration="1-3" data-payment="unpaid" data-status="active">
+                                <td>Global Finance Corp</td>
+                                <td>Financial Analyst Intern</td>
+                                <td>Finance</td>
+                                <td>2 months</td>
+                                <td><span class="payment-badge unpaid">Unpaid</span></td>
+                                <td><span class="status-badge active">Active</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary btn-view">
+                                        <i class="fas fa-eye"></i> View
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr data-id="3" data-industry="Healthcare" data-duration="6+" data-payment="paid" data-status="active">
+                                <td>MediCare Solutions</td>
+                                <td>Healthcare Admin Intern</td>
+                                <td>Healthcare</td>
+                                <td>8 months</td>
+                                <td><span class="payment-badge paid">$1,200/mo</span></td>
+                                <td><span class="status-badge active">Active</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary btn-view">
+                                        <i class="fas fa-eye"></i> View
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination">
+                    <button class="btn btn-secondary" disabled>Previous</button>
+                    <span class="page-info">Page 1 of 3</span>
+                    <button class="btn btn-secondary">Next</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Internship Details Modal -->
+    <div class="modal" id="internship-details-modal">
+        <div class="modal-content" style="max-width: 800px;">
+            <div class="modal-header">
+                <h3 id="modal-internship-title">Internship Details</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="internship-details-grid">
+                    <div class="company-info">
+                        <h4>Company Information</h4>
+                        <div class="detail-section">
+                            <span class="detail-label">Company Name:</span>
+                            <span class="detail-value" id="detail-company-name">Tech Solutions Inc.</span>
+                        </div>
+                        <div class="detail-section">
+                            <span class="detail-label">Industry:</span>
+                            <span class="detail-value" id="detail-industry">Technology</span>
+                        </div>
+                        <div class="detail-section">
+                            <span class="detail-label">Company Size:</span>
+                            <span class="detail-value" id="detail-company-size">500+ employees</span>
+                        </div>
+                    </div>
+                    
+                    <div class="internship-info">
+                        <h4>Internship Details</h4>
+                        <div class="detail-section">
+                            <span class="detail-label">Job Title:</span>
+                            <span class="detail-value" id="detail-job-title">Software Developer Intern</span>
+                        </div>
+                        <div class="detail-section">
+                            <span class="detail-label">Duration:</span>
+                            <span class="detail-value" id="detail-duration">4 months (June - September)</span>
+                        </div>
+                        <div class="detail-section">
+                            <span class="detail-label">Compensation:</span>
+                            <span class="detail-value" id="detail-payment">$1,500 per month</span>
+                        </div>
+                        <div class="detail-section">
+                            <span class="detail-label">Status:</span>
+                            <span class="detail-value"><span class="status-badge active">Active</span></span>
+                        </div>
+                    </div>
+                    
+                    <div class="requirements-info">
+                        <h4>Requirements</h4>
+                        <div class="detail-section">
+                            <span class="detail-label">Skills Required:</span>
+                            <div class="skills-list" id="detail-skills">
+                                <span class="skill-badge">JavaScript</span>
+                                <span class="skill-badge">React</span>
+                                <span class="skill-badge">HTML/CSS</span>
+                                <span class="skill-badge">Git</span>
+                            </div>
+                        </div>
+                        <div class="detail-section">
+                            <span class="detail-label">Education Level:</span>
+                            <span class="detail-value" id="detail-education">Bachelor's degree in progress</span>
+                        </div>
+                    </div>
+                    
+                    <div class="application-info">
+                        <h4>Application Details</h4>
+                        <div class="detail-section">
+                            <span class="detail-label">Applications Received:</span>
+                            <span class="detail-value" id="detail-applications">24</span>
+                        </div>
+                        <div class="detail-section">
+                            <span class="detail-label">Positions Available:</span>
+                            <span class="detail-value" id="detail-positions">5</span>
+                        </div>
+                        <div class="detail-section">
+                            <span class="detail-label">Deadline:</span>
+                            <span class="detail-value" id="detail-deadline">May 15, 2023</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="description-section">
+                    <h4>Job Description</h4>
+                    <div class="detail-value" id="detail-description">
+                        <p>We are seeking a motivated Software Developer Intern to join our engineering team. You will work on real projects, collaborating with our senior developers to build and maintain web applications using modern JavaScript frameworks.</p>
+                        <p><strong>Responsibilities:</strong></p>
+                        <ul>
+                            <li>Develop and maintain front-end components using React</li>
+                            <li>Collaborate with UX designers to implement responsive interfaces</li>
+                            <li>Write clean, maintainable code with unit tests</li>
+                            <li>Participate in code reviews and team meetings</li>
+                        </ul>
+                        <p><strong>Learning Opportunities:</strong></p>
+                        <ul>
+                            <li>Mentorship from senior engineers</li>
+                            <li>Exposure to full software development lifecycle</li>
+                            <li>Opportunity to contribute to open source projects</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary close-modal">Close</button>
+                <button class="btn btn-primary" id="btn-edit-internship"><i class="fas fa-edit"></i> Edit Listing</button>
+                <button class="btn btn-danger" id="btn-deactivate-internship"><i class="fas fa-times"></i> Deactivate</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const searchInput = document.getElementById('internship-search');
+            const industryFilter = document.getElementById('industry-filter');
+            const durationFilter = document.getElementById('duration-filter');
+            const paymentFilter = document.getElementById('payment-filter');
+            const resetBtn = document.getElementById('reset-filters');
+            const internshipsTable = document.getElementById('internships-table');
+            const rows = internshipsTable.querySelectorAll('tbody tr');
+            const viewButtons = document.querySelectorAll('.btn-view');
+            const modal = document.getElementById('internship-details-modal');
+            const closeModalBtns = document.querySelectorAll('.close-modal');
+            
+            // Sample internship data (in real app, this would come from backend)
+            const internshipsData = {
+                1: {
+                    company: "Tech Solutions Inc.",
+                    title: "Software Developer Intern",
+                    industry: "Technology",
+                    duration: "4 months (June - September)",
+                    payment: "$1,500 per month",
+                    status: "active",
+                    companySize: "500+ employees",
+                    skills: ["JavaScript", "React", "HTML/CSS", "Git"],
+                    education: "Bachelor's degree in progress",
+                    applications: 24,
+                    positions: 5,
+                    deadline: "May 15, 2023",
+                    description: `<p>We are seeking a motivated Software Developer Intern to join our engineering team. You will work on real projects, collaborating with our senior developers to build and maintain web applications using modern JavaScript frameworks.</p>
+                    <p><strong>Responsibilities:</strong></p>
+                    <ul>
+                        <li>Develop and maintain front-end components using React</li>
+                        <li>Collaborate with UX designers to implement responsive interfaces</li>
+                        <li>Write clean, maintainable code with unit tests</li>
+                        <li>Participate in code reviews and team meetings</li>
+                    </ul>
+                    <p><strong>Learning Opportunities:</strong></p>
+                    <ul>
+                        <li>Mentorship from senior engineers</li>
+                        <li>Exposure to full software development lifecycle</li>
+                        <li>Opportunity to contribute to open source projects</li>
+                    </ul>`
+                },
+                2: {
+                    company: "Global Finance Corp",
+                    title: "Financial Analyst Intern",
+                    industry: "Finance",
+                    duration: "2 months (July - August)",
+                    payment: "Unpaid",
+                    status: "active",
+                    companySize: "1000+ employees",
+                    skills: ["Excel", "Financial Modeling", "Data Analysis"],
+                    education: "Finance or Economics major preferred",
+                    applications: 18,
+                    positions: 3,
+                    deadline: "June 1, 2023",
+                    description: `<p>Our Financial Analyst Internship provides hands-on experience in corporate finance. Interns will work with our financial planning team to analyze market trends and prepare reports.</p>
+                    <p><strong>Responsibilities:</strong></p>
+                    <ul>
+                        <li>Assist in financial forecasting and budgeting</li>
+                        <li>Prepare monthly financial reports</li>
+                        <li>Analyze financial data and create models</li>
+                        <li>Support ad-hoc financial projects</li>
+                    </ul>`
+                }
+            };
+            
+            // Filter internships
+            function filterInternships() {
+                const searchTerm = searchInput.value.toLowerCase();
+                const industryValue = industryFilter.value;
+                const durationValue = durationFilter.value;
+                const paymentValue = paymentFilter.value;
+                
+                rows.forEach(row => {
+                    const company = row.cells[0].textContent.toLowerCase();
+                    const title = row.cells[1].textContent.toLowerCase();
+                    const industry = row.getAttribute('data-industry');
+                    const duration = row.getAttribute('data-duration');
+                    const payment = row.getAttribute('data-payment');
+                    
+                    const matchesSearch = company.includes(searchTerm) || title.includes(searchTerm);
+                    const matchesIndustry = industryValue === 'all' || industry === industryValue;
+                    const matchesDuration = durationValue === 'all' || duration === durationValue;
+                    const matchesPayment = paymentValue === 'all' || payment === paymentValue;
+                    
+                    if (matchesSearch && matchesIndustry && matchesDuration && matchesPayment) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Load internship details into modal
+            function loadInternshipDetails(internshipId) {
+                const internship = internshipsData[internshipId];
+                if (!internship) return;
+                
+                // Update modal title
+                document.getElementById('modal-internship-title').textContent = internship.title;
+                
+                // Update company info
+                document.getElementById('detail-company-name').textContent = internship.company;
+                document.getElementById('detail-industry').textContent = internship.industry;
+                document.getElementById('detail-company-size').textContent = internship.companySize;
+                
+                // Update internship info
+                document.getElementById('detail-job-title').textContent = internship.title;
+                document.getElementById('detail-duration').textContent = internship.duration;
+                document.getElementById('detail-payment').textContent = internship.payment;
+                
+                // Update requirements
+                document.getElementById('detail-education').textContent = internship.education;
+                const skillsContainer = document.getElementById('detail-skills');
+                skillsContainer.innerHTML = '';
+                internship.skills.forEach(skill => {
+                    const badge = document.createElement('span');
+                    badge.className = 'skill-badge';
+                    badge.textContent = skill;
+                    skillsContainer.appendChild(badge);
+                });
+                
+                // Update application info
+                document.getElementById('detail-applications').textContent = internship.applications;
+                document.getElementById('detail-positions').textContent = internship.positions;
+                document.getElementById('detail-deadline').textContent = internship.deadline;
+                
+                // Update description
+                document.getElementById('detail-description').innerHTML = internship.description;
+                
+                // Open modal
+                modal.style.display = 'flex';
+            }
+            
+            // Event listeners for filters
+            searchInput.addEventListener('input', filterInternships);
+            industryFilter.addEventListener('change', filterInternships);
+            durationFilter.addEventListener('change', filterInternships);
+            paymentFilter.addEventListener('change', filterInternships);
+            
+            // Reset all filters
+            resetBtn.addEventListener('click', function() {
+                searchInput.value = '';
+                industryFilter.value = 'all';
+                durationFilter.value = 'all';
+                paymentFilter.value = 'all';
+                filterInternships();
+            });
+            
+            // View internship details
+            viewButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const internshipId = this.closest('tr').getAttribute('data-id');
+                    loadInternshipDetails(internshipId);
+                });
+            });
+            
+            // Row click to view details
+            rows.forEach(row => {
+                row.addEventListener('click', function(e) {
+                    // Don't trigger if clicking on a button
+                    if (!e.target.closest('button')) {
+                        const internshipId = this.getAttribute('data-id');
+                        loadInternshipDetails(internshipId);
+                    }
+                });
+            });
+            
+            // Close modal
+            closeModalBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    modal.style.display = 'none';
+                });
+            });
+            
+            // Close modal when clicking outside
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+            
+            // Initial filter
+            filterInternships();
+        });
+    </script>
+    <script src="../assets/js/auth.js"></script>
+    <!-- Logout Confirmation Modal -->
+<div class="modal" id="logout-modal">
+    <div class="modal-content" style="max-width: 400px;">
+        <div class="modal-header">
+            <h3>Confirm Logout</h3>
+            <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p>Are you sure you want to log out?</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" id="cancel-logout">Cancel</button>
+            <button class="btn btn-danger" id="confirm-logout">Log Out</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>

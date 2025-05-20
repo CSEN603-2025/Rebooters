@@ -248,3 +248,254 @@
     padding-top: 1.5rem;
     border-top: 1px solid var(--gray-light);
 }
+/* Workshops Table Styles */
+.workshops-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 0.9em;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.workshops-table thead tr {
+    background-color: #bc1313;
+    color: white;
+    text-align: left;
+}
+
+.workshops-table th,
+.workshops-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.workshops-table th {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.8em;
+    letter-spacing: 0.5px;
+}
+
+.workshops-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.workshops-table tbody tr:hover {
+    background-color: #f5f7fa;
+    cursor: pointer;
+}
+
+.workshops-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Workshop Details in Table Cells */
+.workshop-name {
+    font-weight: 600;
+    color: #bc0606;
+    margin-bottom: 5px;
+}
+
+.workshop-description {
+    color: #666;
+    font-size: 0.85em;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.workshop-date {
+    font-weight: 500;
+    color: #2c3e50;
+}
+
+.workshop-time {
+    color: #666;
+    font-size: 0.85em;
+}
+
+/* Status Badges */
+.status-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.75em;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-badge.upcoming {
+    background-color: #e3f2fd;
+    color: #1976d2;
+    border: 1px solid #45a1fe;
+}
+
+.status-badge.ongoing {
+    background-color: #fff8e1;
+    color: #ff8f00;
+    border: 1px solid #ffb656;
+}
+
+.status-badge.completed {
+    background-color: #e8f5e9;
+    color: #388e3c;
+}
+
+/* Action Buttons */
+.btn-view-workshop,
+.btn-edit-workshop {
+    padding: 5px 10px;
+    margin-right: 5px;
+    font-size: 0.8em;
+}
+
+.btn-view-workshop {
+    background-color: #353637;
+    color: #ffffff;
+    border: 1px solid #5c5f6200;
+}
+
+.btn-edit-workshop {
+    background-color: #353637;
+    color: #ffffff;
+    border: 1px solid #5c5f6200;
+}
+
+.btn-view-workshop:hover {
+    background-color: #db1111;
+}
+
+.btn-edit-workshop:hover {
+    background-color: #db1111;
+}
+
+/* No Results Message */
+.no-results {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+    font-style: italic;
+}
+/* Red & White Themed Job Posts Table */
+.job-posts-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 20px 0;
+    font-size: 0.9em;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px #e0e0e0;
+}
+
+.job-posts-table thead tr {
+    background-color: #d81919; /* Dark red */
+    color: white;
+    text-align: left;
+}
+
+.job-posts-table th {
+    padding: 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.8em;
+    letter-spacing: 0.5px;
+}
+
+.job-posts-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #f5f5f5;
+}
+
+.job-posts-table tbody tr:hover {
+    background-color: #c8c8c8; /* Light red */
+}
+
+/* Status Badges - Red Theme */
+.status-badge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 12px;
+    font-size: 0.75em;
+    font-weight: 600;
+    text-transform: uppercase;
+    
+}
+
+.status-badge.active {
+    background-color: #b4e9b0;
+    color: #ffffff;
+}
+
+.status-badge.draft {
+    background-color: #fff3e0;
+    color: #e64a19;
+}
+
+.status-badge.closed {
+    background-color: #f5f5f5;
+    color: #9e9e9e;
+    border: 1px solid #e0e0e0;
+}
+
+/* Action Buttons - Red Theme */
+.job-posts-table .btn {
+    padding: 6px 12px;
+    margin-right: 5px;
+    font-size: 0.8em;
+    border-radius: 4px;
+    transition: all 0.2s;
+    border: none;
+}
+
+.job-posts-table .btn-primary {
+    background-color: #d81919;
+    color: white;
+}
+
+.job-posts-table .btn-secondary {
+    background-color: white;
+    color: #d81919;
+    border: 1px solid #d81919;
+}
+
+.job-posts-table .btn-danger {
+    background-color: #d81919;
+    color: white;
+}
+
+.job-posts-table .btn-primary:hover {
+    background-color: #d81919;
+}
+
+.job-posts-table .btn-secondary:hover {
+    background-color: #ffebee;
+}
+
+/* Highlight important columns */
+.job-posts-table td:nth-child(1) { /* Job Title */
+    font-weight: 600;
+    color: #d81919;
+}
+
+.job-posts-table td:nth-child(4) { /* Applications */
+    font-weight: 600;
+    text-align: center;
+}
+
+/* Responsive Table */
+@media (max-width: 768px) {
+    .job-posts-table {
+        display: block;
+        overflow-x: auto;
+    }
+    
+    .job-posts-table th, 
+    .job-posts-table td {
+        padding: 10px;
+    }
+}

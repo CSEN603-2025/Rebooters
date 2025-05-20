@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assessments | GUC Internship System</title>
+    <link rel="stylesheet" href="..\..\assets\css\style.css">
+    <link rel="stylesheet" href="..\..\assets\css\dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Assessment Specific Styles */
+        .assessment-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: transform 0.2s;
+        }
+
+        .assessment-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .assessment-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .assessment-card-body {
+            margin-bottom: 15px;
+        }
+
+        .assessment-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .assessment-status {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-available {
+            background-color: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .status-completed {
+            background-color: #e8f5e9;
+            color: #388e3c;
+        }
+
+        .status-pending {
+            background-color: #fff8e1;
+            color: #ffa000;
+        }
+
+        .assessment-score {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .score-excellent {
+            color: #388e3c;
+        }
+
+        .score-good {
+            color: #1976d2;
+        }
+
+        .score-fair {
+            color: #ffa000;
+        }
+
+        .score-poor {
+            color: #d32f2f;
+        }
+
+        /* Assessment Modal Styles */
+        .assessment-modal {
+            max-width: 800px;
+            width: 90%;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .assessment-modal-header {
+            padding: 15px 20px;
+            background: #d40000;
+            color: white;
+        }
+
+        .assessment-modal-body {
+            padding: 20px;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .assessment-question {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .assessment-question:last-child {
+            border-bottom: none;
+        }
+
+        .question-text {
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .question-options {
+            margin-left: 20px;
+        }
+
+        .option-item {
+            margin-bottom: 8px;
+        }
+
+        .option-item input {
+            margin-right: 10px;
+        }
+
+        /* Results Modal Styles */
+        .results-modal {
+            max-width: 600px;
+            width: 90%;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .results-modal-header {
+            padding: 15px 20px;
+            background: #d40000;
+            color: white;
+        }
+
+        .results-modal-body {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .results-score {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .results-feedback {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .results-details {
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Profile Sharing Toggle */
+        .share-toggle {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+            justify-content: center;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+            margin: 0 10px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: #d40000;
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+
+        /* Timer Styles */
+        .assessment-timer {
+            background: #f8f9fa;
+            padding: 10px 15px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .timer-warning {
+            color: #ffa000;
+        }
+
+        .timer-critical {
+            color: #d32f2f;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0.5; }
+        }
+
+        /* Notification Toast */
+        .notification-toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 300px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+            display: none;
+        }
+        
+        .notification-header {
+            padding: 10px 15px;
+            background: #d40000;
+            color: white;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .notification-body {
+            padding: 15px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <img src="..\..\assets\images\guc-logo.png" alt="GUC Logo" class="logo">
+                <span class="system-name">GUC Internship System</span>
+            </div>
+            <div class="nav-menu">
+                <a href="notifications.html" class="nav-link"><i class="fas fa-bell"></i></a>
+                <a href="#" class="nav-link logout-btn" id="logout-btn"><i class="fas fa-sign-out-alt"></i></a>
+            </div>
+            <div class="hamburger-menu">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </div>
+    </nav>
+    <!-- Dashboard Layout -->
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="user-profile">
+                <img src="..\..\assets\images\default-avatar.png" alt="Student Avatar" class="avatar">
+                <div class="profile-status">
+                    <span class="status-badge student">Student</span>
+                    <span class="pro-badge" id="pro-badge">PRO</span>
+                </div>
+                <h3>Farah Mokhtar</h3>
+                <p>Business Informatics</p>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="internships.html"><i class="fas fa-briefcase"></i> Internships</a></li>
+                    <li><a href="applications.html"><i class="fas fa-file-alt"></i> My Applications</a></li>
+                    <li><a href="reports.html"><i class="fas fa-clipboard-list"></i> Reports</a></li>
+                    <li class="pro-feature"><a href="appointments.html"><i class="fas fa-calendar-check"></i> Appointments</a></li>
+                    <li class="pro-feature"><a href="assessments.html" class="active"><i class="fas fa-tasks"></i> Assessments</a></li>
+                    <li class="pro-feature"><a href="workshops.html"><i class="fas fa-chalkboard-teacher"></i> Workshops</a></li>
+                    <li><a href="profile.html"><i class="fas fa-user-edit"></i> Profile</a></li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <main class="main-content">
+            <div class="dashboard-header">
+                <h1>Online Assessments</h1>
+                <div class="header-actions">
+                    <button class="btn btn-secondary" id="viewCompletedBtn">
+                        <i class="fas fa-check-circle"></i> My Completed Assessments
+                    </button>
+                </div>
+            </div>
+
+            <div class="dashboard-section">
+                <div class="filter-controls">
+                    <div class="search-group">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="assessmentSearch" class="form-control" placeholder="Search assessments...">
+                    </div>
+                    <div class="filter-group">
+                        <label for="categoryFilter">Filter:</label>
+                        <select id="categoryFilter" class="form-control">
+                            <option value="all">All Categories</option>
+                            <option value="technical">Technical Skills</option>
+                            <option value="language">Language Proficiency</option>
+                            <option value="soft-skills">Soft Skills</option>
+                            <option value="career">Career Readiness</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="assessments-list" id="assessmentsList">
+                    <!-- Assessments will be loaded here -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Assessment Modal -->
+    <div class="modal" id="assessmentModal" style="display:none;">
+        <div class="modal-content assessment-modal">
+            <span class="close-modal">&times;</span>
+            <div class="assessment-modal-header">
+                <h2 id="assessmentModalTitle">Assessment</h2>
+                <div id="assessmentTimer" class="assessment-timer">Time: 30:00</div>
+            </div>
+            <div class="assessment-modal-body">
+                <form id="assessmentForm">
+                    <!-- Questions will be loaded here -->
+                </form>
+            </div>
+            <div class="modal-footer" style="padding: 15px 20px; background: #f8f9fa; border-top: 1px solid #eee;">
+                <button class="btn btn-secondary" id="cancelAssessmentBtn">Cancel</button>
+                <button class="btn btn-primary" id="submitAssessmentBtn">Submit Assessment</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Modal -->
+    <div class="modal" id="resultsModal" style="display:none;">
+        <div class="modal-content results-modal">
+            <span class="close-modal">&times;</span>
+            <div class="results-modal-header">
+                <h2>Assessment Results</h2>
+            </div>
+            <div class="results-modal-body">
+                <h3 id="resultsAssessmentTitle">Assessment Title</h3>
+                
+                <div class="results-score" id="resultsScoreDisplay">85%</div>
+                
+                <div class="results-feedback" id="resultsFeedback">
+                    Great job! You scored above average on this assessment.
+                </div>
+                
+                <div class="results-details">
+                    <div class="result-item">
+                        <span>Questions:</span>
+                        <span id="resultsTotalQuestions">20</span>
+                    </div>
+                    <div class="result-item">
+                        <span>Correct Answers:</span>
+                        <span id="resultsCorrectAnswers">17</span>
+                    </div>
+                    <div class="result-item">
+                        <span>Time Taken:</span>
+                        <span id="resultsTimeTaken">24:35</span>
+                    </div>
+                    <div class="result-item">
+                        <span>Date Completed:</span>
+                        <span id="resultsDateCompleted">May 15, 2025</span>
+                    </div>
+                </div>
+                
+                <div class="share-toggle">
+                    <span>Share on my profile:</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="shareResultsToggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer" style="padding: 15px 20px; background: #f8f9fa; border-top: 1px solid #eee;">
+                <button class="btn btn-primary" id="closeResultsBtn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div class="notification-toast" id="notificationToast">
+        <div class="notification-header">
+            <h4 id="notificationTitle">Notification</h4>
+            <button class="notification-close">&times;</button>
+        </div>
+        <div class="notification-body">
+            <p id="notificationMessage"></p>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // DOM Elements
+        const assessmentsList = document.getElementById('assessmentsList');
+        const assessmentSearch = document.getElementById('assessmentSearch');
+        const categoryFilter = document.getElementById('categoryFilter');
+        const viewCompletedBtn = document.getElementById('viewCompletedBtn');
+        const assessmentModal = document.getElementById('assessmentModal');
+        const resultsModal = document.getElementById('resultsModal');
+        const notificationToast = document.getElementById('notificationToast');
+        
+        // Assessment data
+        let assessments = [
+            {
+                id: 1,
+                title: "Technical Skills Assessment",
+                description: "Evaluate your programming and technical knowledge in various domains.",
+                category: "technical",
+                duration: 30, // minutes
+                questions: 20,
+                status: "available",
+                completed: false,
+                score: null,
+                dateCompleted: null,
+                timeTaken: null,
+                questionsData: [
+                    {
+                        id: 1,
+                        question: "What does HTML stand for?",
+                        options: [
+                            "Hyper Text Markup Language",
+                            "Home Tool Markup Language",
+                            "Hyperlinks and Text Markup Language",
+                            "Hyper Text Makeup Language"
+                        ],
+                        correctAnswer: 0
+                    },
+                    {
+                        id: 2,
+                        question: "Which of these is NOT a JavaScript data type?",
+                        options: [
+                            "String",
+                            "Boolean",
+                            "Number",
+                            "Float"
+                        ],
+                        correctAnswer: 3
+                    },
+                    {
+                        id: 3,
+                        question: "What does CSS stand for?",
+                        options: [
+                            "Computer Style Sheets",
+                            "Creative Style Sheets",
+                            "Cascading Style Sheets",
+                            "Colorful Style Sheets"
+                        ],
+                        correctAnswer: 2
+                    },
+                    {
+                        id: 4,
+                        question: "Which symbol is used for single line comments in JavaScript?",
+                        options: [
+                            "//",
+                            "/*",
+                            "#",
+                            "--"
+                        ],
+                        correctAnswer: 0
+                    }
+                ]
+            },
+            {
+                id: 2,
+                title: "English Language Proficiency",
+                description: "Test your English language skills in reading, writing and comprehension.",
+                category: "language",
+                duration: 45,
+                questions: 30,
+                status: "available",
+                completed: false,
+                score: null,
+                dateCompleted: null,
+                timeTaken: null,
+                questionsData: [
+                    {
+                        id: 1,
+                        question: "Which sentence is grammatically correct?",
+                        options: [
+                            "She don't like apples.",
+                            "She doesn't likes apples.",
+                            "She doesn't like apples.",
+                            "She not like apples."
+                        ],
+                        correctAnswer: 2
+                    },
+                    {
+                        id: 2,
+                        question: "What is the synonym of 'happy'?",
+                        options: [
+                            "Sad",
+                            "Joyful",
+                            "Angry",
+                            "Tired"
+                        ],
+                        correctAnswer: 1
+                    }
+                ]
+            },
+            {
+                id: 3,
+                title: "Communication Skills Evaluation",
+                description: "Assess your interpersonal and professional communication abilities.",
+                category: "soft-skills",
+                duration: 25,
+                questions: 15,
+                status: "completed",
+                completed: true,
+                score: 85,
+                dateCompleted: "2025-05-10T14:30:00",
+                timeTaken: "18:24",
+                questionsData: [
+                    {
+                        id: 1,
+                        question: "When is the best time to provide constructive feedback?",
+                        options: [
+                            "Immediately after noticing the issue",
+                            "At the end of the workday",
+                            "During a scheduled one-on-one meeting",
+                            "In front of the whole team"
+                        ],
+                        correctAnswer: 2
+                    },
+                    {
+                        id: 2,
+                        question: "What is the most important aspect of active listening?",
+                        options: [
+                            "Thinking about your response while the other person is talking",
+                            "Maintaining eye contact and nodding occasionally",
+                            "Paraphrasing what the speaker said to ensure understanding",
+                            "Asking questions as soon as they come to mind"
+                        ],
+                        correctAnswer: 2
+                    }
+                ]
+            },
+            {
+                id: 4,
+                title: "Career Readiness Assessment",
+                description: "Evaluate your preparedness for the professional work environment.",
+                category: "career",
+                duration: 35,
+                questions: 25,
+                status: "available",
+                completed: false,
+                score: null,
+                dateCompleted: null,
+                timeTaken: null,
+                questionsData: [
+                    {
+                        id: 1,
+                        question: "What is the most important thing to research before a job interview?",
+                        options: [
+                            "The company's stock price",
+                            "The company's mission, values, and recent news",
+                            "The interviewer's personal life",
+                            "The office location and parking situation"
+                        ],
+                        correctAnswer: 1
+                    },
+                    {
+                        id: 2,
+                        question: "When should you send a thank-you note after an interview?",
+                        options: [
+                            "Within 24 hours",
+                            "Within 3 days",
+                            "Only if you get the job",
+                            "Within 1 week"
+                        ],
+                        correctAnswer: 0
+                    }
+                ]
+            }
+        ];
+
+        // Current assessment being taken
+        let currentAssessment = null;
+        let timerInterval = null;
+        let timeRemaining = 0;
+        let startTime = null;
+
+        // Initialize the application
+        function init() {
+            renderAssessments(assessments);
+            setupEventListeners();
+            
+            // Show initial notifications
+            setTimeout(() => {
+                showNotification(
+                    "New Assessments Available", 
+                    "You have 3 new assessments to complete this month",
+                    "info"
+                );
+            }, 1000);
+        }
+
+        // Render assessments to the list
+        function renderAssessments(assessmentsToRender) {
+            assessmentsList.innerHTML = '';
+            
+            if (assessmentsToRender.length === 0) {
+                assessmentsList.innerHTML = '<div class="empty-state">No assessments match your criteria</div>';
+                return;
+            }
+            
+            assessmentsToRender.forEach(assessment => {
+                const assessmentCard = document.createElement('div');
+                assessmentCard.className = 'assessment-card';
+                
+                let scoreDisplay = '';
+                if (assessment.completed) {
+                    const scoreClass = getScoreClass(assessment.score);
+                    scoreDisplay = `
+                        <div class="assessment-score ${scoreClass}">
+                            Score: ${assessment.score}%
+                        </div>
+                    `;
+                }
+                
+                assessmentCard.innerHTML = `
+                    <div class="assessment-card-header">
+                        <h3>${assessment.title}</h3>
+                        <span class="assessment-status ${getStatusClass(assessment)}">
+                            ${getStatusText(assessment)}
+                        </span>
+                    </div>
+                    <div class="assessment-card-body">
+                        <p>${assessment.description}</p>
+                        <p><i class="fas fa-question-circle"></i> ${assessment.questions} questions</p>
+                        <p><i class="fas fa-clock"></i> ${assessment.duration} minutes</p>
+                        ${scoreDisplay}
+                    </div>
+                    <div class="assessment-card-footer">
+                        <span class="category-badge">${formatCategory(assessment.category)}</span>
+                        ${getActionButton(assessment)}
+                    </div>
+                `;
+                assessmentsList.appendChild(assessmentCard);
+            });
+            
+            // Add event listeners to all buttons
+            setupAssessmentButtons();
+        }
+
+        // Helper function to get status class
+        function getStatusClass(assessment) {
+            if (assessment.completed) return 'status-completed';
+            if (assessment.status === 'available') return 'status-available';
+            return 'status-pending';
+        }
+
+        // Helper function to get status text
+        function getStatusText(assessment) {
+            if (assessment.completed) return 'Completed';
+            if (assessment.status === 'available') return 'Available';
+            return 'Pending';
+        }
+
+        // Helper function to get score class
+        function getScoreClass(score) {
+            if (score >= 90) return 'score-excellent';
+            if (score >= 75) return 'score-good';
+            if (score >= 60) return 'score-fair';
+            return 'score-poor';
+        }
+
+        // Format category for display
+        function formatCategory(category) {
+            const categories = {
+                'technical': 'Technical Skills',
+                'language': 'Language Proficiency',
+                'soft-skills': 'Soft Skills',
+                'career': 'Career Readiness'
+            };
+            return categories[category] || category;
+        }
+
+        // Get the appropriate action button for an assessment
+        function getActionButton(assessment) {
+            if (assessment.completed) {
+                return `
+                    <button class="btn btn-sm btn-outline view-results-btn" data-id="${assessment.id}">
+                        <i class="fas fa-chart-bar"></i> View Results
+                    </button>
+                    <button class="btn btn-sm btn-primary retake-btn" data-id="${assessment.id}">
+                        <i class="fas fa-redo"></i> Retake
+                    </button>
+                `;
+            } else if (assessment.status === 'available') {
+                return `
+                    <button class="btn btn-sm btn-primary start-btn" data-id="${assessment.id}">
+                        <i class="fas fa-play"></i> Start Assessment
+                    </button>
+                `;
+            } else {
+                return `
+                    <button class="btn btn-sm btn-secondary" disabled>
+                        <i class="fas fa-clock"></i> Coming Soon
+                    </button>
+                `;
+            }
+        }
+
+        // Setup all event listeners
+        function setupEventListeners() {
+            // Search and filter
+            assessmentSearch.addEventListener('input', filterAssessments);
+            categoryFilter.addEventListener('change', filterAssessments);
+            viewCompletedBtn.addEventListener('click', viewCompletedAssessments);
+            
+            // Modal close buttons
+            document.querySelectorAll('.close-modal').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.modal').forEach(modal => {
+                        modal.style.display = 'none';
+                    });
+                    stopTimer();
+                });
+            });
+            
+            // Notification close button
+            document.querySelector('.notification-close').addEventListener('click', function() {
+                notificationToast.style.display = 'none';
+            });
+            
+            // Close modals when clicking outside
+            window.addEventListener('click', function(event) {
+                if (event.target.classList.contains('modal')) {
+                    event.target.style.display = 'none';
+                    stopTimer();
+                }
+            });
+            
+            // Assessment modal buttons
+            document.getElementById('cancelAssessmentBtn').addEventListener('click', function() {
+                if (confirm('Are you sure you want to cancel this assessment? Your progress will not be saved.')) {
+                    assessmentModal.style.display = 'none';
+                    stopTimer();
+                }
+            });
+            
+            document.getElementById('submitAssessmentBtn').addEventListener('click', submitAssessment);
+            
+            // Results modal buttons
+            document.getElementById('closeResultsBtn').addEventListener('click', function() {
+                resultsModal.style.display = 'none';
+            });
+            
+            // Share toggle
+            document.getElementById('shareResultsToggle').addEventListener('change', function() {
+                const assessmentId = this.getAttribute('data-assessment-id');
+                const isShared = this.checked;
+                
+                // Update assessment share status
+                const assessment = assessments.find(a => a.id == assessmentId);
+                if (assessment) {
+                    assessment.sharedOnProfile = isShared;
+                    
+                    showNotification(
+                        "Profile Updated", 
+                        `Your assessment results are ${isShared ? 'now' : 'no longer'} visible on your profile`,
+                        "success"
+                    );
+                }
+            });
+        }
+
+        // Setup assessment card buttons
+        function setupAssessmentButtons() {
+            // Start assessment buttons
+            document.querySelectorAll('.start-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const assessmentId = parseInt(this.getAttribute('data-id'));
+                    startAssessment(assessmentId);
+                });
+            });
+            
+            // View results buttons
+            document.querySelectorAll('.view-results-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const assessmentId = parseInt(this.getAttribute('data-id'));
+                    viewResults(assessmentId);
+                });
+            });
+            
+            // Retake assessment buttons
+            document.querySelectorAll('.retake-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const assessmentId = parseInt(this.getAttribute('data-id'));
+                    if (confirm('Are you sure you want to retake this assessment? Your previous score will be archived.')) {
+                        startAssessment(assessmentId);
+                    }
+                });
+            });
+        }
+
+        // Filter assessments based on search and category
+        function filterAssessments() {
+            const searchTerm = assessmentSearch.value.toLowerCase();
+            const category = categoryFilter.value;
+            
+            const filtered = assessments.filter(assessment => {
+                const matchesSearch = assessment.title.toLowerCase().includes(searchTerm) || 
+                                     assessment.description.toLowerCase().includes(searchTerm);
+                const matchesCategory = category === 'all' || assessment.category === category;
+                return matchesSearch && matchesCategory;
+            });
+            
+            renderAssessments(filtered);
+        }
+
+        // Show only completed assessments
+        function viewCompletedAssessments() {
+            const completed = assessments.filter(a => a.completed);
+            renderAssessments(completed);
+            
+            showNotification(
+                "Completed Assessments", 
+                "Showing only assessments you've completed",
+                "info"
+            );
+        }
+
+        // Start an assessment
+        function startAssessment(assessmentId) {
+            currentAssessment = assessments.find(a => a.id === assessmentId);
+            if (!currentAssessment) return;
+            
+            // Set up the assessment modal
+            document.getElementById('assessmentModalTitle').textContent = currentAssessment.title;
+            
+            // Initialize timer
+            timeRemaining = currentAssessment.duration * 60; // Convert to seconds
+            startTime = new Date();
+            updateTimerDisplay();
+            startTimer();
+            
+            // Load questions
+            const assessmentForm = document.getElementById('assessmentForm');
+            assessmentForm.innerHTML = '';
+            
+            currentAssessment.questionsData.forEach((question, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'assessment-question';
+                questionDiv.innerHTML = `
+                    <div class="question-text">${index + 1}. ${question.question}</div>
+                    <div class="question-options">
+                        ${question.options.map((option, i) => `
+                            <div class="option-item">
+                                <input type="radio" id="q${question.id}_opt${i}" name="q${question.id}" value="${i}">
+                                <label for="q${question.id}_opt${i}">${option}</label>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                assessmentForm.appendChild(questionDiv);
+            });
+            
+            // Show the modal
+            assessmentModal.style.display = 'block';
+        }
+
+        // Start the assessment timer
+        function startTimer() {
+            stopTimer(); // Clear any existing timer
+            
+            timerInterval = setInterval(function() {
+                timeRemaining--;
+                updateTimerDisplay();
+                
+                if (timeRemaining <= 0) {
+                    stopTimer();
+                    submitAssessment(true);
+                }
+            }, 1000);
+        }
+
+        // Stop the assessment timer
+        function stopTimer() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+        }
+
+        // Update the timer display
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeRemaining / 60);
+            const seconds = timeRemaining % 60;
+            const timerDisplay = document.getElementById('assessmentTimer');
+            
+            timerDisplay.textContent = `Time: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            
+            // Change color based on time remaining
+            timerDisplay.className = 'assessment-timer';
+            if (timeRemaining <= 300) { // 5 minutes or less
+                timerDisplay.classList.add('timer-warning');
+            }
+            if (timeRemaining <= 60) { // 1 minute or less
+                timerDisplay.classList.add('timer-critical');
+            }
+        }
+
+        // Submit the assessment
+        function submitAssessment(timeExpired = false) {
+            if (!currentAssessment) return;
+            
+            // Calculate time taken
+            const endTime = new Date();
+            const timeTakenMs = endTime - startTime;
+            const timeTakenMinutes = Math.floor(timeTakenMs / 60000);
+            const timeTakenSeconds = Math.floor((timeTakenMs % 60000) / 1000);
+            const timeTaken = `${timeTakenMinutes}:${timeTakenSeconds < 10 ? '0' : ''}${timeTakenSeconds}`;
+            
+            // Calculate score
+            let correctAnswers = 0;
+            currentAssessment.questionsData.forEach(question => {
+                const selectedOption = document.querySelector(`input[name="q${question.id}"]:checked`);
+                if (selectedOption && parseInt(selectedOption.value) === question.correctAnswer) {
+                    correctAnswers++;
+                }
+            });
+            
+            const score = Math.round((correctAnswers / currentAssessment.questionsData.length) * 100);
+            
+            // Update assessment data
+            currentAssessment.completed = true;
+            currentAssessment.score = score;
+            currentAssessment.dateCompleted = endTime.toISOString();
+            currentAssessment.timeTaken = timeTaken;
+            
+            // Close assessment modal
+            assessmentModal.style.display = 'none';
+            stopTimer();
+            
+            // Show results modal
+            showResults(currentAssessment, timeExpired);
+            
+            // Update assessments list
+            renderAssessments(assessments.filter(a => categoryFilter.value === 'all' || a.category === categoryFilter.value));
+            
+            // Show notification
+            showNotification(
+                "Assessment Submitted", 
+                `You scored ${score}% on the ${currentAssessment.title}`,
+                "success"
+            );
+        }
+
+        // Show assessment results
+        function showResults(assessment, timeExpired = false) {
+            if (!assessment) return;
+            
+            // Set results data
+            document.getElementById('resultsAssessmentTitle').textContent = assessment.title;
+            document.getElementById('resultsScoreDisplay').textContent = `${assessment.score}%`;
+            document.getElementById('resultsScoreDisplay').className = `results-score ${getScoreClass(assessment.score)}`;
+            
+            // Set feedback based on score
+            let feedback = "";
+            if (timeExpired) {
+                feedback = "Time expired! ";
+            }
+            
+            if (assessment.score >= 90) {
+                feedback += "Excellent work! You've demonstrated mastery of this material.";
+            } else if (assessment.score >= 75) {
+                feedback += "Great job! You have a strong understanding of this topic.";
+            } else if (assessment.score >= 60) {
+                feedback += "Good effort. Consider reviewing some areas for improvement.";
+            } else {
+                feedback += "Keep practicing! Review the material and try again.";
+            }
+            
+            document.getElementById('resultsFeedback').textContent = feedback;
+            
+            // Set details
+            document.getElementById('resultsTotalQuestions').textContent = assessment.questionsData.length;
+            document.getElementById('resultsCorrectAnswers').textContent = Math.round((assessment.score / 100) * assessment.questionsData.length);
+            document.getElementById('resultsTimeTaken').textContent = assessment.timeTaken;
+            
+            const dateCompleted = new Date(assessment.dateCompleted);
+            document.getElementById('resultsDateCompleted').textContent = dateCompleted.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            // Set share toggle
+            const shareToggle = document.getElementById('shareResultsToggle');
+            shareToggle.checked = assessment.sharedOnProfile || false;
+            shareToggle.setAttribute('data-assessment-id', assessment.id);
+            
+            // Show the modal
+            resultsModal.style.display = 'block';
+        }
+
+        // View results of a completed assessment
+        function viewResults(assessmentId) {
+            const assessment = assessments.find(a => a.id === assessmentId);
+            if (!assessment) return;
+            
+            showResults(assessment);
+        }
+
+        // Show notification
+        function showNotification(title, message, type = 'info') {
+            document.getElementById('notificationTitle').textContent = title;
+            document.getElementById('notificationMessage').textContent = message;
+            
+            // Set notification type
+            notificationToast.className = 'notification-toast';
+            notificationToast.classList.add(type);
+            
+            // Show notification
+            notificationToast.style.display = 'block';
+            
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                notificationToast.style.display = 'none';
+            }, 5000);
+        }
+
+        // Initialize the application
+        init();
+    });
+    </script>
+    <script src="..\..\assets\js\auth.js"></script>
+
+    <!-- Logout Confirmation Modal -->
+    <div class="modal" id="logout-modal">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header">
+                <h3>Confirm Logout</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to log out?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancel-logout">Cancel</button>
+                <button class="btn btn-danger" id="confirm-logout">Log Out</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

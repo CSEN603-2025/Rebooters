@@ -283,24 +283,28 @@ a:hover {
 .modal {
     display: none;
     position: fixed;
-    z-index: 2000;
-    left: 0;
     top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    overflow: auto;
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    overflow-y: auto;
 }
 
 .modal-content {
-    background-color: #fff;
-    margin: 5% auto;
-    padding: 2rem;
+    background-color: white;
     border-radius: 8px;
-    max-width: 500px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    position: relative;
-    animation: modalFadeIn 0.3s;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh; /* Limit height */
+    margin: 20px 0; /* Add vertical spacing */
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    animation: modalFadeIn 0.3s ease-out;
 }
 
 @keyframes modalFadeIn {
@@ -479,6 +483,44 @@ a:hover {
   color: var(--primary-color);
   margin-bottom: 0.5rem;
 }
+.search-box {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
+}
+
+.search-box input {
+    border: none;
+    padding: 0.5rem 1rem;
+    width: 200px;
+}
+
+.search-box input:focus {
+    outline: none;
+}
+
+.search-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.search-btn:hover {
+    background-color: var(--primary-dark);
+}
+
+.filter-dropdown select {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--gray-light);
+    border-radius: 4px;
+    background-color: white;
+}
 
 .status-badge {
   position: absolute;
@@ -489,6 +531,7 @@ a:hover {
   font-size: 0.8rem;
   font-weight: 600;
 }
+
 
 .status-badge.pending {
   background-color: rgba(255, 152, 0, 0.2);
@@ -698,4 +741,551 @@ a:hover {
     display: flex;
     gap: 1rem;
     margin-top: 1rem;
+}
+/* Company Registration Form Styles */
+.form-section {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #eee;
+}
+
+.form-section h4 {
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.form-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+.file-upload {
+    margin-bottom: 1rem;
+}
+
+.file-upload-label {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background: #f5f5f5;
+    border: 1px dashed #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.file-upload-label:hover {
+    background: #e9e9e9;
+}
+
+.file-upload-label i {
+    margin-right: 0.5rem;
+    color: #666;
+}
+
+.logo-preview {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.logo-preview img {
+    max-width: 200px;
+    max-height: 100px;
+    margin-bottom: 0.5rem;
+    border: 1px solid #ddd;
+    padding: 5px;
+    background: white;
+}
+
+.help-text {
+    font-size: 0.8rem;
+    color: #666;
+    margin-top: 0.5rem;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    margin: 1.5rem 0;
+}
+
+.checkbox-group input {
+    margin-right: 0.5rem;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+}
+.modal-header, .form-actions {
+    flex-shrink: 0; /* Prevent header/footer from shrinking */
+}
+
+/* For company registration specifically */
+#company-registration-modal .modal-body {
+    max-height: 60vh; /* Adjust as needed */
+    padding: 20px;}
+    /* Enhanced Table Styling */
+.companies-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 5px; /* Add vertical spacing between rows */
+    margin: 20px 0;
+    font-size: 0.9rem;
+}
+
+.companies-table th {
+    background-color: #f8f9fa;
+    padding: 9px 11px;
+    text-align: left;
+    font-weight: 600;
+    color: #495057;
+    border-bottom: 2px solid #dee2e6;
+    font-size: 0.85rem;
+}
+
+.companies-table td {
+    padding: 9px 11px;
+    vertical-align: middle;
+    background-color: white;
+    border-top: 1px solid #e9ecef;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.companies-table tr:first-child td {
+    border-top: 2px solid #e9ecef;
+}
+
+.companies-table tr:last-child td {
+    border-bottom: 2px solid #e9ecef;
+}
+
+.companies-table tr:hover td {
+    background-color: #f8f9fa;
+}
+
+/* Enhanced Status Badges */
+.status-badge {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: capitalize;
+    display: inline-block;
+    min-width: 80px;
+    text-align: center;
+}
+
+.status-badge.pending {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+}
+
+.status-badge.approved {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.status-badge.rejected {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* Enhanced Action Buttons */
+.action-buttons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: nowrap;
+}
+
+.btn-sm {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    border-radius: 4px;
+    font-weight: 500;
+    min-width: 80px;
+    text-align: center;
+}
+
+/* Add some margin to the table section */
+.dashboard-section {
+    margin-top: 20px;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* Improve filter controls spacing */
+.filter-controls {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+}
+
+/* Add some breathing room to the main content */
+.main-content {
+    padding: 20px;
+}
+/* Consistent with companies.html styling */
+        .internships-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 5px;
+            font-size: 0.9rem;
+        }
+        
+        .internships-table th {
+            background-color: #f8f9fa;
+            padding: 10px 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #495057;
+            border-bottom: 1px solid #dee2e6;
+            font-size: 0.85rem;
+        }
+        
+        .internships-table td {
+            padding: 10px 12px;
+            vertical-align: middle;
+            background-color: white;
+            border: 1px solid #e9ecef;
+            border-left: none;
+            border-right: none;
+        }
+        
+        .internships-table tr:hover td {
+            background-color: #f8f9fa;
+        }
+        
+        .status-badge {
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            display: inline-block;
+            min-width: 70px;
+            text-align: center;
+        }
+        
+        .status-badge.open {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .status-badge.closed {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .status-badge.upcoming {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 6px;
+        }
+        
+        .btn-sm {
+            padding: 4px 8px;
+            font-size: 0.75rem;
+            border-radius: 3px;
+            min-width: auto;
+        }
+        
+        /* Column Widths */
+        .col-company { width: 20%; }
+        .col-title { width: 25%; }
+        .col-field { width: 15%; }
+        .col-duration { width: 10%; }
+        .col-start { width: 10%; }
+        .col-status { width: 10%; }
+        .col-actions { width: 10%; }
+        
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .internships-table th, 
+            .internships-table td {
+                padding: 8px 10px;
+                font-size: 0.8rem;
+            }
+            
+            .status-badge {
+                min-width: 60px;
+                font-size: 0.7rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .col-field, 
+            .col-start {
+                display: none;
+            }
+            
+            .col-company { width: 25%; }
+            .col-title { width: 30%; }
+            .col-duration { width: 15%; }
+            .col-status { width: 15%; }
+            .col-actions { width: 15%; }
+            
+            .btn-sm span {
+                display: none;
+            }
+            .btn-sm i {
+                margin-right: 0;
+            }
+            .btn-sm {
+                padding: 4px 6px;
+                min-width: 30px;
+            }
+        }
+        /* Student Table Styling */
+        .students-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 8px;
+            font-size: 0.9rem;
+        }
+        
+        .students-table th {
+            background-color: #f8f9fa;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #495057;
+            border-bottom: 2px solid #dee2e6;
+        }
+        
+        .students-table td {
+            padding: 12px 15px;
+            vertical-align: middle;
+            background-color: white;
+            border: 1px solid #e9ecef;
+            border-left: none;
+            border-right: none;
+        }
+        
+        .students-table tr:hover td {
+            background-color: #f8f9fa;
+            cursor: pointer;
+        }
+        
+        
+        /* Status Badges */
+        .status-badge {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            display: inline-block;
+            min-width: 80px;
+            text-align: center;
+        }
+        
+        .status-badge.active {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .status-badge.pending {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+        }
+        
+        .status-badge.completed {
+            background-color: #e7f5ff;
+            color: #1864ab;
+            border: 1px solid #d0ebff;
+        }
+        
+        .status-badge.not-applied {
+            background-color: #f8f9fa;
+            color: #495057;
+            border: 1px solid #e9ecef;
+        }
+        
+        /* Student Profile Modal */
+        .student-profile-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .profile-section {
+            margin-bottom: 15px;
+        }
+        
+        .profile-label {
+            font-weight: 600;
+            color: #495057;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .profile-value {
+            padding: 8px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            display: block;
+        }
+        
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 5px;
+        }
+        
+        .skill-badge {
+            background-color: #e9ecef;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+        
+        
+        
+        @media (max-width: 768px) {
+            .col-year, .col-credits {
+                display: none;
+            }
+        }
+        .reports-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 8px;
+            font-size: 0.8rem;
+        }
+        
+        .reports-table th {
+            background-color: #f8f9fa;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #495057;
+            border-bottom: 2px solid #dee2e6;
+        }
+        
+        .reports-table td {
+            padding: 12px 15px;
+            vertical-align: middle;
+            background-color: white;
+            border: 1px solid #e9ecef;
+            border-left: none;
+            border-right: none;
+        }
+        
+        .reports-table tr:hover td {
+            background-color: #f8f9fa;
+            cursor: pointer;
+        }
+        
+        /* Status Badges */
+        .status-badge {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            display: inline-block;
+            min-width: 80px;
+            text-align: center;
+        }
+        
+        .status-badge.pending {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+        }
+        
+        .status-badge.accepted {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .status-badge.flagged {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .status-badge.rejected {
+            background-color: #e2e3e5;
+            color: #383d41;
+            border: 1px solid #d6d8db;
+        }
+        
+        /* Report Details Modal */
+        .report-details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .detail-section {
+            margin-bottom: 15px;
+        }
+        
+        .detail-label {
+            font-weight: 600;
+            color: #495057;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .detail-value {
+            padding: 8px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            display: block;
+        }
+        
+        .report-content {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            border: 1px solid #e9ecef;
+        }
+        /* Logout Modal Styles */
+#logout-modal .modal-content {
+    text-align: center;
+}
+
+#logout-modal .modal-body {
+    padding: 20px;
+    font-size: 1.1em;
+}
+
+#logout-modal .modal-footer {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 15px 20px;
+}
+
+#logout-modal #confirm-logout {
+    min-width: 100px;
 }

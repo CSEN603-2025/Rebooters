@@ -3,40 +3,42 @@ const notificationsData = [
     {
         id: 1,
         type: "application",
-        title: "New Application Received",
-        message: "Ahmed Mohamed applied to your Frontend Developer Intern position",
-        date: "2023-10-15 14:30",
+        title: "Application Status Changed",
+        message: "Mariam Ali's application for Data Science Intern has been finalized",
+        date: "2024-10-13 16:45",
         read: false,
         emailSent: true,
-        internshipId: 1
+        internshipId: 2
+        
     },
     {
         id: 2,
         type: "status",
-        title: "Registration Approved",
-        message: "Your company registration has been approved by SCAD office",
-        date: "2023-10-14 09:15",
+        title: "Application Approved",
+        message: "Your application has been approved by SCAD office",
+        date: "2024-10-14 09:15",
         read: true,
         emailSent: true
     },
     {
         id: 3,
-        type: "application",
-        title: "Application Status Changed",
-        message: "Mariam Ali's application for Data Science Intern has been finalized",
-        date: "2023-10-13 16:45",
-        read: false,
-        emailSent: true,
-        internshipId: 2
-    },
-    {
-        id: 4,
         type: "system",
         title: "System Maintenance",
         message: "Scheduled maintenance on Saturday, October 21 from 2:00 AM to 4:00 AM",
-        date: "2023-10-12 11:20",
+        date: "2024-10-12 11:20",
         read: true,
-        emailSent: true
+        emailSent: false
+        
+    },
+    {
+        id: 4,
+        type: "application",
+        title: "New Application Received",
+        message: "Ahmed Mohamed applied to your Frontend Developer Intern position",
+        date: "2024-10-15 14:30",
+        read: false,
+        emailSent: true,
+        internshipId: 1
     }
 ];
 

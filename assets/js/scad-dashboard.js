@@ -1,4 +1,100 @@
 document.addEventListener('DOMContentLoaded', function() {
+    let activeCycle = {
+        name: "Fall 2023",
+        startDate: "2023-10-01",
+        endDate: "2023-12-31",
+        status: "active"
+    };
+
+    // DOM Elements
+    const newCycleBtn = document.getElementById('new-cycle-btn');
+    const newCycleModal = document.getElementById('new-cycle-modal');
+    const cycleForm = document.getElementById('cycle-form');
+    const closeModalBtns = document.querySelectorAll('.close-modal');
+    const activeCycleCard = document.querySelector('.card:nth-child(2) .card-body p');
+
+    // Open new cycle modal
+    newCycleBtn.addEventListener('click', function() {
+        // Set default dates (next month start to 3 months later)
+        const today = new Date();
+        const nextMonth = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+        const endDate = new Date(nextMonth.getFullYear(), nextMonth.getMonth() + 3, 0);
+        
+        document.getElementById('start-date').valueAsDate = nextMonth;
+        document.getElementById('end-date').valueAsDate = endDate;
+        
+        newCycleModal.style.display = 'flex';
+    });
+
+    // Close modal
+    closeModalBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            newCycleModal.style.display = 'none';
+        });
+    });
+
+    // Close modal when clicking outside
+    window.addEventListener('click', function(e) {
+        if (e.target === newCycleModal) {
+            newCycleModal.style.display = 'none';
+        }
+    });
+
+    // Handle cycle form submission
+    cycleForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const cycleName = document.getElementById('cycle-name').value;
+        const startDate = document.getElementById('start-date').value;
+        const endDate = document.getElementById('end-date').value;
+        const description = document.getElementById('cycle-description').value;
+        
+        // Validate dates
+        if (new Date(startDate) >= new Date(endDate)) {
+            alert('End date must be after start date');
+            return;
+        }
+        
+        // Update active cycle (in a real app, this would be an API call)
+        activeCycle = {
+            name: cycleName,
+            startDate: startDate,
+            endDate: endDate,
+            status: "active"
+        };
+        
+        // Update the dashboard display
+        updateActiveCycleDisplay();
+        
+        // Close modal
+        newCycleModal.style.display = 'none';
+        
+        // Show success message
+        alert(`New internship cycle "${cycleName}" has been created and activated!`);
+        
+        // Reset form
+        this.reset();
+    });
+
+    // Function to update the active cycle display
+    function updateActiveCycleDisplay() {
+        // Format dates (e.g., Oct 1, 2023)
+        const startDate = new Date(activeCycle.startDate);
+        const endDate = new Date(activeCycle.endDate);
+        
+        const options = { year: 'numeric', month: 'short', day: 'numeric' };
+        const formattedStart = startDate.toLocaleDateString('en-US', options);
+        const formattedEnd = endDate.toLocaleDateString('en-US', options);
+        
+        // Update the card
+        const cycleCard = document.querySelector('.card:nth-child(2)');
+        cycleCard.querySelector('.badge').textContent = activeCycle.name;
+        cycleCard.querySelector('.card-body p').textContent = 
+            `${formattedStart} - ${formattedEnd}`;
+    }
+
+    // Initialize the active cycle display
+    updateActiveCycleDisplay();
     // Sample data for companies
     const companies = [
         {

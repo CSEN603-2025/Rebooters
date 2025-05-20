@@ -1,34 +1,1262 @@
-<div class="dashboard-section">
-    <h2>Upcoming Workshops</h2>
-    
-    <div class="workshops-tabs">
-        <div class="tabs">
-            <button class="tab-btn active" data-tab="upcoming">Upcoming</button>
-            <button class="tab-btn" data-tab="past">Past</button>
-            <button class="tab-btn" data-tab="registered">Registered</button>
-        </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workshops | GUC Internship System</title>
+    <link rel="stylesheet" href="..\..\assets\css\style.css">
+    <link rel="stylesheet" href="..\..\assets\css\dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #d40000;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-link.notification-btn {
+            position: relative;
+        }
+        .notes-section {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-top: 1px solid #eee;
+        }
+        .certificate {
+            background: white;
+            padding: 30px;
+            border: 15px solid #d40000;
+            text-align: center;
+        }
+
+        .certificate-header img {
+            height: 80px;
+            margin-bottom: 20px;
+        }
+
+        .certificate-body {
+            margin: 30px 0;
+        }
+
+        .signatures {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 50px;
+        }
+
+        .certificate-footer {
+            margin-top: 30px;
+        }
+
+        #workshopNotes {
+            width: 100%;
+            height: 150px;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            resize: vertical;
+        }
         
-        <div class="tab-content active" id="upcoming">
-            <div class="workshops-list" id="upcomingWorkshops">
-                <!-- Upcoming workshops will be loaded here -->
+        .time-display {
+            margin-left: auto;
+            font-family: monospace;
+        }
+        
+        /* Improved Chat Section */
+        .chat-section {
+            border-top: 1px solid #eee;
+            display: flex;
+            flex-direction: column;
+            height: 40%;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+            background: #f9f9f9;
+        }
+        
+        .chat-message {
+            margin-bottom: 10px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            background: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .own-message {
+            background: #e3f2fd;
+            margin-left: 20%;
+        }
+        
+        .message-sender {
+            font-weight: bold;
+            font-size: 0.85rem;
+            color: #555;
+        }
+        
+        .message-time {
+            font-size: 0.75rem;
+            color: #777;
+            text-align: right;
+        }
+        
+        .chat-input {
+            padding: 10px;
+            background: #f8f9fa;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .chat-input input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+        }
+        
+        /* Workshop Card Improvements */
+        .workshop-card-footer {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .btn-cancel {
+            background: #f8f9fa;
+            color: #dc3545;
+            border: 1px solid #dc3545;
+        }
+        
+        /* Notification Improvements */
+        .notification-toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 300px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+            display: none;
+        }
+        
+        .notification-header {
+            padding: 10px 15px;
+            background: #d40000;
+            color: white;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .notification-body {
+            padding: 15px;
+        }
+        
+        /* Details Modal */
+        .details-modal {
+            max-width: 600px;
+            width: 90%;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .details-header {
+            padding: 15px 20px;
+            background: #d40000;
+            color: white;
+        }
+        
+        .details-body {
+            padding: 20px;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        
+        .workshop-agenda {
+            margin-top: 15px;
+        }
+        
+        .workshop-agenda li {
+            margin-bottom: 8px;
+        }
+
+        /* Feedback Modal Styles */
+        .feedback-modal {
+            max-width: 500px;
+            width: 90%;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .feedback-header {
+            padding: 15px 20px;
+            background: #d40000;
+            color: white;
+        }
+
+        .feedback-body {
+            padding: 20px;
+        }
+
+        .rating-stars {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            font-size: 24px;
+        }
+
+        .rating-stars .star {
+            color: #ddd;
+            cursor: pointer;
+            margin: 0 5px;
+            transition: color 0.2s;
+        }
+
+        .rating-stars .star:hover,
+        .rating-stars .star.active {
+            color: #ffc107;
+        }
+
+        .feedback-textarea {
+            width: 100%;
+            height: 120px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            resize: vertical;
+            margin-bottom: 15px;
+        }
+
+        .feedback-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border-top: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <img src="..\..\assets\images\guc-logo.png" alt="GUC Logo" class="logo">
+                <span class="system-name">GUC Internship System</span>
+            </div>
+            <div class="nav-menu">
+                <a href="notifications.html" class="nav-link"><i class="fas fa-bell"></i></a>
+                <a href="#" class="nav-link logout-btn" id="logout-btn"><i class="fas fa-sign-out-alt"></i></a>
+            </div>
+            <div class="hamburger-menu">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
             </div>
         </div>
-        
-        <div class="tab-content" id="past">
-            <div class="workshops-list" id="pastWorkshops">
-                <!-- Past workshops will be loaded here -->
+    </nav>
+    <!-- Dashboard Layout -->
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="user-profile">
+                <img src="..\..\assets\images\default-avatar.png" alt="Student Avatar" class="avatar">
+                <div class="profile-status">
+                    <span class="status-badge student">Student</span>
+                    <span class="pro-badge" id="pro-badge">PRO</span>
+                </div>
+                <h3>Farah Mokhtar</h3>
+                <p>Business Informatics</p>
             </div>
-        </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="internships.html" ><i class="fas fa-briefcase"></i> Internships</a></li>
+                    <li><a href="applications.html"><i class="fas fa-file-alt"></i> My Applications</a></li>
+                    <li><a href="reports.html"><i class="fas fa-clipboard-list"></i> Reports</a></li>
+                    
+                     <!-- PRO Features (hidden by default) -->
+        <li class="pro-feature" style="display:none;"><a href="appointments.html"><i class="fas fa-calendar-check"></i> Appointments</a></li>
+        <li class="pro-feature" style="display:none;"><a href="assessments.html"><i class="fas fa-tasks"></i> Assessments</a></li>
+        <li class="pro-feature" style="display:none;"><a href="workshops.html" class="active"><i class="fas fa-chalkboard-teacher"></i> Workshops</a></li>
+        <li><a href="profile.html"><i class="fas fa-user-edit"></i> Profile</a></li>
+                </ul>
+            </nav>
+        </aside>
         
-        <div class="tab-content" id="registered">
-            <div class="workshops-list" id="registeredWorkshops">
-                <!-- Registered workshops will be loaded here -->
+        <main class="main-content">
+            <div class="dashboard-header">
+                <h1>Workshops</h1>
+                <div class="header-actions">
+                    <button class="btn btn-secondary" id="viewRegisteredBtn">
+                        <i class="fas fa-calendar-check"></i> My Workshops
+                    </button>
+                </div>
+            </div>
+
+            <div class="dashboard-section">
+                <div class="filter-controls">
+                    <div class="search-group">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="workshopSearch" class="form-control" placeholder="Search workshops...">
+                    </div>
+                    <div class="filter-group">
+                        <label for="statusFilter">Filter:</label>
+                        <select id="statusFilter" class="form-control">
+                            <option value="all">All Workshops</option>
+                            <option value="upcoming">Upcoming</option>
+                            <option value="live">Live Now</option>
+                            <option value="recorded">Recorded</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="workshops-grid" id="workshopsGrid">
+                    <!-- Workshops will be loaded here -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Workshop Details Modal -->
+    <div class="modal" id="detailsModal" style="display:none;">
+        <div class="modal-content details-modal">
+            <span class="close-modal">&times;</span>
+            <div class="details-header">
+                <h2 id="workshopModalTitle">Workshop Details</h2>
+            </div>
+            <div class="details-body">
+                <div class="workshop-basic-info">
+                    <p><i class="fas fa-calendar-alt"></i> <strong>Date:</strong> <span id="workshopDate"></span></p>
+                    <p><i class="fas fa-clock"></i> <strong>Duration:</strong> <span id="workshopDuration"></span></p>
+                    <p><i class="fas fa-user-tie"></i> <strong>Instructor:</strong> <span id="workshopSpeaker"></span></p>
+                    <p><i class="fas fa-info-circle"></i> <strong>Description:</strong> <span id="workshopDescription"></span></p>
+                </div>
+                
+                <div class="workshop-agenda">
+                    <h3>Agenda</h3>
+                    <ul id="workshopAgenda"></ul>
+                </div>
+                
+                <div class="workshop-requirements">
+                    <h3>Requirements</h3>
+                    <ul id="workshopRequirements"></ul>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Workshop Details Modal -->
-<div class="modal" id="workshopModal">
-    <!-- Modal content will be loaded here -->
+    <!-- Video Player Modal -->
+    <div class="modal" id="videoPlayerModal" style="display:none;">
+        <div class="modal-content video-player-modal">
+            <div class="video-player-header">
+                <h3 id="videoWorkshopTitle">Workshop Video</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="video-player-body">
+                <div class="video-container">
+                    <video id="workshopVideo" controls>
+                        <source src="" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="video-controls">
+                <button class="btn btn-sm" id="playBtn"><i class="fas fa-play"></i> Play</button>
+                <button class="btn btn-sm" id="pauseBtn"><i class="fas fa-pause"></i> Pause</button>
+                <span class="time-display" id="timeDisplay">00:00 / 00:00</span>
+            </div>
+                </div>
+                <div class="chat-section">
+                    <div class="chat-messages" id="chatMessages"></div>
+                    <div class="chat-input">
+                        <input type="text" id="chatInput" placeholder="Type your message...">
+                        <button class="btn btn-sm" id="sendMessageBtn"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+                <div class="notes-section">
+    <h4><i class="fas fa-edit"></i> Workshop Notes</h4>
+    <textarea id="workshopNotes" placeholder="Take notes here during the workshop..."></textarea>
+    <button class="btn btn-sm btn-primary" id="saveNotesBtn">
+        <i class="fas fa-save"></i> Save Notes and Leave
+    </button>
 </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- Feedback Modal -->
+    <div class="modal" id="feedbackModal" style="display:none;">
+        <div class="modal-content feedback-modal">
+            <span class="close-modal">&times;</span>
+            <div class="feedback-header">
+                <h2>Workshop Feedback</h2>
+            </div>
+            <div class="feedback-body">
+                <p>Please rate your experience with this workshop:</p>
+                <div class="rating-stars">
+                    <i class="fas fa-star star" data-rating="1"></i>
+                    <i class="fas fa-star star" data-rating="2"></i>
+                    <i class="fas fa-star star" data-rating="3"></i>
+                    <i class="fas fa-star star" data-rating="4"></i>
+                    <i class="fas fa-star star" data-rating="5"></i>
+                </div>
+                <p>Additional feedback (optional):</p>
+                <textarea class="feedback-textarea" id="feedbackText" placeholder="What did you like or dislike about this workshop?"></textarea>
+            </div>
+            <div class="feedback-footer">
+                <button class="btn btn-secondary" id="cancelFeedbackBtn">Cancel</button>
+                <button class="btn btn-primary" id="submitFeedbackBtn">Submit Feedback</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Certificate Modal -->
+    <div class="modal" id="certificateModal" style="display:none;">
+        <div class="modal-content" style="max-width: 800px;">
+            <span class="close-modal">&times;</span>
+            <div class="certificate">
+                <div class="certificate-header">
+                    <img src="../../assets/images/guc-logo.png" alt="GUC Logo">
+                    <h2>Certificate of Completion</h2>
+                </div>
+                <div class="certificate-body">
+                    <p>This is to certify that</p>
+                    <h3 id="certificateStudentName">Farah Mokhtar</h3>
+                    <p>has successfully completed the workshop on</p>
+                    <h4 id="certificateWorkshopTitle">Workshop Title</h4>
+                    <p id="certificateDate">on Workshop Date</p>
+                    <div class="signatures">
+                        <div>
+                            <p>_________________________</p>
+                            <p>Workshop Instructor</p>
+                            <p id="certificateInstructor">Instructor Name</p>
+                        </div>
+                        <div>
+                            <p>_________________________</p>
+                            <p>SCAD Office</p>
+                            <p>GUC Internship System</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="certificate-footer">
+                    <button class="btn btn-primary" id="downloadCertBtn">
+                        <i class="fas fa-download"></i> Download Certificate
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div class="notification-toast" id="notificationToast">
+        <div class="notification-header">
+            <h4 id="notificationTitle">Notification</h4>
+            <button class="notification-close">&times;</button>
+        </div>
+        <div class="notification-body">
+            <p id="notificationMessage"></p>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        // DOM Elements
+        const workshopsGrid = document.getElementById('workshopsGrid');
+        const workshopSearch = document.getElementById('workshopSearch');
+        const statusFilter = document.getElementById('statusFilter');
+        const viewRegisteredBtn = document.getElementById('viewRegisteredBtn');
+        const videoPlayerModal = document.getElementById('videoPlayerModal');
+        const detailsModal = document.getElementById('detailsModal');
+        const feedbackModal = document.getElementById('feedbackModal');
+        const certificateModal = document.getElementById('certificateModal');
+        const notificationToast = document.getElementById('notificationToast');
+        const saveNotesBtn = document.getElementById('saveNotesBtn');
+        
+        // Workshop data
+        let workshops = [
+            {
+                id: 1,
+                title: "Web Development Fundamentals",
+                date: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString(), // 2 days from now
+                duration: "2 hours",
+                speaker: "Dr. Ahmed Ali",
+                description: "Learn HTML, CSS, and JavaScript basics in this comprehensive workshop designed for beginners.",
+                status: "upcoming",
+                registered: false,
+                certificateAvailable: false,
+                videoUrl: "https://example.com/video1",
+                agenda: [
+                    "Introduction to Web Development",
+                    "HTML Basics and Structure",
+                    "CSS Styling Fundamentals",
+                    "JavaScript Interactive Elements",
+                    "Q&A Session"
+                ],
+                requirements: [
+                    "Laptop with modern browser",
+                    "Text editor (VS Code recommended)",
+                    "Basic programming knowledge helpful but not required"
+                ]
+            },
+            {
+                id: 2,
+                title: "Career Preparation Workshop",
+                date: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString(), // 5 days from now
+                duration: "1.5 hours",
+                speaker: "Ms. Fatma Hassan",
+                description: "Resume writing and interview techniques to help you land your dream job.",
+                status: "upcoming",
+                registered: false,
+                certificateAvailable: false,
+                videoUrl: "https://example.com/video2",
+                agenda: [
+                    "Crafting the Perfect Resume",
+                    "Writing Effective Cover Letters",
+                    "Interview Techniques",
+                    "Salary Negotiation Tips",
+                    "Mock Interview Session"
+                ],
+                requirements: [
+                    "Bring your current resume",
+                    "Notebook for taking notes",
+                    "Questions for the Q&A session"
+                ]
+            },
+            {
+                id: 3,
+                title: "Introduction to Data Science",
+                date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(), // 2 days ago
+                duration: "2.5 hours",
+                speaker: "Prof. Sarah Johnson",
+                description: "Introduction to data science concepts and tools used in industry.",
+                status: "recorded",
+                registered: true,
+                certificateAvailable: true,
+                videoUrl: "https://example.com/video3",
+                agenda: [
+                    "What is Data Science?",
+                    "Data Cleaning and Preparation",
+                    "Exploratory Data Analysis",
+                    "Basic Machine Learning Concepts",
+                    "Real-world Applications"
+                ],
+                requirements: [
+                    "Basic statistics knowledge",
+                    "Python experience helpful",
+                    "Curiosity to learn"
+                ]
+            }
+        ];
+        
+        // Current workshop ID for feedback
+        let currentWorkshopId = null;
+        let selectedRating = 0;
+        // Chat notification variables
+        let unreadChatMessages = 0;
+        let isChatFocused = false;
+        let chatNotificationInterval;
+
+        // Initialize the application
+        function init() {
+            renderWorkshops(workshops);
+            setupEventListeners();
+            
+            // Show initial notifications
+            setTimeout(() => {
+                showNotification(
+                    "Welcome to Workshops", 
+                    "You have 2 upcoming workshops this month. Don't forget to register!",
+                    "info"
+                );
+            }, 1000);
+        }
+
+        // Render workshops to the grid
+        function renderWorkshops(workshopsToRender) {
+            workshopsGrid.innerHTML = '';
+            
+            if (workshopsToRender.length === 0) {
+                workshopsGrid.innerHTML = '<div class="empty-state">No workshops match your criteria</div>';
+                return;
+            }
+            
+            workshopsToRender.forEach(workshop => {
+                const workshopCard = document.createElement('div');
+                workshopCard.className = 'workshop-card';
+                workshopCard.innerHTML = `
+                    <div class="workshop-card-header">
+                        <h3>${workshop.title}</h3>
+                        <span class="badge ${getStatusClass(workshop.status)}">${workshop.status}</span>
+                    </div>
+                    <div class="workshop-card-body">
+                        <p><i class="fas fa-calendar-alt"></i> ${formatDate(workshop.date)}</p>
+                        <p><i class="fas fa-user-tie"></i> ${workshop.speaker}</p>
+                        <p>${workshop.description.substring(0, 100)}...</p>
+                    </div>
+                    <div class="workshop-card-footer">
+                        <button class="btn btn-sm btn-outline view-btn" data-id="${workshop.id}">
+                            <i class="fas fa-info-circle"></i> Details
+                        </button>
+                        ${getActionButton(workshop)}
+                    </div>
+                `;
+                workshopsGrid.appendChild(workshopCard);
+            });
+            
+            // Add event listeners to all buttons
+            setupWorkshopButtons();
+        }
+
+        // Helper function to get status class
+        function getStatusClass(status) {
+            switch(status) {
+                case 'upcoming': return 'info';
+                case 'live': return 'warning';
+                case 'completed': return 'success';
+                case 'recorded': return 'secondary';
+                default: return '';
+            }
+        }
+
+        // Format date for display
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleString('en-US', {
+                weekday: 'short',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        // Get the appropriate action button for a workshop
+        function getActionButton(workshop) {
+            if (workshop.status === 'upcoming') {
+                if (workshop.registered) {
+                    return `
+                        <button class="btn btn-sm btn-success registered-btn" data-id="${workshop.id}">
+                            <i class="fas fa-check"></i> Confirmed (You)
+                        </button>
+                        <button class="btn btn-sm btn-cancel cancel-btn" data-id="${workshop.id}">
+                            <i class="fas fa-times"></i> Cancel
+                        </button>
+                    `;
+                } else {
+                    return `<button class="btn btn-sm btn-primary register-btn" data-id="${workshop.id}">
+                        <i class="fas fa-calendar-plus"></i> Register
+                    </button>`;
+                }
+            } else if (workshop.status === 'live') {
+                return `<button class="btn btn-sm btn-danger join-btn" data-id="${workshop.id}">
+                    <i class="fas fa-video"></i> Join Live
+                </button>`;
+            } else if (workshop.status === 'recorded') {
+                return `<button class="btn btn-sm btn-secondary watch-btn" data-id="${workshop.id}">
+                    <i class="fas fa-play"></i> Watch
+                </button>`;
+            } else if (workshop.certificateAvailable) {
+                return `<button class="btn btn-sm btn-info saveNotesBtn" data-id="${workshop.id}">
+                    <i class="fas fa-certificate"></i> Certificate
+                </button>`;
+            }
+            return '';
+        }
+
+        // Setup all event listeners
+        function setupEventListeners() {
+            // Search and filter
+            workshopSearch.addEventListener('input', filterWorkshops);
+            statusFilter.addEventListener('change', filterWorkshops);
+            viewRegisteredBtn.addEventListener('click', viewRegisteredWorkshops);
+            
+            // Modal close buttons
+            document.querySelectorAll('.close-modal').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.modal').forEach(modal => {
+                        modal.style.display = 'none';
+                    });
+                });
+            });
+            
+            // Notification close button
+            document.querySelector('.notification-close').addEventListener('click', function() {
+                notificationToast.style.display = 'none';
+            });
+            
+            // Close modals when clicking outside
+            window.addEventListener('click', function(event) {
+                if (event.target.classList.contains('modal')) {
+                    event.target.style.display = 'none';
+                }
+            });
+            
+            // Save notes button
+            if (saveNotesBtn) {
+                saveNotesBtn.addEventListener('click', handleSaveNotes);
+            }
+            
+            // Feedback modal events
+            setupFeedbackModalEvents();
+            
+            // Certificate download button
+            const downloadCertBtn = document.getElementById('downloadCertBtn');
+            if (downloadCertBtn) {
+                downloadCertBtn.addEventListener('click', function() {
+                    showNotification("Certificate Downloaded", 
+                        "Your certificate has been saved", 
+                        "success");
+                });
+            }
+        }
+
+        // Setup workshop card buttons
+        function setupWorkshopButtons() {
+            // Register buttons
+            document.querySelectorAll('.register-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const workshopId = parseInt(this.getAttribute('data-id'));
+                    registerForWorkshop(workshopId);
+                });
+            });
+            
+            // Cancel buttons
+            document.querySelectorAll('.cancel-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const workshopId = parseInt(this.getAttribute('data-id'));
+                    cancelWorkshopRegistration(workshopId);
+                });
+            });
+            
+            // Watch buttons
+            document.querySelectorAll('.watch-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const workshopId = parseInt(this.getAttribute('data-id'));
+                    watchWorkshop(workshopId);
+                });
+            });
+            
+            // Join buttons
+            document.querySelectorAll('.join-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const workshopId = parseInt(this.getAttribute('data-id'));
+                    joinWorkshop(workshopId);
+                });
+            });
+            
+            // Certificate buttons
+            document.querySelectorAll('.saveNotesBtn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const workshopId = parseInt(this.getAttribute('data-id'));
+                    showCertificate(workshopId);
+                });
+            });
+            
+            // Details buttons
+            document.querySelectorAll('.view-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const workshopId = parseInt(this.getAttribute('data-id'));
+                    showWorkshopDetails(workshopId);
+                });
+            });
+        }
+
+        // Setup feedback modal event listeners
+        function setupFeedbackModalEvents() {
+            // Star rating
+            const stars = document.querySelectorAll('.rating-stars .star');
+            stars.forEach(star => {
+                star.addEventListener('click', function() {
+                    const rating = parseInt(this.getAttribute('data-rating'));
+                    selectedRating = rating;
+                    
+                    // Update star display
+                    stars.forEach((s, index) => {
+                        if (index < rating) {
+                            s.classList.add('active');
+                        } else {
+                            s.classList.remove('active');
+                        }
+                    });
+                });
+            });
+            
+            // Submit feedback button
+            const submitFeedbackBtn = document.getElementById('submitFeedbackBtn');
+            if (submitFeedbackBtn) {
+                submitFeedbackBtn.addEventListener('click', function() {
+                    if (selectedRating === 0) {
+                        showNotification("Rating Required", "Please select a rating before submitting", "warning");
+                        return;
+                    }
+                    
+                    const feedbackText = document.getElementById('feedbackText').value;
+                    
+                    // In a real app, you would send this to your server
+                    console.log("Feedback submitted:", {
+                        workshopId: currentWorkshopId,
+                        rating: selectedRating,
+                        feedback: feedbackText
+                    });
+                    
+                    // Close feedback modal
+                    feedbackModal.style.display = 'none';
+                    
+                    // Show certificate if available
+                    const workshop = workshops.find(w => w.id === currentWorkshopId);
+                    if (workshop && workshop.certificateAvailable) {
+                        showCertificate(workshop.id);
+                    }
+                    
+                    showNotification(
+                        "Thank You!", 
+                        "Your feedback has been submitted successfully",
+                        "success"
+                    );
+                });
+            }
+            
+            // Cancel feedback button
+            const cancelFeedbackBtn = document.getElementById('cancelFeedbackBtn');
+            if (cancelFeedbackBtn) {
+                cancelFeedbackBtn.addEventListener('click', function() {
+                    feedbackModal.style.display = 'none';
+                });
+            }
+        }
+
+        // Handle save notes button click
+        function handleSaveNotes() {
+            // Get the current workshop ID from the video player modal
+            const workshopTitle = document.getElementById('videoWorkshopTitle').textContent.replace(" (Live)", "");
+            const workshop = workshops.find(w => w.title === workshopTitle);
+            
+            if (!workshop) return;
+            
+            // Save the notes (in a real app, you would send to server)
+            const notes = document.getElementById('workshopNotes').value;
+            console.log("Notes saved:", notes);
+            
+            // Set current workshop ID for feedback
+            currentWorkshopId = workshop.id;
+            
+            // Close the video player modal
+            videoPlayerModal.style.display = 'none';
+            
+            // Show feedback modal
+            feedbackModal.style.display = 'flex';
+            
+            // Reset feedback form
+            selectedRating = 0;
+            document.querySelectorAll('.rating-stars .star').forEach(star => {
+                star.classList.remove('active');
+            });
+            document.getElementById('feedbackText').value = '';
+        }
+
+        // Filter workshops based on search and status
+        function filterWorkshops() {
+            const searchTerm = workshopSearch.value.toLowerCase();
+            const status = statusFilter.value;
+            
+            const filtered = workshops.filter(workshop => {
+                const matchesSearch = workshop.title.toLowerCase().includes(searchTerm) || 
+                                     workshop.description.toLowerCase().includes(searchTerm) ||
+                                     workshop.speaker.toLowerCase().includes(searchTerm);
+                const matchesStatus = status === 'all' || workshop.status === status;
+                return matchesSearch && matchesStatus;
+            });
+            
+            renderWorkshops(filtered);
+        }
+
+        // Show only registered workshops
+        function viewRegisteredWorkshops() {
+            const registered = workshops.filter(w => w.registered);
+            renderWorkshops(registered);
+            
+            showNotification(
+                "Viewing Your Workshops", 
+                "Showing only workshops you've registered for",
+                "info"
+            );
+        }
+
+        // Register for a workshop
+        function registerForWorkshop(workshopId) {
+            const workshop = workshops.find(w => w.id === workshopId);
+            if (!workshop) return;
+            
+            workshop.registered = true;
+            
+            // Update the UI
+            renderWorkshops(workshops.filter(w => statusFilter.value === 'all' || w.status === statusFilter.value));
+            
+            showNotification(
+                "Registration Confirmed", 
+                `You've successfully registered for "${workshop.title}" on ${formatDate(workshop.date)}`,
+                "success"
+            );
+            
+            // Send email notification
+            sendEmailNotification(
+                "Workshop Registration Confirmation",
+                `You've registered for: ${workshop.title}\nDate: ${formatDate(workshop.date)}\nLocation: Online`
+            );
+            
+            // Schedule reminder notification (1 day before)
+            const workshopDate = new Date(workshop.date);
+            const now = new Date();
+            const diffInHours = Math.floor((workshopDate - now) / (1000 * 60 * 60));
+            
+            if (diffInHours >= 24) {
+                setTimeout(() => {
+                    showNotification(
+                        "Workshop Reminder", 
+                        `Your "${workshop.title}" workshop starts tomorrow at ${formatDate(workshop.date).split(',')[1].trim()}`,
+                        "info"
+                    );
+                }, 15000); // In real app: (diffInHours - 24) * 60 * 60 * 1000
+            }
+        }
+
+        // Cancel workshop registration
+        function cancelWorkshopRegistration(workshopId) {
+            const workshop = workshops.find(w => w.id === workshopId);
+            if (!workshop) return;
+            
+            if (confirm(`Are you sure you want to cancel your registration for "${workshop.title}"?`)) {
+                workshop.registered = false;
+                
+                // Update the UI
+                renderWorkshops(workshops.filter(w => statusFilter.value === 'all' || w.status === statusFilter.value));
+                
+                showNotification(
+                    "Registration Cancelled", 
+                    `You've cancelled your registration for "${workshop.title}"`,
+                    "warning"
+                );
+                
+                // Send email notification
+                sendEmailNotification(
+                    "Workshop Registration Cancelled",
+                    `You've cancelled your registration for: ${workshop.title}\nWe hope to see you at future workshops!`
+                );
+            }
+        }
+
+        // Watch a recorded workshop
+        function watchWorkshop(workshopId) {
+            const workshop = workshops.find(w => w.id === workshopId);
+            if (!workshop) return;
+            
+            // Set up the video player modal
+            document.getElementById('videoWorkshopTitle').textContent = workshop.title;
+            document.getElementById('workshopVideo').src = workshop.videoUrl;
+            
+            // Show the modal
+            videoPlayerModal.style.display = 'block';
+            
+            // Initialize chat
+            initializeChat(workshop);
+        }
+
+        // Join a live workshop
+        function joinWorkshop(workshopId) {
+            const workshop = workshops.find(w => w.id === workshopId);
+            if (!workshop) return;
+            
+            // Set up the video player modal
+            document.getElementById('videoWorkshopTitle').textContent = workshop.title + " (Live)";
+            document.getElementById('workshopVideo').src = workshop.videoUrl;
+            
+            // Show the modal
+            videoPlayerModal.style.display = 'block';
+            
+            // Initialize chat with live messages
+            initializeChat(workshop, true);
+            
+            showNotification(
+                "Joined Live Workshop", 
+                `You've joined the live session of "${workshop.title}"`,
+                "success"
+            );
+        }
+
+        // Show workshop details
+        function showWorkshopDetails(workshopId) {
+            const workshop = workshops.find(w => w.id === workshopId);
+            if (!workshop) return;
+            
+            // Populate details
+            document.getElementById('workshopModalTitle').textContent = workshop.title;
+            document.getElementById('workshopDate').textContent = formatDate(workshop.date) + " (" + workshop.duration + ")";
+            document.getElementById('workshopDuration').textContent = workshop.duration;
+            document.getElementById('workshopSpeaker').textContent = workshop.speaker;
+            document.getElementById('workshopDescription').textContent = workshop.description;
+            
+            // Populate agenda
+            const agendaList = document.getElementById('workshopAgenda');
+            agendaList.innerHTML = '';
+            workshop.agenda.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item;
+                agendaList.appendChild(li);
+            });
+            
+            // Populate requirements
+            const requirementsList = document.getElementById('workshopRequirements');
+            requirementsList.innerHTML = '';
+            workshop.requirements.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item;
+                requirementsList.appendChild(li);
+            });
+            
+            // Show the modal
+            detailsModal.style.display = 'block';
+        }
+
+        // Show certificate
+        function showCertificate(workshopId) {
+            const workshop = workshops.find(w => w.id === workshopId);
+            if (!workshop) return;
+
+            // Populate certificate data
+            document.getElementById('certificateStudentName').textContent = document.querySelector('.user-profile h3').textContent;
+            document.getElementById('certificateWorkshopTitle').textContent = workshop.title;
+            document.getElementById('certificateDate').textContent = `on ${formatDate(workshop.date)}`;
+            document.getElementById('certificateInstructor').textContent = workshop.speaker;
+            
+            // Show the modal
+            certificateModal.style.display = 'flex';
+        }
+
+        // Initialize chat for workshop
+        function initializeChat(workshop, isLive = false) {
+            const chatContainer = document.getElementById('chatMessages');
+            chatContainer.innerHTML = '';
+            unreadChatMessages = 0;
+            updateNotificationBadge();
+            
+            // Sample messages
+            const messages = isLive ? [
+                { sender: "Moderator", message: "Welcome to the live workshop!", time: "Just now", isYou: false },
+                { sender: workshop.speaker, message: "We'll be starting in a few minutes.", time: "Just now", isYou: false },
+                { sender: "Student1", message: "Excited to be here!", time: "Just now", isYou: false }
+            ] : [
+                { sender: "Moderator", message: "Welcome to the workshop recording!", time: "10:00 AM", isYou: false },
+                { sender: workshop.speaker, message: "Let's get started with the first topic.", time: "10:05 AM", isYou: false },
+                { sender: "Student1", message: "This is very helpful!", time: "10:20 AM", isYou: false }
+            ];
+            
+            // Render messages
+            messages.forEach(msg => renderChatMessage(msg));
+            
+            // Setup chat input
+            document.getElementById('sendMessageBtn').addEventListener('click', sendChatMessage);
+            document.getElementById('chatInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') sendChatMessage();
+            });
+
+            // Track chat focus
+            document.getElementById('chatInput').addEventListener('focus', function() {
+                isChatFocused = true;
+                unreadChatMessages = 0;
+                updateNotificationBadge();
+            });
+
+            document.getElementById('chatInput').addEventListener('blur', function() {
+                isChatFocused = false;
+            });
+
+            // Clear any existing interval
+            if (chatNotificationInterval) {
+                clearInterval(chatNotificationInterval);
+            }
+
+            // Simulate live messages if this is a live workshop
+            if (isLive) {
+                // Start simulating incoming messages
+                chatNotificationInterval = setInterval(() => {
+                    simulateIncomingMessage(workshop);
+                }, 3000 + Math.random() * 7000);
+            }
+        }
+        // Simulate incoming chat messages
+        function simulateIncomingMessage(workshop) {
+            const names = ["Instructor", "Student2", "Student3", "Moderator"];
+            const messages = [
+                "Great question!",
+                "I agree with that point",
+                "Could you explain that again?",
+                "Thanks for the explanation!",
+                "This is very helpful",
+                "When will we get the slides?"
+            ];
+            
+            const newMsg = {
+                sender: names[Math.floor(Math.random() * names.length)],
+                message: messages[Math.floor(Math.random() * messages.length)],
+                time: "Just now",
+                isYou: false
+            };
+            
+            renderChatMessage(newMsg);
+            
+            // Only show notification if chat is not focused
+            if (!isChatFocused) {
+                unreadChatMessages++;
+                updateNotificationBadge();
+                
+                showNotification(
+                    `New message from ${newMsg.sender}`, 
+                    newMsg.message,
+                    "info"
+                );
+            }
+        }
+        // Update notification badge
+        function updateNotificationBadge() {
+            const badge = document.querySelector('.notification-btn .notification-badge');
+            if (unreadChatMessages > 0) {
+                if (!badge) {
+                    const newBadge = document.createElement('span');
+                    newBadge.className = 'notification-badge';
+                    newBadge.textContent = unreadChatMessages;
+                    document.querySelector('.notification-btn').appendChild(newBadge);
+                } else {
+                    badge.textContent = unreadChatMessages;
+                }
+            } else if (badge) {
+                badge.remove();
+            }
+        }
+
+
+        // Render a single chat message
+        function renderChatMessage(msg) {
+            const chatContainer = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${msg.isYou ? 'own-message' : ''}`;
+            
+            messageDiv.innerHTML = `
+                ${msg.isYou ? '' : `<div class="message-sender">${msg.sender}</div>`}
+                <div class="message-content">
+                    <div class="message-text">${msg.message}</div>
+                    <div class="message-time">${msg.time}</div>
+                </div>
+            `;
+            
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        // Send chat message
+        function sendChatMessage() {
+            const chatInput = document.getElementById('chatInput');
+            const message = chatInput.value.trim();
+            
+            if (message) {
+                const newMsg = {
+                    sender: "You",
+                    message: message,
+                    time: "Just now",
+                    isYou: true
+                };
+                
+                renderChatMessage(newMsg);
+                chatInput.value = '';
+                
+                // Simulate response after 1-3 seconds
+                setTimeout(() => {
+                    const responses = [
+                        "That's a great question!",
+                        "Thanks for your input!",
+                        "I'll address that point next.",
+                        "Could you elaborate on that?",
+                        "Let me add to what you said..."
+                    ];
+                    
+                    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                    const workshop = workshops.find(w => w.title === document.getElementById('videoWorkshopTitle').textContent.replace(" (Live)", ""));
+                    
+                    const responseMsg = {
+                        sender: workshop ? workshop.speaker : "Moderator",
+                        message: randomResponse,
+                        time: "Just now",
+                        isYou: false
+                    };
+                    
+                    renderChatMessage(responseMsg);
+                }, 1000 + Math.random() * 2000);
+            }
+        }
+
+        // Show notification
+        function showNotification(title, message, type = 'info') {
+            document.getElementById('notificationTitle').textContent = title;
+            document.getElementById('notificationMessage').textContent = message;
+            
+            // Set notification type
+            notificationToast.className = 'notification-toast';
+            notificationToast.classList.add(type);
+            
+            // Show notification
+            notificationToast.style.display = 'block';
+            
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                notificationToast.style.display = 'none';
+            }, 10000);
+        }
+
+        // Simulate sending email notification
+        function sendEmailNotification(subject, body) {
+            console.log(`Email sent:\nSubject: ${subject}\nBody: ${body}`);
+        }
+
+        // Initialize the application
+        init();
+    });
+    
+    </script>
+    <script src="..\..\assets\js\auth.js"></script>
+
+    
+    <!-- Logout Confirmation Modal -->
+    <div class="modal" id="logout-modal">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header">
+                <h3>Confirm Logout</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to log out?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancel-logout">Cancel</button>
+                <button class="btn btn-danger" id="confirm-logout">Log Out</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

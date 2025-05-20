@@ -18,7 +18,7 @@
             </div>
             <div class="nav-menu">
                 <a href="notifications.html" class="nav-link"><i class="fas fa-bell"></i><span class="notification-badge">3</span></a>
-                <a href="#" class="nav-link logout-btn"><i class="fas fa-sign-out-alt"></i></a>
+                <a href="#" class="nav-link logout-btn" id="logout-btn"><i class="fas fa-sign-out-alt"></i></a>
             </div>
             <div class="hamburger-menu">
                 <div class="bar"></div>
@@ -45,6 +45,7 @@
                 <ul>
                     <li><a href="dashboard.html" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
                     <li><a href="job-post.html"><i class="fas fa-briefcase"></i> My Internship Posts</a></li>
+                    <li><a href="internships.html"><i class="fas fa-briefcase"></i> Available Internships</a></li>
                     <li><a href="applications.html"><i class="fas fa-file-alt"></i> Applications</a></li>
                     <li><a href="current-interns.html"><i class="fas fa-users"></i> Current Interns</a></li>
                     <li><a href="past-interns.html"><i class="fas fa-user-graduate"></i> Past Interns</a></li>
@@ -304,6 +305,22 @@
 <div class="email-notification" id="email-notification">
     <i class="fas fa-envelope"></i>
     <span id="email-message">New notification received</span>
+</div>
+<!-- Logout Confirmation Modal -->
+<div class="modal" id="logout-modal">
+    <div class="modal-content" style="max-width: 400px;">
+        <div class="modal-header">
+            <h3>Confirm Logout</h3>
+            <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p>Are you sure you want to log out?</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" id="cancel-logout">Cancel</button>
+            <button class="btn btn-danger" id="confirm-logout">Log Out</button>
+        </div>
+    </div>
 </div>
 </body>
 </html>

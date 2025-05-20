@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intern Evaluations | SCAD System</title>
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/dashboard.css">
+    <link rel="stylesheet" href="../../assets/css/evaluations.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <img src="../../assets/images/guc-logo.png" alt="SCAD Logo" class="logo">
+                <span class="system-name">SCAD Internship System</span>
+            </div>
+            <div class="nav-menu">
+                <a href="notifications.html" class="nav-link"><i class="fas fa-bell"></i><span class="notification-badge">3</span></a>
+                <a href="#" class="nav-link logout-btn" id="logout-btn"><i class="fas fa-sign-out-alt"></i></a>
+            </div>
+            <div class="hamburger-menu">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Layout -->
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="user-profile">
+                <img src="../../assets/images/company-avatar.png" alt="Company Logo" class="avatar">
+                <div class="profile-status">
+                    <span class="status-badge company">Company</span>
+                </div>
+                <h3>Tech Solutions Inc.</h3>
+                <p>Software Development</p>
+                <p class="company-size">Large (300 employees)</p>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="job-post.html"><i class="fas fa-briefcase"></i> My Internship Posts</a></li>
+                    <li><a href="internships.html"><i class="fas fa-briefcase"></i> Available Internships</a></li>
+                    <li><a href="applications.html" ><i class="fas fa-file-alt"></i> Applications</a></li>
+                    <li><a href="current-interns.html"><i class="fas fa-users"></i> Current Interns</a></li>
+                    <li><a href="past-interns.html"><i class="fas fa-user-graduate"></i> Past Interns</a></li>
+                    <li><a href="evaluations.html" class="active"><i class="fas fa-clipboard-check"></i> Intern Evaluations</a></li>
+                    <li><a href="profile.html"><i class="fas fa-building"></i> Company Profile</a></li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="dashboard-header">
+                <h1>Intern Evaluations</h1>
+                <div class="header-actions">
+                    <button class="btn btn-primary" id="new-evaluation-btn">
+                        <i class="fas fa-plus"></i> New Evaluation
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Search and Filter Controls -->
+            <div class="controls-container">
+                <div class="search-control">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="search-input" placeholder="Search by intern name or position...">
+                </div>
+                
+                <div class="filter-controls">
+                    <div class="filter-dropdown">
+                        <button class="filter-btn">
+                            <i class="fas fa-filter"></i>
+                            <span id="status-filter-label">Status: All</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="filter-menu" id="status-filter-menu">
+                            <div class="filter-option active" data-status="all">All Evaluations</div>
+                            <div class="filter-option" data-status="draft">Draft</div>
+                            <div class="filter-option" data-status="submitted">Submitted</div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-secondary" id="reset-filters">
+                        <i class="fas fa-sync-alt"></i> Reset Filters
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Evaluations Table -->
+            <div class="dashboard-section">
+                <div class="table-responsive">
+                    <table class="evaluations-table">
+                        <thead>
+                            <tr>
+                                <th>Intern</th>
+                                <th>Position</th>
+                                <th>Internship Period</th>
+                                <th>Evaluation Date</th>
+                                <th>Status</th>
+                                <th>Overall Rating</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="evaluations-table-body">
+                            <!-- Evaluations will be dynamically added here -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Pagination -->
+                <div class="pagination">
+                    <button class="btn btn-sm" disabled><i class="fas fa-chevron-left"></i> Previous</button>
+                    <span class="page-info">Page 1 of 1</span>
+                    <button class="btn btn-sm" disabled>Next <i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Evaluation Form Modal -->
+    <div class="modal" id="evaluation-modal">
+        <div class="modal-content wide-modal">
+            <div class="modal-header">
+                <h3 id="evaluation-modal-title">New Evaluation</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="evaluation-form">
+                    <input type="hidden" id="evaluation-id">
+                    
+                    <div class="form-row">
+                        <div class="form-group" style="flex: 2;">
+                            <label for="intern-select">Intern</label>
+                            <select class="form-control" id="intern-select" required>
+                                <option value="">Select an intern</option>
+                                <!-- Options will be populated dynamically -->
+                            </select>
+                        </div>
+                        <div class="form-group" style="flex: 1;">
+                            <label for="evaluation-date">Evaluation Date</label>
+                            <input type="date" class="form-control" id="evaluation-date" required>
+                        </div>
+                    </div>
+                    
+                    <div class="evaluation-form">
+                        <div class="form-group">
+                            <label>Technical Skills</label>
+                            <div class="rating-stars" id="technical-rating">
+                                <i class="fas fa-star" data-rating="1"></i>
+                                <i class="fas fa-star" data-rating="2"></i>
+                                <i class="fas fa-star" data-rating="3"></i>
+                                <i class="fas fa-star" data-rating="4"></i>
+                                <i class="fas fa-star" data-rating="5"></i>
+                            </div>
+                            <input type="hidden" id="technical-score" value="0">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Work Ethic</label>
+                            <div class="rating-stars" id="work-ethic-rating">
+                                <i class="fas fa-star" data-rating="1"></i>
+                                <i class="fas fa-star" data-rating="2"></i>
+                                <i class="fas fa-star" data-rating="3"></i>
+                                <i class="fas fa-star" data-rating="4"></i>
+                                <i class="fas fa-star" data-rating="5"></i>
+                            </div>
+                            <input type="hidden" id="work-ethic-score" value="0">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Teamwork</label>
+                            <div class="rating-stars" id="teamwork-rating">
+                                <i class="fas fa-star" data-rating="1"></i>
+                                <i class="fas fa-star" data-rating="2"></i>
+                                <i class="fas fa-star" data-rating="3"></i>
+                                <i class="fas fa-star" data-rating="4"></i>
+                                <i class="fas fa-star" data-rating="5"></i>
+                            </div>
+                            <input type="hidden" id="teamwork-score" value="0">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Communication</label>
+                            <div class="rating-stars" id="communication-rating">
+                                <i class="fas fa-star" data-rating="1"></i>
+                                <i class="fas fa-star" data-rating="2"></i>
+                                <i class="fas fa-star" data-rating="3"></i>
+                                <i class="fas fa-star" data-rating="4"></i>
+                                <i class="fas fa-star" data-rating="5"></i>
+                            </div>
+                            <input type="hidden" id="communication-score" value="0">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Overall Performance</label>
+                            <div class="rating-stars" id="overall-rating">
+                                <i class="fas fa-star" data-rating="1"></i>
+                                <i class="fas fa-star" data-rating="2"></i>
+                                <i class="fas fa-star" data-rating="3"></i>
+                                <i class="fas fa-star" data-rating="4"></i>
+                                <i class="fas fa-star" data-rating="5"></i>
+                            </div>
+                            <input type="hidden" id="overall-score" value="0">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="final-evaluation">Final Evaluation</label>
+                            <textarea class="form-control" id="final-evaluation" rows="5" placeholder="Write detailed evaluation..." required></textarea>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" id="save-draft">Save as Draft</button>
+                            <button type="submit" class="btn btn-primary" id="submit-evaluation">Submit Evaluation</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal" id="delete-modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <h3>Delete Evaluation</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this evaluation? This action cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancel-delete">Cancel</button>
+                <button class="btn btn-danger" id="confirm-delete">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal" id="success-modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <h3 id="success-title">Success</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div style="text-align: center; padding: 2rem;">
+                    <i class="fas fa-check-circle" style="font-size: 3rem; color: #28a745; margin-bottom: 1rem;"></i>
+                    <p id="success-message">Operation completed successfully.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary close-modal">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../assets/js/auth.js"></script>
+    <script src="../../assets/js/company-dashboard.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Sample data for completed interns who can be evaluated
+        const completedInterns = [
+            {
+                id: 1,
+                name: "Mariam Ali",
+                education: "Data Science, GUC",
+                position: "Data Analyst",
+                startDate: "2025-02-15",
+                endDate: "2025-06-15",
+                supervisor: "Sarah Johnson"
+            },
+            {
+                id: 2,
+                name: "Omar Hassan",
+                education: "Computer Engineering, GUC",
+                position: "Backend Developer",
+                startDate: "2025-09-01",
+                endDate: "2025-12-31",
+                supervisor: "Michael Brown"
+            },
+            {
+                id: 3,
+                name: "Ahmed Mohamed",
+                education: "Computer Science, GUC",
+                position: "Frontend Developer",
+                startDate: "2025-03-01",
+                endDate: "2025-05-31",
+                supervisor: "John Smith"
+            }
+        ];
+        
+        // Sample evaluation data
+        let evaluations = [
+            {
+                id: 1,
+                internId: 1,
+                internName: "Mariam Ali",
+                position: "Data Analyst",
+                startDate: "2025-02-15",
+                endDate: "2025-06-15",
+                evaluationDate: "2025-06-20",
+                status: "submitted",
+                technicalScore: 4,
+                workEthicScore: 5,
+                teamworkScore: 4,
+                communicationScore: 5,
+                overallScore: 4,
+                finalEvaluation: "Mariam demonstrated excellent data analysis skills and was able to quickly adapt to our tools and workflows. She showed strong initiative in identifying areas for improvement in our data collection processes.",
+                supervisor: "Sarah Johnson"
+            },
+            {
+                id: 2,
+                internId: 2,
+                internName: "Omar Hassan",
+                position: "Backend Developer",
+                startDate: "2025-09-01",
+                endDate: "2025-12-31",
+                evaluationDate: "2026-01-05",
+                status: "draft",
+                technicalScore: 3,
+                workEthicScore: 4,
+                teamworkScore: 3,
+                communicationScore: 4,
+                overallScore: 3,
+                finalEvaluation: "Omar showed good technical skills but sometimes struggled with communication. Needs to work on documenting his code more thoroughly.",
+                supervisor: "Michael Brown"
+            }
+        ];
+        
+        // Current evaluation being edited
+        let currentEvaluation = null;
+        
+        // Initialize the page
+        function initPage() {
+            populateInternSelect();
+            renderEvaluationsTable();
+            setupEventListeners();
+        }
+        
+        // Populate the intern select dropdown
+        function populateInternSelect() {
+            const select = document.getElementById('intern-select');
+            select.innerHTML = '<option value="">Select an intern</option>';
+            
+            completedInterns.forEach(intern => {
+                const option = document.createElement('option');
+                option.value = intern.id;
+                option.textContent = `${intern.name} - ${intern.position}`;
+                select.appendChild(option);
+            });
+        }
+        
+        // Render the evaluations table
+        function renderEvaluationsTable() {
+            const tbody = document.getElementById('evaluations-table-body');
+            tbody.innerHTML = '';
+            
+            evaluations.forEach(eval => {
+                const intern = completedInterns.find(i => i.id === eval.internId) || {};
+                const row = document.createElement('tr');
+                row.setAttribute('data-id', eval.id);
+                row.setAttribute('data-status', eval.status);
+                
+                row.innerHTML = `
+                    <td>
+                        <div class="intern-info">
+                            <div>
+                                <span class="intern-name">${eval.internName}</span>
+                                <span class="intern-meta">${intern.education || ''}</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>${eval.position}</td>
+                    <td>${formatDate(eval.startDate)} - ${formatDate(eval.endDate)}</td>
+                    <td>${formatDate(eval.evaluationDate)}</td>
+                    <td><span class="status-badge ${eval.status}">${eval.status === 'submitted' ? 'Submitted' : 'Draft'}</span></td>
+                    <td>
+                        <div class="rating-stars small">
+                            ${renderStars(eval.overallScore)}
+                        </div>
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-primary view-eval-btn" data-id="${eval.id}">
+                            <i class="fas fa-eye"></i> View
+                        </button>
+                        <div class="dropdown">
+                            <button class="btn btn-sm btn-secondary dropdown-toggle">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a href="#" class="dropdown-item edit-eval-btn" data-id="${eval.id}"><i class="fas fa-edit"></i> Edit</a>
+                                <a href="#" class="dropdown-item delete-eval-btn" data-id="${eval.id}"><i class="fas fa-trash"></i> Delete</a>
+                                <a href="#" class="dropdown-item"><i class="fas fa-file-pdf"></i> Generate PDF</a>
+                            </div>
+                        </div>
+                    </td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+        
+        // Format date for display
+        function formatDate(dateString) {
+            if (!dateString) return '';
+            const options = { year: 'numeric', month: 'short', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString('en-US', options);
+        }
+        
+        // Render star rating
+        function renderStars(rating) {
+            let stars = '';
+            for (let i = 1; i <= 5; i++) {
+                stars += `<i class="fas fa-star${i <= rating ? ' filled' : ''}"></i>`;
+            }
+            return stars;
+        }
+        
+        // Setup event listeners
+        function setupEventListeners() {
+            // New evaluation button
+            document.getElementById('new-evaluation-btn').addEventListener('click', function() {
+                currentEvaluation = null;
+                resetEvaluationForm();
+                document.getElementById('evaluation-modal-title').textContent = 'New Evaluation';
+                document.getElementById('evaluation-modal').style.display = 'block';
+            });
+            
+            // View evaluation button (using event delegation)
+            document.addEventListener('click', function(e) {
+                // Handle view button clicks
+                const viewBtn = e.target.closest('.view-eval-btn');
+            if (viewBtn) {
+                const evalId = parseInt(viewBtn.getAttribute('data-id'));
+                viewEvaluation(evalId);
+                return;
+            }
+                
+                // Handle edit button clicks (including dropdown menu items)
+            const editBtn = e.target.closest('.edit-eval-btn');
+            if (editBtn) {
+                e.preventDefault();
+                const evalId = parseInt(editBtn.getAttribute('data-id'));
+                editEvaluation(evalId);
+                return;
+            }
+                
+                // Handle delete button clicks
+            const deleteBtn = e.target.closest('.delete-eval-btn');
+            if (deleteBtn) {
+                e.preventDefault();
+                const evalId = parseInt(deleteBtn.getAttribute('data-id'));
+                confirmDeleteEvaluation(evalId);
+                return;
+            }
+        });
+            
+            // Star rating functionality
+            document.querySelectorAll('.rating-stars .fa-star').forEach(star => {
+                star.addEventListener('click', function() {
+                    const starGroup = this.parentElement;
+                    const rating = parseInt(this.getAttribute('data-rating'));
+                    
+                    // Update stars in this group
+                    Array.from(starGroup.children).forEach((s, i) => {
+                        if (i < rating) {
+                            s.classList.add('filled');
+                        } else {
+                            s.classList.remove('filled');
+                        }
+                    });
+                    
+                    // Update the corresponding hidden input
+                    const inputId = starGroup.id + '-score';
+                    document.getElementById(inputId).value = rating;
+                });
+            });
+            
+            // Save draft button
+            document.getElementById('save-draft').addEventListener('click', function() {
+                if (validateEvaluationForm()) {
+                    saveEvaluation('draft');
+                }
+            });
+            
+            // Submit evaluation form
+            document.getElementById('evaluation-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                if (validateEvaluationForm()) {
+                    saveEvaluation('submitted');
+                }
+            });
+            
+            // Close modal buttons
+            document.querySelectorAll('.close-modal').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.modal').forEach(modal => {
+                        modal.style.display = 'none';
+                    });
+                });
+            });
+            
+            // Confirm delete button
+            document.getElementById('confirm-delete').addEventListener('click', function() {
+                const evalId = parseInt(this.getAttribute('data-eval-id'));
+                deleteEvaluation(evalId);
+            });
+            
+            // Cancel delete button
+            document.getElementById('cancel-delete').addEventListener('click', function() {
+                document.getElementById('delete-modal').style.display = 'none';
+            });
+            
+            // Search functionality
+            document.getElementById('search-input').addEventListener('input', function() {
+                filterEvaluations();
+            });
+            
+            // Status filter functionality
+            document.querySelectorAll('#status-filter-menu .filter-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    // Update active option
+                    document.querySelectorAll('#status-filter-menu .filter-option').forEach(opt => {
+                        opt.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    
+                    // Update label
+                    const labelText = this.textContent === 'All Evaluations' ? 'Status: All' : 
+                                     this.textContent === 'Draft' ? 'Status: Draft' : 'Status: Submitted';
+                    document.getElementById('status-filter-label').textContent = labelText;
+                    
+                    // Apply filter
+                    filterEvaluations();
+                });
+            });
+            
+            // Reset filters
+            document.getElementById('reset-filters').addEventListener('click', function() {
+                document.getElementById('search-input').value = '';
+                
+                // Reset status filter to "All"
+                document.querySelectorAll('#status-filter-menu .filter-option').forEach(opt => {
+                    opt.classList.remove('active');
+                });
+                document.querySelector('#status-filter-menu .filter-option[data-status="all"]').classList.add('active');
+                document.getElementById('status-filter-label').textContent = 'Status: All';
+                
+                filterEvaluations();
+            });
+        }
+        
+        
+        function viewEvaluation(evalId) {
+        console.log('Attempting to view evaluation:', evalId); // Debug log
+        const modal = document.getElementById('evaluation-modal');
+    if (!modal) {
+        console.error('Evaluation modal not found');
+        return;
+    }
+        const evaluation = evaluations.find(e => e.id === evalId);
+        if (!evaluation) {
+            console.error('Evaluation not found');
+            return;
+        }
+
+        // Fill the form with data
+        document.getElementById('evaluation-id').value = evaluation.id;
+        document.getElementById('intern-select').value = evaluation.internId;
+        document.getElementById('evaluation-date').value = evaluation.evaluationDate;
+        document.getElementById('final-evaluation').value = evaluation.finalEvaluation;
+
+        // Set star ratings
+        setRating('technical-rating', evaluation.technicalScore);
+        setRating('work-ethic-rating', evaluation.workEthicScore);
+        setRating('teamwork-rating', evaluation.teamworkScore);
+        setRating('communication-rating', evaluation.communicationScore);
+        setRating('overall-rating', evaluation.overallScore);
+
+        // Disable all form elements
+        const formElements = document.querySelectorAll('#evaluation-form input, #evaluation-form select, #evaluation-form textarea, #evaluation-form button');
+        formElements.forEach(el => el.disabled = true);
+
+        // Hide action buttons
+        document.querySelector('.form-actions').style.display = 'none';
+
+        // Set modal title and show
+        document.getElementById('evaluation-modal-title').textContent = `Evaluation: ${evaluation.internName}`;
+        document.getElementById('evaluation-modal').style.display = 'block';
+    }
+
+    // Enhanced editEvaluation function:
+    function editEvaluation(evalId) {
+        console.log('Attempting to edit evaluation:', evalId); // Debug log
+        const evaluation = evaluations.find(e => e.id === evalId);
+        if (!evaluation) {
+            console.error('Evaluation not found');
+            return;
+        }
+
+        currentEvaluation = evaluation;
+
+        // Fill the form with data
+        document.getElementById('evaluation-id').value = evaluation.id;
+        document.getElementById('intern-select').value = evaluation.internId;
+        document.getElementById('evaluation-date').value = evaluation.evaluationDate;
+        document.getElementById('final-evaluation').value = evaluation.finalEvaluation;
+
+        // Set star ratings
+        setRating('technical-rating', evaluation.technicalScore);
+        setRating('work-ethic-rating', evaluation.workEthicScore);
+        setRating('teamwork-rating', evaluation.teamworkScore);
+        setRating('communication-rating', evaluation.communicationScore);
+        setRating('overall-rating', evaluation.overallScore);
+
+        // Enable all form elements
+        const formElements = document.querySelectorAll('#evaluation-form input, #evaluation-form select, #evaluation-form textarea, #evaluation-form button');
+        formElements.forEach(el => el.disabled = false);
+
+        // Show action buttons
+        document.querySelector('.form-actions').style.display = 'flex';
+
+        // Set modal title and show
+        document.getElementById('evaluation-modal-title').textContent = `Edit Evaluation: ${evaluation.internName}`;
+        document.getElementById('evaluation-modal').style.display = 'block';
+    }
+        
+        // Set star rating
+        function setRating(ratingId, score) {
+    // Get the star container and input element
+    const starContainer = document.getElementById(ratingId);
+    const scoreInput = document.getElementById(ratingId + '-score');
+    
+    // Check if elements exist before proceeding
+    if (!starContainer || !scoreInput) {
+        console.error(`Could not find rating elements for: ${ratingId}`);
+        return; // Exit the function if elements aren't found
+    }
+    
+    // Update star display
+    const stars = starContainer.children;
+    for (let i = 0; i < stars.length; i++) {
+        if (i < score) {
+            stars[i].classList.add('filled');
+        } else {
+            stars[i].classList.remove('filled');
+        }
+    }
+    
+    // Update hidden input value
+    scoreInput.value = score;
+}
+        
+        // Reset evaluation form
+        function resetEvaluationForm() {
+            document.getElementById('evaluation-form').reset();
+            document.querySelectorAll('.rating-stars .fa-star').forEach(star => {
+                star.classList.remove('filled');
+            });
+            document.querySelectorAll('#evaluation-form input[type="hidden"]').forEach(input => {
+                input.value = '0';
+            });
+            
+            // Set today's date as default
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('evaluation-date').value = today;
+            
+            // Enable all form elements
+            document.getElementById('evaluation-form').querySelectorAll('input, select, textarea, button').forEach(el => {
+                el.disabled = false;
+            });
+            
+            // Show form actions for new evaluation
+            document.querySelector('.form-actions').style.display = 'flex';
+        }
+        
+        // Validate evaluation form
+        function validateEvaluationForm() {
+            const internSelect = document.getElementById('intern-select');
+            const evaluationDate = document.getElementById('evaluation-date');
+            const finalEvaluation = document.getElementById('final-evaluation');
+            const overallScore = document.getElementById('overall-score');
+            
+            if (!internSelect.value) {
+                alert('Please select an intern');
+                return false;
+            }
+            
+            if (!evaluationDate.value) {
+                alert('Please select an evaluation date');
+                return false;
+            }
+            
+            if (!finalEvaluation.value.trim()) {
+                alert('Please write a final evaluation');
+                return false;
+            }
+            
+            
+            
+            return true;
+        }
+        
+        // Save evaluation (draft or submitted)
+        function saveEvaluation(status) {
+            const internId = parseInt(document.getElementById('intern-select').value);
+            const intern = completedInterns.find(i => i.id === internId);
+            
+            const evaluationData = {
+                id: currentEvaluation ? currentEvaluation.id : evaluations.length > 0 ? Math.max(...evaluations.map(e => e.id)) + 1 : 1,
+                internId: internId,
+                internName: intern.name,
+                position: intern.position,
+                startDate: intern.startDate,
+                endDate: intern.endDate,
+                evaluationDate: document.getElementById('evaluation-date').value,
+                status: status,
+                technicalScore: parseInt(document.getElementById('technical-score').value),
+                workEthicScore: parseInt(document.getElementById('work-ethic-score').value),
+                teamworkScore: parseInt(document.getElementById('teamwork-score').value),
+                communicationScore: parseInt(document.getElementById('communication-score').value),
+                overallScore: parseInt(document.getElementById('overall-score').value),
+                finalEvaluation: document.getElementById('final-evaluation').value.trim(),
+                supervisor: intern.supervisor
+            };
+            
+            if (currentEvaluation) {
+                // Update existing evaluation
+                const index = evaluations.findIndex(e => e.id === currentEvaluation.id);
+                if (index !== -1) {
+                    evaluations[index] = evaluationData;
+                }
+            } else {
+                // Add new evaluation
+                evaluations.push(evaluationData);
+            }
+            
+            // Close modal and refresh table
+            document.getElementById('evaluation-modal').style.display = 'none';
+            renderEvaluationsTable();
+            
+            // Show success message
+            document.getElementById('success-title').textContent = 'Success';
+            document.getElementById('success-message').textContent = 
+                `Evaluation has been ${status === 'submitted' ? 'submitted' : 'saved as draft'}`;
+            document.getElementById('success-modal').style.display = 'block';
+        }
+        
+        // Confirm delete evaluation
+        function confirmDeleteEvaluation(evalId) {
+            document.getElementById('confirm-delete').setAttribute('data-eval-id', evalId);
+            document.getElementById('delete-modal').style.display = 'block';
+        }
+        
+        // Delete evaluation
+        function deleteEvaluation(evalId) {
+            evaluations = evaluations.filter(e => e.id !== evalId);
+            document.getElementById('delete-modal').style.display = 'none';
+            renderEvaluationsTable();
+            
+            // Show success message
+            document.getElementById('success-title').textContent = 'Deleted';
+            document.getElementById('success-message').textContent = 'Evaluation has been deleted';
+            document.getElementById('success-modal').style.display = 'block';
+        }
+        
+        // Filter evaluations based on search and status
+        function filterEvaluations() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const statusFilter = document.querySelector('#status-filter-menu .filter-option.active').getAttribute('data-status');
+            
+            const rows = document.querySelectorAll('#evaluations-table-body tr');
+            rows.forEach(row => {
+                const name = row.querySelector('.intern-name').textContent.toLowerCase();
+                const position = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+                const status = row.getAttribute('data-status');
+                
+                const matchesSearch = name.includes(searchTerm) || position.includes(searchTerm);
+                const matchesStatus = statusFilter === 'all' || status === statusFilter;
+                
+                if (matchesSearch && matchesStatus) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+        
+        // Initialize the page
+        initPage();
+    });
+    </script>
+<!-- Logout Confirmation Modal -->
+    <div class="modal" id="logout-modal">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header">
+                <h3>Confirm Logout</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to log out?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancel-logout">Cancel</button>
+                <button class="btn btn-danger" id="confirm-logout">Log Out</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

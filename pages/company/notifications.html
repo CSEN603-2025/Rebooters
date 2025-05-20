@@ -13,7 +13,7 @@
     <nav class="navbar">
         <div class="navbar-container">
             <div class="navbar-brand">
-                <img src="../../assets/images/scad-logo.png" alt="SCAD Logo" class="logo">
+                <img src="../../assets/images/guc-logo.png" alt="SCAD Logo" class="logo">
                 <span class="system-name">SCAD Internship System</span>
             </div>
             <div class="nav-menu">
@@ -21,7 +21,7 @@
                     <i class="fas fa-bell"></i>
                     <span class="notification-badge" id="notification-count">3</span>
                 </a>
-                <a href="#" class="nav-link logout-btn"><i class="fas fa-sign-out-alt"></i></a>
+                <a href="#" class="nav-link logout-btn" id="logout-btn"><i class="fas fa-sign-out-alt"></i></a>
             </div>
         </div>
     </nav>
@@ -40,9 +40,10 @@
                 <p class="company-size">Large (300 employees)</p>
             </div>
             <nav class="sidebar-nav">
-                <ul>
+                <ul> 
                     <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
-                    <li><a href="internship-posts.html"><i class="fas fa-briefcase"></i> My Internship Posts</a></li>
+                    <li><a href="job-post.html"><i class="fas fa-briefcase"></i> My Internship Posts</a></li>
+                    <li><a href="internships.html"><i class="fas fa-briefcase"></i> Available Internships</a></li>
                     <li><a href="applications.html"><i class="fas fa-file-alt"></i> Applications</a></li>
                     <li><a href="current-interns.html"><i class="fas fa-users"></i> Current Interns</a></li>
                     <li><a href="profile.html"><i class="fas fa-building"></i> Company Profile</a></li>
@@ -78,5 +79,21 @@
     </div>
 
     <script src="../../assets/js/company-notifications.js"></script>
+    <!-- Logout Confirmation Modal -->
+<div class="modal" id="logout-modal">
+    <div class="modal-content" style="max-width: 400px;">
+        <div class="modal-header">
+            <h3>Confirm Logout</h3>
+            <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p>Are you sure you want to log out?</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" id="cancel-logout">Cancel</button>
+            <button class="btn btn-danger" id="confirm-logout">Log Out</button>
+        </div>
+    </div>
+</div>
 </body>
 </html>

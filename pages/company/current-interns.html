@@ -4,44 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Current Interns | SCAD System</title>
-    <link rel="stylesheet" href="..\..\assets\css\style.css">
-    <link rel="stylesheet" href="..\..\assets\css\dashboard.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/dashboard.css">
+    <link rel="stylesheet" href="../../assets/css/current-interns.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <!-- Top Navigation Bar (same as dashboard) -->
+    <!-- Top Navigation Bar -->
     <nav class="navbar">
-        <!-- ... same navbar code ... -->
-         <nav class="navbar">
         <div class="navbar-container">
             <div class="navbar-brand">
                 <img src="../../assets/images/guc-logo.png" alt="SCAD Logo" class="logo">
-                <span class="system-name">Company Applications</span>
+                <span class="system-name">SCAD Internship System</span>
             </div>
             <div class="nav-menu">
-                <a href="notifications.html" class="nav-link"><i class="fas fa-bell"></i><span class="notification-badge">5</span></a>
-                <a href="#" class="nav-link logout-btn"><i class="fas fa-sign-out-alt"></i></a>
+                <a href="notifications.html" class="nav-link"><i class="fas fa-bell"></i><span class="notification-badge">3</span></a>
+                <a href="#" class="nav-link logout-btn" id="logout-btn"><i class="fas fa-sign-out-alt"></i></a>
+            </div>
+            <div class="hamburger-menu">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
             </div>
         </div>
-    </nav>
     </nav>
 
     <!-- Dashboard Layout -->
     <div class="dashboard-container">
-        <div class="user-profile">
-                <img src="../../assets/images/guc-logo.png" alt="Admin Avatar" class="avatar">
-                <div class="profile-status">
-                    <span class="status-badge admin">SCAD Office</span>
-                </div>
-                <h3>Admin User</h3>
-                <p>System Administrator</p>
-            </div>
-        <!-- Sidebar Navigation (same as dashboard) -->
+        <!-- Sidebar Navigation -->
         <aside class="sidebar">
+            <div class="user-profile">
+                <img src="../../assets/images/company-avatar.png" alt="Company Logo" class="avatar">
+                <div class="profile-status">
+                    <span class="status-badge company">Company</span>
+                </div>
+                <h3>Tech Solutions Inc.</h3>
+                <p>Software Development</p>
+                <p class="company-size">Large (300 employees)</p>
+            </div>
+            
             <nav class="sidebar-nav">
                 <ul>
-                    <li><a href="dashboard.html" ><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
                     <li><a href="job-post.html"><i class="fas fa-briefcase"></i> My Internship Posts</a></li>
+                    <li><a href="internships.html"><i class="fas fa-briefcase"></i> Available Internships</a></li>
                     <li><a href="applications.html" ><i class="fas fa-file-alt"></i> Applications</a></li>
                     <li><a href="current-interns.html" class="active"><i class="fas fa-users"></i> Current Interns</a></li>
                     <li><a href="past-interns.html"><i class="fas fa-user-graduate"></i> Past Interns</a></li>
@@ -49,61 +55,44 @@
                     <li><a href="profile.html"><i class="fas fa-building"></i> Company Profile</a></li>
                 </ul>
             </nav>
-            <!-- ... same sidebar code ... -->
         </aside>
         
         <!-- Main Content -->
         <main class="main-content">
             <div class="dashboard-header">
-                <h1>Intern Management</h1>
+                <h1>Current Interns</h1>
                 <div class="header-actions">
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" id="filter-dropdown">
-                            <i class="fas fa-filter"></i> Filter Status
-                        </button>
-                        <div class="dropdown-menu">
-                            <a href="#" class="dropdown-item active">All Interns</a>
-                            <a href="#" class="dropdown-item">Current Interns</a>
-                            <a href="#" class="dropdown-item">Completed Internships</a>
-                        </div>
-                    </div>
-                    <div class="search-box">
-                        <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Search interns...">
-                    </div>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Add New Intern
+                    </button>
                 </div>
             </div>
             
-            <!-- Intern Stats Cards -->
-            <div class="dashboard-cards">
-                <div class="card">
-                    <div class="card-header">
-                        <h3>Current Interns</h3>
-                        <span class="badge success">8</span>
-                    </div>
-                    <div class="card-body">
-                        <p>Active in your company</p>
-                    </div>
+            <!-- Search and Filter Controls -->
+            <div class="controls-container">
+                <div class="search-control">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="search-input" placeholder="Search by name or job title...">
                 </div>
                 
-                <div class="card">
-                    <div class="card-header">
-                        <h3>Interns This Year</h3>
-                        <span class="badge">15</span>
+                <div class="filter-controls">
+                    <div class="filter-dropdown">
+                        <button class="filter-btn">
+                            <i class="fas fa-filter"></i>
+                            <span id="status-filter-label">Status: All</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="filter-menu" id="status-filter-menu">
+                            <div class="filter-option active" data-status="all">All Interns</div>
+                            <div class="filter-option" data-status="active">Current Interns</div>
+                            <div class="filter-option" data-status="completed">Internship Complete</div>
+                            <div class="filter-option" data-status="needs-eval">Needs Evaluation</div>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <p>Total interns in 2023</p>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <div class="card-header">
-                        <h3>Need Evaluation</h3>
-                        <span class="badge warning">3</span>
-                    </div>
-                    <div class="card-body">
-                        <p>Completed internships pending evaluation</p>
-                    </div>
+                    
+                    <button class="btn btn-secondary" id="reset-filters">
+                        <i class="fas fa-sync-alt"></i> Reset Filters
+                    </button>
                 </div>
             </div>
             
@@ -122,11 +111,10 @@
                                 <th>Actions</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
+                        <tbody id="interns-table-body">
+                            <tr data-name="ahmed mohamed" data-position="frontend developer" data-status="active">
                                 <td>
                                     <div class="intern-info">
-                                        <img src="..\..\assets\images\student-avatar1.png" alt="Intern" class="intern-avatar">
                                         <div>
                                             <span class="intern-name">Ahmed Mohamed</span>
                                             <span class="intern-meta">Computer Science, GUC</span>
@@ -134,40 +122,119 @@
                                     </div>
                                 </td>
                                 <td>Frontend Developer</td>
-                                <td>2023-11-01</td>
-                                <td>2024-01-31</td>
+                                <td>2025-03-01</td>
+                                <td>2025-05-31</td>
                                 <td><span class="status-badge active">Active</span></td>
                                 <td>John Smith</td>
                                 <td>
-                                    <button class="btn btn-sm btn-primary view-intern-btn">View</button>
+                                    <button class="btn btn-sm btn-primary view-intern-btn">
+                                        <i class="fas fa-eye"></i> View
+                                    </button>
                                     <div class="dropdown">
-                                        <button class="btn btn-sm btn-secondary dropdown-toggle">Actions</button>
+                                        <button class="btn btn-sm btn-secondary dropdown-toggle">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </button>
                                         <div class="dropdown-menu">
                                             <a href="#" class="dropdown-item"><i class="fas fa-edit"></i> Edit</a>
                                             <a href="#" class="dropdown-item complete-btn"><i class="fas fa-graduation-cap"></i> Complete</a>
                                             <a href="#" class="dropdown-item"><i class="fas fa-envelope"></i> Message</a>
+                                            <a href="#" class="dropdown-item"><i class="fas fa-file-pdf"></i> Generate Report</a>
                                         </div>
                                     </div>
                                 </td>
                             </tr>
-                            <!-- More rows with different statuses -->
-                            <tr>
-                                <td>...</td>
-                                <td>...</td>
-                                <td>...</td>
-                                <td>...</td>
+                            <tr data-name="mariam ali" data-position="data analyst" data-status="completed">
+                                <td>
+                                    <div class="intern-info">
+                                        <div>
+                                            <span class="intern-name">Mariam Ali</span>
+                                            <span class="intern-meta">Data Science, GUC</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Data Analyst</td>
+                                <td>2025-02-15</td>
+                                <td>2024-06-15</td>
                                 <td><span class="status-badge completed">Completed</span></td>
-                                <td>...</td>
-                                <td>...</td>
+                                <td>Sarah Johnson</td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary view-intern-btn">
+                                        <i class="fas fa-eye"></i> View
+                                    </button>
+                                    <div class="dropdown">
+                                        <button class="btn btn-sm btn-secondary dropdown-toggle">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a href="#" class="dropdown-item"><i class="fas fa-edit"></i> Edit</a>
+                                            <a href="#" class="dropdown-item evaluate-btn"><i class="fas fa-clipboard-check"></i> Evaluate</a>
+                                            <a href="#" class="dropdown-item"><i class="fas fa-envelope"></i> Message</a>
+                                            <a href="#" class="dropdown-item"><i class="fas fa-file-pdf"></i> Generate Report</a>
+                                        </div>
+                                    </div>
+                                </td>
                             </tr>
-                            <tr>
-                                <td>...</td>
-                                <td>...</td>
-                                <td>...</td>
-                                <td>...</td>
+                            <tr data-name="omar hassan" data-position="backend developer" data-status="needs-eval">
+                                <td>
+                                    <div class="intern-info">
+                                        <div>
+                                            <span class="intern-name">Omar Hassan</span>
+                                            <span class="intern-meta">Computer Engineering, GUC</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Backend Developer</td>
+                                <td>2025-09-01</td>
+                                <td>2025-12-31</td>
                                 <td><span class="status-badge needs-eval">Needs Evaluation</span></td>
-                                <td>...</td>
-                                <td>...</td>
+                                <td>Michael Brown</td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary view-intern-btn">
+                                        <i class="fas fa-eye"></i> View
+                                    </button>
+                                    <div class="dropdown">
+                                        <button class="btn btn-sm btn-secondary dropdown-toggle">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a href="#" class="dropdown-item"><i class="fas fa-edit"></i> Edit</a>
+                                            <a href="#" class="dropdown-item evaluate-btn"><i class="fas fa-clipboard-check"></i> Evaluate</a>
+                                            <a href="#" class="dropdown-item"><i class="fas fa-envelope"></i> Message</a>
+                                            <a href="#" class="dropdown-item"><i class="fas fa-file-pdf"></i> Generate Report</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr data-name="fatima ibrahim" data-position="ui/ux designer" data-status="active">
+                                <td>
+                                    <div class="intern-info">
+                                        <div>
+                                            <span class="intern-name">Fatima Ibrahim</span>
+                                            <span class="intern-meta">Graphic Design, AUC</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>UI/UX Designer</td>
+                                <td>2025-04-10</td>
+                                <td>2025-07-10</td>
+                                <td><span class="status-badge active">Active</span></td>
+                                <td>Emily Davis</td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary view-intern-btn">
+                                        <i class="fas fa-eye"></i> View
+                                    </button>
+                                    <div class="dropdown">
+                                        <button class="btn btn-sm btn-secondary dropdown-toggle">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a href="#" class="dropdown-item"><i class="fas fa-edit"></i> Edit</a>
+                                            <a href="#" class="dropdown-item complete-btn"><i class="fas fa-graduation-cap"></i> Complete</a>
+                                            <a href="#" class="dropdown-item"><i class="fas fa-envelope"></i> Message</a>
+                                            <a href="#" class="dropdown-item"><i class="fas fa-file-pdf"></i> Generate Report</a>
+                                        </div>
+                                    </div>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -193,13 +260,12 @@
             <div class="modal-body">
                 <div class="intern-profile">
                     <div class="profile-header">
-                        <img src="..\..\assets\images\student-avatar1.png" alt="Intern" class="profile-avatar">
                         <div class="profile-info">
-                            <h2>Ahmed Mohamed</h2>
-                            <p>Frontend Developer Intern</p>
-                            <p>Computer Science, German University in Cairo</p>
+                            <h2 id="modal-intern-name">Ahmed Mohamed</h2>
+                            <p id="modal-intern-position">Frontend Developer Intern</p>
+                            <p id="modal-intern-education">Computer Science, German University in Cairo</p>
                             <div class="status-badge-container">
-                                <span class="status-badge active">Active</span>
+                                <span class="status-badge active" id="modal-intern-status">Active</span>
                                 <div class="dropdown">
                                     <button class="btn btn-sm btn-secondary dropdown-toggle">Change Status</button>
                                     <div class="dropdown-menu">
@@ -222,107 +288,115 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label>Internship Period</label>
-                                <p>November 1, 2023 - January 31, 2024</p>
+                                <p id="internship-period">November 1, 2024 - January 31, 2025</p>
                             </div>
                             <div class="form-group">
                                 <label>Supervisor</label>
-                                <p>John Smith (Frontend Team Lead)</p>
+                                <p id="internship-supervisor">John Smith (Frontend Team Lead)</p>
                             </div>
                         </div>
                         
                         <div class="form-row">
                             <div class="form-group">
                                 <label>Internship Type</label>
-                                <p>Paid (800 EGP/month)</p>
+                                <p id="internship-type">Paid (800 EGP/month)</p>
                             </div>
                             <div class="form-group">
                                 <label>Working Hours</label>
-                                <p>20 hours/week</p>
+                                <p id="working-hours">20 hours/week</p>
                             </div>
                         </div>
                         
                         <div class="form-group">
                             <label>Internship Description</label>
                             <div class="internship-description">
-                                <p>Frontend development using React.js, working on the company's customer portal...</p>
+                                <p id="internship-description">Frontend development using React.js, working on the company's customer portal. Responsibilities include implementing new UI components, fixing bugs, and collaborating with the design team.</p>
                             </div>
                         </div>
                     </div>
                     
                     <div class="tab-content" id="documents-tab">
-                        <!-- Similar to application documents tab -->
+                        <div class="documents-container">
+                            <h4>Intern Documents</h4>
+                            <div class="document-list">
+                                <div class="document-item">
+                                    <i class="fas fa-file-pdf"></i>
+                                    <span>Internship Agreement.pdf</span>
+                                    <button class="btn btn-sm btn-primary">Download</button>
+                                </div>
+                                <div class="document-item">
+                                    <i class="fas fa-file-word"></i>
+                                    <span>Application Form.docx</span>
+                                    <button class="btn btn-sm btn-primary">Download</button>
+                                </div>
+                                <div class="document-item">
+                                    <i class="fas fa-file-image"></i>
+                                    <span>ID_Copy.jpg</span>
+                                    <button class="btn btn-sm btn-primary">Download</button>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary mt-3">
+                                <i class="fas fa-upload"></i> Upload Document
+                            </button>
+                        </div>
                     </div>
                     
                     <div class="tab-content" id="evaluation-tab">
                         <div class="evaluation-container">
+                            <h4>Internship Evaluation</h4>
                             <div class="evaluation-form">
-                                <h4>Internship Evaluation</h4>
-                                
                                 <div class="form-group">
                                     <label>Technical Skills</label>
                                     <div class="rating-stars">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star" data-rating="1"></i>
+                                        <i class="fas fa-star" data-rating="2"></i>
+                                        <i class="fas fa-star" data-rating="3"></i>
+                                        <i class="fas fa-star" data-rating="4"></i>
+                                        <i class="fas fa-star" data-rating="5"></i>
                                     </div>
                                 </div>
                                 
                                 <div class="form-group">
                                     <label>Work Ethic</label>
                                     <div class="rating-stars">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star" data-rating="1"></i>
+                                        <i class="fas fa-star" data-rating="2"></i>
+                                        <i class="fas fa-star" data-rating="3"></i>
+                                        <i class="fas fa-star" data-rating="4"></i>
+                                        <i class="fas fa-star" data-rating="5"></i>
                                     </div>
                                 </div>
                                 
                                 <div class="form-group">
                                     <label>Teamwork</label>
                                     <div class="rating-stars">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star" data-rating="1"></i>
+                                        <i class="fas fa-star" data-rating="2"></i>
+                                        <i class="fas fa-star" data-rating="3"></i>
+                                        <i class="fas fa-star" data-rating="4"></i>
+                                        <i class="fas fa-star" data-rating="5"></i>
                                     </div>
                                 </div>
                                 
                                 <div class="form-group">
                                     <label>Overall Performance</label>
                                     <div class="rating-stars">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star" data-rating="1"></i>
+                                        <i class="fas fa-star" data-rating="2"></i>
+                                        <i class="fas fa-star" data-rating="3"></i>
+                                        <i class="fas fa-star" data-rating="4"></i>
+                                        <i class="fas fa-star" data-rating="5"></i>
                                     </div>
                                 </div>
                                 
                                 <div class="form-group">
                                     <label>Final Evaluation</label>
-                                    <textarea class="form-control" rows="5" placeholder="Write detailed evaluation..."></textarea>
+                                    <textarea class="form-control" id="final-evaluation" rows="5" placeholder="Write detailed evaluation..."></textarea>
                                 </div>
                                 
                                 <div class="form-actions">
-                                    <button class="btn btn-primary">Save Evaluation</button>
-                                    <button class="btn btn-success">Submit Final Evaluation</button>
-                                </div>
-                            </div>
-                            
-                            <div class="previous-evaluations">
-                                <h4>Previous Evaluations</h4>
-                                <div class="evaluation-item">
-                                    <div class="evaluation-header">
-                                        <span class="evaluation-date">Midterm Evaluation - Dec 15, 2023</span>
-                                        <span class="evaluation-rating">Rating: 4.2/5</span>
-                                    </div>
-                                    <div class="evaluation-comment">
-                                        <p>Ahmed has shown excellent progress in React development and has contributed significantly to the customer portal project.</p>
-                                    </div>
+                                    <button class="btn btn-primary" id="save-evaluation">Save Evaluation</button>
+                                    <button class="btn btn-success" id="submit-evaluation">Submit Final Evaluation</button>
                                 </div>
                             </div>
                         </div>
@@ -331,20 +405,12 @@
                     <div class="tab-content" id="notes-tab">
                         <div class="notes-container">
                             <div class="notes-form">
-                                <textarea class="form-control" rows="3" placeholder="Add new note..."></textarea>
-                                <button class="btn btn-primary">Add Note</button>
+                                <textarea class="form-control" id="new-note" rows="3" placeholder="Add new note..."></textarea>
+                                <button class="btn btn-primary" id="add-note">Add Note</button>
                             </div>
                             
-                            <div class="notes-list">
-                                <div class="note-item">
-                                    <div class="note-header">
-                                        <span class="note-author">John Smith</span>
-                                        <span class="note-date">Dec 10, 2023</span>
-                                    </div>
-                                    <div class="note-content">
-                                        <p>Ahmed needs more guidance on state management in large applications.</p>
-                                    </div>
-                                </div>
+                            <div class="notes-list" id="notes-list">
+                                <!-- Notes will be dynamically added here -->
                             </div>
                         </div>
                     </div>
@@ -353,25 +419,144 @@
             <div class="modal-footer">
                 <button class="btn btn-secondary close-modal">Close</button>
                 <button class="btn btn-primary"><i class="fas fa-envelope"></i> Message Intern</button>
-                <button class="btn btn-danger terminate-btn"><i class="fas fa-user-slash"></i> Terminate Internship</button>
             </div>
         </div>
     </div>
 
-    <script src="..\..\assets\js\auth.js"></script>
-    <script src="..\..\assets\js\company-dashboard.js"></script>
+    <!-- Evaluation Success Modal -->
+    <div class="modal" id="evaluation-success-modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <h3>Evaluation Submitted</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div style="text-align: center; padding: 2rem;">
+                    <i class="fas fa-check-circle" style="font-size: 3rem; color: #28a745; margin-bottom: 1rem;"></i>
+                    <p>The evaluation has been successfully submitted to the SCAD office.</p>
+                    <p>This evaluation is now only visible to SCAD administrators.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary close-modal">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../assets/js/auth.js"></script>
+    <script src="../../assets/js/company-dashboard.js"></script>
     <script>
-        // Intern management scripts
         document.addEventListener('DOMContentLoaded', function() {
+            // Intern data for demonstration
+            const internsData = [
+                {
+                    id: 1,
+                    name: "Ahmed Mohamed",
+                    education: "Computer Science, GUC",
+                    position: "Frontend Developer",
+                    startDate: "2025-03-01",
+                    endDate: "2025-05-31",
+                    status: "active",
+                    supervisor: "John Smith",
+                    type: "Paid (800 EGP/month)",
+                    hours: "20 hours/week",
+                    description: "Frontend development using React.js, working on the company's customer portal. Responsibilities include implementing new UI components, fixing bugs, and collaborating with the design team."
+                },
+                {
+                    id: 2,
+                    name: "Mariam Ali",
+                    education: "Data Science, GUC",
+                    position: "Data Analyst",
+                    startDate: "2025-02-15",
+                    endDate: "2024-06-15",
+                    status: "completed",
+                    supervisor: "Sarah Johnson",
+                    type: "Paid (1000 EGP/month)",
+                    hours: "25 hours/week",
+                    description: "Data analysis and visualization using Python and Tableau. Worked on customer behavior analysis project, creating dashboards and reports for management."
+                },
+                {
+                    id: 3,
+                    name: "Omar Hassan",
+                    education: "Computer Engineering, GUC",
+                    position: "Backend Developer",
+                    startDate: "2025-09-01",
+                    endDate: "2025-12-31",
+                    status: "needs-eval",
+                    supervisor: "Michael Brown",
+                    type: "Paid (900 EGP/month)",
+                    hours: "20 hours/week",
+                    description: "Backend development using Node.js and MongoDB. Working on API development and database optimization for the company's e-commerce platform."
+                },
+                {
+                    id: 4,
+                    name: "Fatima Ibrahim",
+                    education: "Graphic Design, AUC",
+                    position: "UI/UX Designer",
+                    startDate: "2025-04-10",
+                    endDate: "2025-07-10",
+                    status: "active",
+                    supervisor: "Emily Davis",
+                    type: "Paid (750 EGP/month)",
+                    hours: "15 hours/week",
+                    description: "UI/UX design for mobile and web applications. Creating wireframes, prototypes, and final designs using Figma and Adobe XD."
+                }
+            ];
+
+            // Current intern being viewed/modified
+            let currentIntern = null;
+            
             // View intern modal
             const viewButtons = document.querySelectorAll('.view-intern-btn');
             const internModal = document.getElementById('intern-modal');
             
             viewButtons.forEach(button => {
                 button.addEventListener('click', function() {
-                    internModal.style.display = 'block';
+                    const row = this.closest('tr');
+                    const internName = row.querySelector('.intern-name').textContent;
+                    const internData = internsData.find(intern => intern.name === internName);
+                    
+                    if (internData) {
+                        currentIntern = internData;
+                        populateInternModal(internData);
+                        internModal.style.display = 'block';
+                    }
                 });
             });
+            
+            // Populate intern modal with data
+            function populateInternModal(data) {
+                document.getElementById('modal-intern-name').textContent = data.name;
+                document.getElementById('modal-intern-position').textContent = data.position + " Intern";
+                document.getElementById('modal-intern-education').textContent = data.education;
+                
+                // Update status badge
+                const statusBadge = document.getElementById('modal-intern-status');
+                statusBadge.className = 'status-badge ' + data.status;
+                statusBadge.textContent = 
+                    data.status === 'active' ? 'Active' : 
+                    data.status === 'completed' ? 'Completed' : 'Needs Evaluation';
+                
+                // Update internship details
+                document.getElementById('internship-period').textContent = 
+                    formatDate(data.startDate) + " - " + formatDate(data.endDate);
+                document.getElementById('internship-supervisor').textContent = data.supervisor;
+                document.getElementById('internship-type').textContent = data.type;
+                document.getElementById('working-hours').textContent = data.hours;
+                document.getElementById('internship-description').textContent = data.description;
+                
+                // Reset evaluation tab
+                resetEvaluationForm();
+                
+                // Load notes (simulated)
+                loadNotes(data.id);
+            }
+            
+            // Format date for display
+            function formatDate(dateString) {
+                const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                return new Date(dateString).toLocaleDateString('en-US', options);
+            }
             
             // Tab functionality
             const tabButtons = document.querySelectorAll('.tab-btn');
@@ -390,28 +575,6 @@
                 });
             });
             
-            // Complete internship button
-            document.querySelectorAll('.complete-btn').forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    if(confirm('Mark this internship as completed?')) {
-                        alert('Internship marked as completed');
-                        // Update status in UI and backend
-                    }
-                });
-            });
-            
-            // Terminate internship button
-            document.querySelectorAll('.terminate-btn').forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    if(confirm('Terminate this internship early?')) {
-                        alert('Internship terminated');
-                        // Update status in UI and backend
-                    }
-                });
-            });
-            
             // Close modal
             document.querySelectorAll('.close-modal').forEach(btn => {
                 btn.addEventListener('click', function() {
@@ -421,16 +584,35 @@
                 });
             });
             
+            // Complete internship button
+            document.querySelectorAll('.complete-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if(confirm('Mark this internship as completed?')) {
+                        // In a real app, you would update the backend here
+                        const row = this.closest('tr');
+                        const statusBadge = row.querySelector('.status-badge');
+                        
+                        statusBadge.className = 'status-badge completed';
+                        statusBadge.textContent = 'Completed';
+                        
+                        // Update the data-status attribute
+                        row.setAttribute('data-status', 'completed');
+                        
+                        alert('Internship marked as completed');
+                    }
+                });
+            });
+            
             // Star rating functionality
-            const stars = document.querySelectorAll('.rating-stars .fas.fa-star');
-            stars.forEach(star => {
+            document.querySelectorAll('.rating-stars .fa-star').forEach(star => {
                 star.addEventListener('click', function() {
                     const starGroup = this.parentElement;
-                    const starIndex = Array.from(starGroup.children).indexOf(this);
+                    const rating = parseInt(this.getAttribute('data-rating'));
                     
                     // Update stars in this group
                     Array.from(starGroup.children).forEach((s, i) => {
-                        if(i <= starIndex) {
+                        if(i < rating) {
                             s.classList.add('filled');
                         } else {
                             s.classList.remove('filled');
@@ -438,7 +620,219 @@
                     });
                 });
             });
+            
+            // Reset evaluation form
+            function resetEvaluationForm() {
+                document.querySelectorAll('.rating-stars .fa-star').forEach(star => {
+                    star.classList.remove('filled');
+                });
+                document.getElementById('final-evaluation').value = '';
+            }
+            
+            // Save evaluation (draft)
+            document.getElementById('save-evaluation').addEventListener('click', function() {
+                alert('Evaluation saved as draft');
+            });
+            
+            // Submit final evaluation
+            document.getElementById('submit-evaluation').addEventListener('click', function() {
+                if(confirm('Are you sure you want to submit this evaluation? Once submitted, it cannot be modified.')) {
+                    // In a real app, you would submit to the backend here
+                    document.getElementById('intern-modal').style.display = 'none';
+                    document.getElementById('evaluation-success-modal').style.display = 'block';
+                    
+                    // Update status to completed if it was "needs-eval"
+                    if (currentIntern && currentIntern.status === 'needs-eval') {
+                        currentIntern.status = 'completed';
+                        updateInternStatusInTable(currentIntern.id, 'completed');
+                    }
+                }
+            });
+            
+            // Load notes for an intern
+            function loadNotes(internId) {
+                const notesList = document.getElementById('notes-list');
+                notesList.innerHTML = '';
+                
+                // Simulated notes data - in a real app, this would come from the backend
+                const notes = [
+                    {
+                        id: 1,
+                        author: "John Smith",
+                        date: "Dec 10, 2024",
+                        content: "Ahmed needs more guidance on state management in large applications. Will schedule a training session next week."
+                    },
+                    {
+                        id: 2,
+                        author: "Sarah Johnson",
+                        date: "Nov 20, 2024",
+                        content: "Excellent performance in the last sprint. Completed all assigned tasks ahead of schedule."
+                    }
+                ];
+                
+                notes.forEach(note => {
+                    const noteItem = document.createElement('div');
+                    noteItem.className = 'note-item';
+                    noteItem.innerHTML = `
+                        <div class="note-header">
+                            <span class="note-author">${note.author}</span>
+                            <span class="note-date">${note.date}</span>
+                        </div>
+                        <div class="note-content">
+                            <p>${note.content}</p>
+                        </div>
+                    `;
+                    notesList.appendChild(noteItem);
+                });
+            }
+            
+            // Add new note
+            document.getElementById('add-note').addEventListener('click', function() {
+                const noteText = document.getElementById('new-note').value.trim();
+                if (noteText) {
+                    // In a real app, you would save to the backend here
+                    const notesList = document.getElementById('notes-list');
+                    const newNote = document.createElement('div');
+                    newNote.className = 'note-item';
+                    
+                    const now = new Date();
+                    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+                    const dateString = now.toLocaleDateString('en-US', options);
+                    
+                    newNote.innerHTML = `
+                        <div class="note-header">
+                            <span class="note-author">You</span>
+                            <span class="note-date">${dateString}</span>
+                        </div>
+                        <div class="note-content">
+                            <p>${noteText}</p>
+                        </div>
+                    `;
+                    
+                    notesList.insertBefore(newNote, notesList.firstChild);
+                    document.getElementById('new-note').value = '';
+                }
+            });
+            
+            // Search functionality
+            document.getElementById('search-input').addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                filterInterns();
+            });
+            
+            // Status filter functionality
+            const statusFilterOptions = document.querySelectorAll('#status-filter-menu .filter-option');
+            statusFilterOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Update active option
+                    statusFilterOptions.forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Update label
+                    const labelText = this.textContent === 'All Interns' ? 'Status: All' : 
+                                     this.textContent === 'Current Interns' ? 'Status: Current' :
+                                     this.textContent === 'Internship Complete' ? 'Status: Completed' : 'Status: Needs Eval';
+                    document.getElementById('status-filter-label').textContent = labelText;
+                    
+                    // Apply filter
+                    filterInterns();
+                });
+            });
+            
+            // Reset filters
+            document.getElementById('reset-filters').addEventListener('click', function() {
+                document.getElementById('search-input').value = '';
+                
+                // Reset status filter to "All"
+                statusFilterOptions.forEach(opt => opt.classList.remove('active'));
+                statusFilterOptions[0].classList.add('active');
+                document.getElementById('status-filter-label').textContent = 'Status: All';
+                
+                filterInterns();
+            });
+            
+            // Filter interns based on search and status
+            function filterInterns() {
+                const searchTerm = document.getElementById('search-input').value.toLowerCase();
+                const statusFilter = document.querySelector('#status-filter-menu .filter-option.active').getAttribute('data-status');
+                
+                const rows = document.querySelectorAll('#interns-table-body tr');
+                rows.forEach(row => {
+                    const name = row.getAttribute('data-name').toLowerCase();
+                    const position = row.getAttribute('data-position').toLowerCase();
+                    const status = row.getAttribute('data-status');
+                    
+                    const matchesSearch = name.includes(searchTerm) || position.includes(searchTerm);
+                    const matchesStatus = statusFilter === 'all' || status === statusFilter;
+                    
+                    if (matchesSearch && matchesStatus) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Update intern status in the table
+            function updateInternStatusInTable(internId, newStatus) {
+                const rows = document.querySelectorAll('#interns-table-body tr');
+                rows.forEach(row => {
+                    const rowInternId = parseInt(row.getAttribute('data-id')) || 0;
+                    if (rowInternId === internId) {
+                        row.setAttribute('data-status', newStatus);
+                        const statusBadge = row.querySelector('.status-badge');
+                        
+                        statusBadge.className = 'status-badge ' + 
+                            (newStatus === 'active' ? 'active' : 
+                             newStatus === 'completed' ? 'completed' : 'needs-eval');
+                        
+                        statusBadge.textContent = 
+                            newStatus === 'active' ? 'Active' : 
+                            newStatus === 'completed' ? 'Completed' : 'Needs Evaluation';
+                    }
+                });
+            }
+            
+            // Set data-id attributes for rows (for demo purposes)
+            document.querySelectorAll('#interns-table-body tr').forEach((row, index) => {
+                row.setAttribute('data-id', internsData[index].id);
+            });
+            
+            // Evaluate button in dropdown
+            document.querySelectorAll('.evaluate-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const row = this.closest('tr');
+                    const internName = row.querySelector('.intern-name').textContent;
+                    const internData = internsData.find(intern => intern.name === internName);
+                    
+                    if (internData) {
+                        currentIntern = internData;
+                        populateInternModal(internData);
+                        
+                        // Switch to evaluation tab
+                        document.querySelector('.tab-btn[data-tab="evaluation"]').click();
+                        internModal.style.display = 'block';
+                    }
+                });
+            });
         });
     </script>
+    <!-- Logout Confirmation Modal -->
+    <div class="modal" id="logout-modal">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header">
+                <h3>Confirm Logout</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to log out?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancel-logout">Cancel</button>
+                <button class="btn btn-danger" id="confirm-logout">Log Out</button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

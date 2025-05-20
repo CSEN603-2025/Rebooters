@@ -1,7 +1,110 @@
-<!-- Similar structure to other pages -->
-<div class="dashboard-section">
-    <h2>Notifications</h2>
-    <div class="notifications-list" id="notificationsList">
-        <!-- Notifications will be loaded here -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications | GUC Internship System</title>
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <img src="..\..\assets\images\guc-logo.png" alt="GUC Logo" class="logo">
+                <span class="system-name">GUC Internship System</span>
+            </div>
+            <div class="nav-menu">
+                <a href="notifications.html" class="nav-link active">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge" id="notification-count">3</span>
+                </a>
+                <a href="#" class="nav-link logout-btn" id="logout-btn"><i class="fas fa-sign-out-alt"></i></a>
+            </div>
+            <div class="hamburger-menu">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Layout -->
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="user-profile">
+                <img src="..\..\assets\images\default-avatar.png" alt="Student Avatar" class="avatar">
+                <div class="profile-status">
+                    <span class="status-badge student">Student</span>
+                    <span class="pro-badge" id="pro-badge">PRO</span>
+                </div>
+                <h3>Farah Mokhtar</h3>
+                <p>Business Informatics</p>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="internships.html"><i class="fas fa-briefcase"></i> Internships</a></li>
+                    <li><a href="applications.html"><i class="fas fa-file-alt"></i> My Applications</a></li>
+                    <li><a href="reports.html"><i class="fas fa-clipboard-list"></i> Reports</a></li>
+                    
+                     <!-- PRO Features (hidden by default) -->
+        <li class="pro-feature" style="display:none;"><a href="appointments.html"><i class="fas fa-calendar-check"></i> Appointments</a></li>
+        <li class="pro-feature" style="display:none;"><a href="assessments.html"><i class="fas fa-tasks"></i> Assessments</a></li>
+        <li class="pro-feature" style="display:none;"><a href="workshops.html"><i class="fas fa-chalkboard-teacher"></i> Workshops</a></li>
+        <li><a href="profile.html"><i class="fas fa-user-edit"></i> Profile</a></li>
+                </ul>
+            </nav>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="dashboard-header">
+                <h1>Notifications</h1>
+                <div class="header-actions">
+                    <button class="btn btn-secondary" id="mark-all-read">
+                        <i class="fas fa-check-double"></i> Mark All as Read
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Notification Filters -->
+            <div class="notification-filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="application">Applications</button>
+                <button class="filter-btn" data-filter="status">Status Updates</button>
+                <button class="filter-btn" data-filter="system">System</button>
+            </div>
+            
+            <!-- Notifications List -->
+            <div class="notifications-list" id="notifications-list">
+                <!-- Will be populated by JavaScript -->
+            </div>
+        </main>
+    </div>
+
+    <script src="../../assets/js/student-notifications.js"></script>
+    <script src="..\..\assets\js\auth.js"></script>
+    <!-- Logout Confirmation Modal -->
+<div class="modal" id="logout-modal">
+    <div class="modal-content" style="max-width: 400px;">
+        <div class="modal-header">
+            <h3>Confirm Logout</h3>
+            <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p>Are you sure you want to log out?</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" id="cancel-logout">Cancel</button>
+            <button class="btn btn-danger" id="confirm-logout">Log Out</button>
+        </div>
     </div>
 </div>
+
+    
+</body>
+</html>

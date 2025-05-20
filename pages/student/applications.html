@@ -19,7 +19,7 @@
             </div>
             <div class="nav-menu">
                 <a href="notifications.html" class="nav-link"><i class="fas fa-bell"></i></a>
-                <a href="#" class="nav-link logout-btn"><i class="fas fa-sign-out-alt"></i></a>
+                <a href="#" class="nav-link logout-btn" id="logout-btn"><i class="fas fa-sign-out-alt"></i></a>
             </div>
             <div class="hamburger-menu">
                 <div class="bar"></div>
@@ -37,6 +37,7 @@
                 <img src="..\..\assets\images\default-avatar.png" alt="Student Avatar" class="avatar">
                 <div class="profile-status">
                     <span class="status-badge student">Student</span>
+                    <span class="pro-badge" id="pro-badge">PRO</span>
                 </div>
                 <h3>Farah Mokhtar</h3>
                 <p>Business Informatics</p>
@@ -47,9 +48,11 @@
                     <li><a href="internships.html"><i class="fas fa-briefcase"></i> Internships</a></li>
                     <li><a href="applications.html" class="active"><i class="fas fa-file-alt"></i> My Applications</a></li>
                     <li><a href="reports.html"><i class="fas fa-clipboard-list"></i> Reports</a></li>
-                    <li><a href="appointments.html"><i class="fas fa-calendar-check"></i> Appointments</a></li>
-                    <li><a href="workshops.html"><i class="fas fa-chalkboard-teacher"></i> Workshops</a></li>
-                    <li><a href="profile.html"><i class="fas fa-user-edit"></i> Profile</a></li>
+                     <!-- PRO Features (hidden by default) -->
+        <li class="pro-feature" style="display:none;"><a href="appointments.html"><i class="fas fa-calendar-check"></i> Appointments</a></li>
+        <li class="pro-feature" style="display:none;"><a href="assessments.html"><i class="fas fa-tasks"></i> Assessments</a></li>
+        <li class="pro-feature" style="display:none;"><a href="workshops.html"><i class="fas fa-chalkboard-teacher"></i> Workshops</a></li>
+        <li><a href="profile.html"><i class="fas fa-user-edit"></i> Profile</a></li>
                 </ul>
             </nav>
         </aside>
@@ -61,19 +64,19 @@
                 <div class="dashboard-actions">
                     <div class="internship-filters">
                         <div class="search-box">
-                            <input type="text" id="internshipSearch" placeholder="Search by title or company...">
+                            <input type="text" placeholder="Search by job title or company..." id="internshipSearch">
                             <button class="search-btn"><i class="fas fa-search"></i></button>
                         </div>
                         <div class="filter-dropdown">
                             <select id="internshipStatusFilter">
-                                <option value="">All Statuses</option>
+                                <option value="all">All Statuses</option>
                                 <option value="current">Current Internships</option>
                                 <option value="completed">Completed Internships</option>
                             </select>
                         </div>
                         <div class="filter-dropdown">
                             <select id="internshipDateFilter">
-                                <option value="">All Dates</option>
+                                <option value="all">All Dates</option>
                                 <option value="2025">2025</option>
                                 <option value="2024">2024</option>
                                 <option value="2023">2023</option>
@@ -92,42 +95,14 @@
             <!-- Applications Tab -->
             <div id="applications-tab" class="tab-content active">
                 <div class="applications-list" id="applicationsList">
-                    <!-- Applications will be loaded here -->
-                    <div class="application-card">
-                        <h3>PwC Egypt - Tax Internship</h3>
-                        <p><strong>Status:</strong> Pending</p>
-                        <p><strong>Applied On:</strong> April 25, 2025</p>
-                    </div>
-                    <div class="application-card">
-                        <h3>EY - Advisory Internship</h3>
-                        <p><strong>Status:</strong> Accepted</p>
-                        <p><strong>Applied On:</strong> March 10, 2025</p>
-                    </div>
+                    <!-- Applications will be loaded dynamically -->
                 </div>
             </div>
 
             <!-- Internships Tab -->
             <div id="internships-tab" class="tab-content">
                 <div class="internships-list" id="internshipsList">
-                    <!-- Internships will be loaded here -->
-                    <div class="internship-card">
-                        <h3>Deloitte Egypt - Audit Internship</h3>
-                        <p><strong>Duration:</strong> July 2024 - September 2024</p>
-                        <p><strong>Outcome:</strong> Successfully Completed</p>
-                        <div class="internship-actions">
-                            <button class="btn btn-primary evaluate-btn" data-internship-id="1">Evaluate Internship</button>
-                            <button class="btn btn-secondary view-report-btn">View Report</button>
-                        </div>
-                    </div>
-                    <div class="internship-card">
-                        <h3>GUC Accounting Office - Summer Assistant</h3>
-                        <p><strong>Duration:</strong> August 2023</p>
-                        <p><strong>Outcome:</strong> Report Submitted & Approved</p>
-                        <div class="internship-actions">
-                            <button class="btn btn-primary evaluate-btn" data-internship-id="2">Evaluate Internship</button>
-                            <button class="btn btn-secondary view-report-btn">View Report</button>
-                        </div>
-                    </div>
+                    <!-- Internships will be loaded dynamically -->
                 </div>
             </div>
 
@@ -187,6 +162,13 @@
                         </div>
                         
                         <div class="form-group">
+                            <label>Select courses that helped during this internship:</label>
+                            <div class="courses-checklist" id="coursesChecklist">
+                                <!-- Courses will be loaded dynamically -->
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
                             <label for="suggestions">Suggestions for Improvement:</label>
                             <textarea id="suggestions" name="suggestions" rows="3"></textarea>
                         </div>
@@ -213,118 +195,40 @@
 
             <!-- Report Modal -->
             <div class="modal" id="reportModal" style="display:none;">
-                <!-- Modal content will be injected here -->
+                <div class="modal-content report-modal-content">
+                    <span class="close-modal">&times;</span>
+                    <div class="report-header">
+                        <h2>Internship Report</h2>
+                        <button class="btn btn-secondary download-pdf-btn">
+                            <i class="fas fa-download"></i> Download as PDF
+                        </button>
+                    </div>
+                    <div class="report-body" id="reportContent">
+                        <!-- Report content will be injected here -->
+                    </div>
+                </div>
             </div>
         </main>
     </div>
 
     <script src="..\..\assets\js\auth.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Tab switching functionality
-            const tabButtons = document.querySelectorAll('.tab-btn');
-            const tabContents = document.querySelectorAll('.tab-content');
-            
-            tabButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const tabId = button.getAttribute('data-tab');
-                    
-                    // Update active tab button
-                    tabButtons.forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
-                    
-                    // Show corresponding tab content
-                    tabContents.forEach(content => content.classList.remove('active'));
-                    document.getElementById(`${tabId}-tab`).classList.add('active');
-                });
-            });
-            
-            // Evaluation modal functionality
-            const evaluationModal = document.getElementById('evaluationModal');
-            const successModal = document.getElementById('successModal');
-            const evaluateButtons = document.querySelectorAll('.evaluate-btn');
-            const closeModalButtons = document.querySelectorAll('.close-modal, .close-modal-btn');
-            const closeSuccessModalButton = document.querySelector('.close-success-modal');
-            const stars = document.querySelectorAll('.rating-stars i');
-            const evaluationForm = document.getElementById('evaluationForm');
-            
-            // Open evaluation modal
-            evaluateButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const internshipId = button.getAttribute('data-internship-id');
-                    document.getElementById('internshipId').value = internshipId;
-                    evaluationModal.style.display = 'flex';
-                });
-            });
-            
-            // Close modals
-            closeModalButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    evaluationModal.style.display = 'none';
-                });
-            });
-            
-            closeSuccessModalButton.addEventListener('click', () => {
-                successModal.style.display = 'none';
-            });
-            
-            // Star rating functionality
-            stars.forEach(star => {
-                star.addEventListener('click', () => {
-                    const rating = star.getAttribute('data-rating');
-                    document.getElementById('overallRating').value = rating;
-                    
-                    // Update star display
-                    stars.forEach((s, index) => {
-                        if (index < rating) {
-                            s.classList.remove('far');
-                            s.classList.add('fas');
-                        } else {
-                            s.classList.remove('fas');
-                            s.classList.add('far');
-                        }
-                    });
-                });
-            });
-            
-            // Form submission
-            evaluationForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                // Here you would typically send the data to your backend
-                // For demonstration, we'll just show the success modal
-                
-                // Get form data
-                const formData = new FormData(this);
-                const evaluationData = {};
-                formData.forEach((value, key) => {
-                    evaluationData[key] = value;
-                });
-                
-                console.log('Evaluation submitted:', evaluationData);
-                
-                // Hide evaluation modal and show success modal
-                evaluationModal.style.display = 'none';
-                successModal.style.display = 'flex';
-                
-                // Reset form
-                this.reset();
-                stars.forEach(star => {
-                    star.classList.remove('fas');
-                    star.classList.add('far');
-                });
-            });
-            
-            // Close modals when clicking outside
-            window.addEventListener('click', (e) => {
-                if (e.target === evaluationModal) {
-                    evaluationModal.style.display = 'none';
-                }
-                if (e.target === successModal) {
-                    successModal.style.display = 'none';
-                }
-            });
-        });
-    </script>
+    <script src="..\..\assets\js\student-applications.js"></script>
+    
+    <!-- Logout Confirmation Modal -->
+    <div class="modal" id="logout-modal">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header">
+                <h3>Confirm Logout</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to log out?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancel-logout">Cancel</button>
+                <button class="btn btn-danger" id="confirm-logout">Log Out</button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

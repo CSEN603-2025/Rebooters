@@ -3,10 +3,171 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Dashboard | GUC Internship System</title>
+    <title>My Dashboard | GUC Internship System</title>
     <link rel="stylesheet" href="..\..\assets\css\style.css">
     <link rel="stylesheet" href="..\..\assets\css\dashboard.css">
+    <link rel="stylesheet" href="..\..\assets\css\applications.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+    /* Major Selector Styles */
+.major-selector {
+    margin: 15px 0;
+}
+
+.major-selector select {
+    padding: 8px 15px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    background-color: white;
+}
+
+/* OR for Option 2 */
+.major-info-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 15px 0;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.current-major h3 {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.current-major p {
+    margin: 5px 0 0;
+    color: #666;
+}
+
+.major-select-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+    z-index: 1;
+    border-radius: 4px;
+    padding: 10px;
+    left: 0;
+}
+
+.dropdown-header {
+    font-weight: bold;
+    padding: 5px 0;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 5px;
+}
+
+.major-option {
+    padding: 8px 5px;
+    cursor: pointer;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.major-option.active {
+    background-color: #f0f7ff;
+}
+
+.major-option:hover {
+    background-color: #f5f5f5;
+}
+
+.semester-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 5px;
+}
+
+.semester-option {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    text-align: center;
+    background: #e9ecef;
+    border-radius: 50%;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.semester-option:hover {
+    background: #d1e7ff;
+}
+    
+        /* Notification styles */
+        .notification-toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #28a745;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 5px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            display: none;
+            z-index: 1000;
+            max-width: 300px;
+            animation: slideIn 0.5s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+        
+        .notification-toast.error {
+            background: #dc3545;
+        }
+        
+        .notification-toast.warning {
+            background: #fd7e14;
+        }
+        
+        .notification-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .notification-title {
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .notification-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 0 0 0 10px;
+        }
+        
+        .notification-message {
+            font-size: 14px;
+        }
+        
+        .notification-count {
+            background-color: #dc3545;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 12px;
+            position: absolute;
+            top: -5px;
+            right: -5px;
+        }
+    </style>
 </head>
 <body>
     <!-- Top Navigation Bar -->
@@ -17,8 +178,11 @@
                 <span class="system-name">GUC Internship System</span>
             </div>
             <div class="nav-menu">
-                <a href="notifications.html" class="nav-link"><i class="fas fa-bell"></i></a>
-                <a href="#" class="nav-link logout-btn"><i class="fas fa-sign-out-alt"></i></a>
+                <a href="notifications.html" class="nav-link active">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge" id="notification-count">0</span>
+                </a>
+                <a href="#" class="nav-link logout-btn" id="logout-btn"><i class="fas fa-sign-out-alt"></i></a>
             </div>
             <div class="hamburger-menu">
                 <div class="bar"></div>
@@ -27,40 +191,91 @@
             </div>
         </div>
     </nav>
+    <!-- Notification Toast -->
+    <div class="notification-toast" id="notification-toast">
+        <div class="notification-header">
+            <div class="notification-title">Notification</div>
+            <button class="notification-close" id="close-notification">&times;</button>
+        </div>
+        <div class="notification-message" id="notification-message"></div>
+    </div>
 
     <!-- Dashboard Layout -->
     <div class="dashboard-container">
         <!-- Sidebar Navigation -->
         <aside class="sidebar">
             <div class="user-profile">
-                <img src="C:\Users\Farah Mokhtar\OneDrive\Desktop\internship-system\assets\images\default-avatar.png" alt="Student Avatar" class="avatar">
+                <img src="..\..\assets\images\default-avatar.png" alt="Student Avatar" class="avatar">
                 <div class="profile-status">
                     <span class="status-badge student">Student</span>
+                    <span class="pro-badge" id="pro-badge">PRO</span>
                 </div>
                 <h3>Farah Mokhtar</h3>
                 <p>Business Informatics</p>
-                
             </div>
             <nav class="sidebar-nav">
-                <ul>
-                    <li><a href="dashboard.html" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
-                    <li><a href="internships.html"><i class="fas fa-briefcase"></i> Internships</a></li>
-                    <li><a href="applications.html"><i class="fas fa-file-alt"></i> My Applications</a></li>
-                    <li><a href="reports.html"><i class="fas fa-clipboard-list"></i> Reports</a></li>
-                    
-                    <li><a href="appointments.html"><i class="fas fa-calendar-check"></i> Appointments</a></li>
-                    <li><a href="workshops.html"><i class="fas fa-chalkboard-teacher"></i> Workshops</a></li>
-                    <li><a href="profile.html"><i class="fas fa-user-edit"></i> Profile</a></li>
-                </ul>
-            </nav>
+    <ul>
+        <li><a href="dashboard.html" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
+        <li><a href="internships.html"><i class="fas fa-briefcase"></i> Internships</a></li>
+        <li><a href="applications.html"><i class="fas fa-file-alt"></i> My Applications</a></li>
+        <li><a href="reports.html"><i class="fas fa-clipboard-list"></i> Reports</a></li>
+        <!-- PRO Features (hidden by default) -->
+        <li class="pro-feature" style="display:none;"><a href="appointments.html"><i class="fas fa-calendar-check"></i> Appointments</a></li>
+        <li class="pro-feature" style="display:none;"><a href="assessments.html"><i class="fas fa-tasks"></i> Assessments</a></li>
+        <li class="pro-feature" style="display:none;"><a href="workshops.html"><i class="fas fa-chalkboard-teacher"></i> Workshops</a></li>
+        <li><a href="profile.html"><i class="fas fa-user-edit"></i> Profile</a></li>
+    </ul>
+</nav>
         </aside>
         
         <!-- Main Content -->
         <main class="main-content">
             <div class="dashboard-header">
                 <h1>Student Dashboard</h1>
-                
+    <div class="major-info-card">
+    <div class="current-major">
+        <h3>Business Informatics</h3>
+        <p>Semester 6</p>
+    </div>
+    <div class="major-select-dropdown">
+        <button class="btn btn-outline" id="change-major-btn">
+            <i class="fas fa-exchange-alt"></i> Change View
+        </button>
+        <div class="dropdown-content" id="major-dropdown">
+            <div class="dropdown-header">Select Major</div>
+            <div class="major-option active" data-major="bi">
+                <span>Business Informatics</span>
+                <div class="semester-options">
+                    <span class="semester-option" data-semester="1">1</span>
+                    <span class="semester-option" data-semester="2">2</span>
+                    <span class="semester-option" data-semester="3">3</span>
+                    <span class="semester-option" data-semester="4">4</span>
+                    <span class="semester-option" data-semester="5">5</span>
+                    <span class="semester-option" data-semester="6">6</span>
+                    <span class="semester-option" data-semester="7">7</span>
+                    <span class="semester-option" data-semester="8">8</span>
+                </div>
             </div>
+            <div class="major-option" data-major="cs">
+                <span>Computer Science</span>
+                <div class="semester-options">
+                    <span class="semester-option" data-semester="1">1</span>
+                    <span class="semester-option" data-semester="2">2</span>
+                    <span class="semester-option" data-semester="3">3</span>
+                    <span class="semester-option" data-semester="4">4</span>
+                    <span class="semester-option" data-semester="5">5</span>
+                    <span class="semester-option" data-semester="6">6</span>
+                    <span class="semester-option" data-semester="7">7</span>
+                    <span class="semester-option" data-semester="8">8</span>
+                </div>
+            </div>
+            <!-- Add more majors as needed -->
+        </div>
+    </div>
+</div>
+</div>
+                
+
             
             <div class="dashboard-cards">
                 <div class="card">
@@ -99,29 +314,372 @@
             
             <div class="dashboard-section">
                 <h2>Suggested Internships</h2>
+                <p class="section-subtitle">Based on your interests in Web Development, Data Analysis, and recommendations from past interns</p>
+                
                 <div class="internship-list">
-                    <!-- Internship items will be added here dynamically -->
-                     <div class="internship-card">
+                    <!-- Internship 1 -->
+                    <div class="internship-card">
                         <h3>Frontend Developer Intern</h3>
                         <p class="company">Tech Solutions Inc.</p>
                         <p class="industry"><strong>Industry:</strong> Software Development</p>
-                        <p class="interest-match"><strong>Matched Interest:</strong> Web Development</p>
+                        <p class="interest-match"><strong>Matched Interest:</strong> Web Development (95% match)</p>
                         <p class="recommendation"><strong>Recommended by:</strong> 5 past interns</p>
                         <div class="internship-meta">
                             <span><i class="fas fa-clock"></i> 3 months</span>
-                            <span><i class="fas fa-money-bill-wave"></i> $800/month</span>
+                            <span><i class="fas fa-money-bill-wave"></i> 1800 LE/month</span>
+                            <span><i class="fas fa-star"></i> 4.8/5 rating</span>
                         </div>
                         <div class="internship-actions">
                             <a href="internship-details.html" class="btn btn-primary">View Details</a>
                             <button class="btn btn-secondary">Apply Now</button>
                         </div>
                     </div>
+                    
+                    <!-- Internship 2 -->
+                    <div class="internship-card">
+                        <h3>Data Analyst Intern</h3>
+                        <p class="company">Data Insights Corp</p>
+                        <p class="industry"><strong>Industry:</strong> Data Science & Analytics</p>
+                        <p class="interest-match"><strong>Matched Interest:</strong> Data Analysis (92% match)</p>
+                        <p class="recommendation"><strong>Recommended by:</strong> 8 past interns</p>
+                        <div class="internship-meta">
+                            <span><i class="fas fa-clock"></i> 2 months</span>
+                            <span><i class="fas fa-money-bill-wave"></i> 1000 LE/month</span>
+                            <span><i class="fas fa-star"></i> 4.9/5 rating</span>
+                        </div>
+                        <div class="internship-actions">
+                            <a href="internship-details.html" class="btn btn-primary">View Details</a>
+                            <button class="btn btn-secondary">Apply Now</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Internship 3 -->
+                    <div class="internship-card">
+                        <h3>UI/UX Design Intern</h3>
+                        <p class="company">Creative Digital Agency</p>
+                        <p class="industry"><strong>Industry:</strong> Digital Design</p>
+                        <p class="interest-match"><strong>Matched Interest:</strong> UI/UX Design (88% match)</p>
+                        <p class="recommendation"><strong>Recommended by:</strong> 4 past interns</p>
+                        <div class="internship-meta">
+                            <span><i class="fas fa-clock"></i> 1 month</span>
+                            <span><i class="fas fa-money-bill-wave"></i> 3000 LE/month</span>
+                            <span><i class="fas fa-star"></i> 4.7/5 rating</span>
+                        </div>
+                        <div class="internship-actions">
+                            <a href="internship-details.html" class="btn btn-primary">View Details</a>
+                            <button class="btn btn-secondary">Apply Now</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Internship 4 -->
+                    <div class="internship-card">
+                        <h3>Business Intelligence Intern</h3>
+                        <p class="company">Enterprise Analytics Ltd</p>
+                        <p class="industry"><strong>Industry:</strong> Business Technology</p>
+                        <p class="interest-match"><strong>Matched Interest:</strong> Business Intelligence (90% match)</p>
+                        <p class="recommendation"><strong>Recommended by:</strong> 6 past interns</p>
+                        <div class="internship-meta">
+                            <span><i class="fas fa-clock"></i> 1 month</span>
+                            <span><i class="fas fa-money-bill-wave"></i> 900 LE/month</span>
+                            <span><i class="fas fa-star"></i> 4.6/5 rating</span>
+                        </div>
+                        <div class="internship-actions">
+                            <a href="internship-details.html" class="btn btn-primary">View Details</a>
+                            <button class="btn btn-secondary">Apply Now</button>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+                
+                <div class="company-recommendations">
+                    <h3>Top Recommended Companies</h3>
+                    <div class="company-grid">
+                        <div class="company-card">
+                            
+                            <h4>Tech Solutions Inc.</h4>
+                            <p class="company-industry">Software Development</p>
+                            <div class="company-stats">
+                                <span><i class="fas fa-user-graduate"></i> 32 GUC interns</span>
+                                <span><i class="fas fa-thumbs-up"></i> 94% satisfaction</span>
+                            </div>
+                        </div>
+                        
+                        <div class="company-card">
+                            
+                            <h4>Data Insights Corp</h4>
+                            <p class="company-industry">Data Analytics</p>
+                            <div class="company-stats">
+                                <span><i class="fas fa-user-graduate"></i> 28 GUC interns</span>
+                                <span><i class="fas fa-thumbs-up"></i> 97% satisfaction</span>
+                            </div>
+                        </div>
+                        
+                        <div class="company-card">
+                            
+                            <h4>Creative Digital Agency</h4>
+                            <p class="company-industry">Digital Design</p>
+                            <div class="company-stats">
+                                <span><i class="fas fa-user-graduate"></i> 18 GUC interns</span>
+                                <span><i class="fas fa-thumbs-up"></i> 91% satisfaction</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
     </div>
-
+<script src="..\..\assets\js\student-dashboard.js"></script>
     <script src="..\..\assets\js\auth.js"></script>
-    <script src="..\..\assets\js\student-dashboard.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const changeMajorBtn = document.getElementById('change-major-btn');
+    const majorDropdown = document.getElementById('major-dropdown');
+    
+    if (changeMajorBtn && majorDropdown) {
+        changeMajorBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            majorDropdown.style.display = majorDropdown.style.display === 'block' ? 'none' : 'block';
+        });
+        
+        // Close dropdown when clicking elsewhere
+        document.addEventListener('click', function() {
+            majorDropdown.style.display = 'none';
+        });
+        
+        // Major/semester selection
+        const majorOptions = document.querySelectorAll('.major-option');
+        const semesterOptions = document.querySelectorAll('.semester-option');
+        
+        majorOptions.forEach(option => {
+            option.addEventListener('click', function(e) {
+                if (e.target.classList.contains('semester-option')) return;
+                
+                majorOptions.forEach(opt => opt.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+        
+        semesterOptions.forEach(option => {
+            option.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const major = this.closest('.major-option').dataset.major;
+                const semester = this.dataset.semester;
+                
+                // Update display
+                const currentMajor = document.querySelector('.current-major');
+                const majorName = this.closest('.major-option').querySelector('span').textContent;
+                
+                currentMajor.querySelector('h3').textContent = majorName;
+                currentMajor.querySelector('p').textContent = `Semester ${semester}`;
+                
+                // Here you could add logic to filter content based on major/semester
+                console.log(`Selected: ${majorName} - Semester ${semester}`);
+                
+                // Close dropdown
+                majorDropdown.style.display = 'none';
+            });
+        });
+    }
+            
+           // Initialize notification close button
+            const closeNotificationBtn = document.getElementById('close-notification');
+            closeNotificationBtn.addEventListener('click', function() {
+                const toast = document.getElementById('notification-toast');
+                toast.style.display = 'none';
+            });
+
+            function simulateNotifications() {
+                // Show first notification after 2 seconds
+                setTimeout(() => {
+                    showNotificationToast('Internship Cycle Update', 'New internship cycle begins in 2 months', 'success');
+                }, 2000);
+                
+                // Show second notification after 10 seconds
+                setTimeout(() => {
+                    showNotificationToast('Report Status', 'Your internship report was accepted', 'success');
+                }, 10000);
+                
+                
+            }
+            
+            // Show notification toast
+            function showNotificationToast(title, message, type = 'success') {
+                const toast = document.getElementById('notification-toast');
+                const messageEl = document.getElementById('notification-message');
+                
+                toast.className = `notification-toast ${type}`;
+                document.querySelector('.notification-title').textContent = title;
+                messageEl.textContent = message;
+                toast.style.display = 'block';
+                
+                
+                
+                
+                
+                // Update notification count
+                const currentCount = parseInt(document.querySelector('.notification-badge').textContent);
+                document.querySelector('.notification-badge').textContent = currentCount + 1;
+            }
+            
+            // Sample internship data (in real app, this would come from backend)
+            const internshipsData = {
+                1: {
+                    company: "Tech Solutions Inc.",
+                    title: "Software Developer Intern",
+                    industry: "Technology",
+                    duration: "4 months (June - September)",
+                    payment: "$1,500 per month",
+                    status: "active",
+                    companySize: "500+ employees",
+                    skills: ["JavaScript", "React", "HTML/CSS", "Git"],
+                    education: "Bachelor's degree in progress",
+                    applications: 24,
+                    positions: 5,
+                    deadline: "May 15, 2023",
+                    description: `<p>We are seeking a motivated Software Developer Intern to join our engineering team. You will work on real projects, collaborating with our senior developers to build and maintain web applications using modern JavaScript frameworks.</p>
+                    <p><strong>Responsibilities:</strong></p>
+                    <ul>
+                        <li>Develop and maintain front-end components using React</li>
+                        <li>Collaborate with UX designers to implement responsive interfaces</li>
+                        <li>Write clean, maintainable code with unit tests</li>
+                        <li>Participate in code reviews and team meetings</li>
+                    </ul>
+                    <p><strong>Learning Opportunities:</strong></p>
+                    <ul>
+                        <li>Mentorship from senior engineers</li>
+                        <li>Exposure to full software development lifecycle</li>
+                        <li>Opportunity to contribute to open source projects</li>
+                    </ul>`
+                },
+                2: {
+                    company: "Global Finance Corp",
+                    title: "Financial Analyst Intern",
+                    industry: "Finance",
+                    duration: "2 months (July - August)",
+                    payment: "Unpaid",
+                    status: "active",
+                    companySize: "1000+ employees",
+                    skills: ["Excel", "Financial Modeling", "Data Analysis"],
+                    education: "Finance or Economics major preferred",
+                    applications: 18,
+                    positions: 3,
+                    deadline: "June 1, 2023",
+                    description: `<p>Our Financial Analyst Internship provides hands-on experience in corporate finance. Interns will work with our financial planning team to analyze market trends and prepare reports.</p>
+                    <p><strong>Responsibilities:</strong></p>
+                    <ul>
+                        <li>Assist in financial forecasting and budgeting</li>
+                        <li>Prepare monthly financial reports</li>
+                        <li>Analyze financial data and create models</li>
+                        <li>Support ad-hoc financial projects</li>
+                    </ul>`
+                }
+            };
+            
+            
+            
+            
+            // Initialize notification simulation
+            simulateNotifications();
+            simulateApplicationStatusChange();
+            
+            
+            // Load internship details into modal
+            function loadInternshipDetails(internshipId) {
+                const internship = internshipsData[internshipId];
+                if (!internship) return;
+                
+                // Update modal title
+                document.getElementById('modal-internship-title').textContent = internship.title;
+                
+                // Update company info
+                document.getElementById('detail-company-name').textContent = internship.company;
+                document.getElementById('detail-industry').textContent = internship.industry;
+                document.getElementById('detail-company-size').textContent = internship.companySize;
+                
+                // Update internship info
+                document.getElementById('detail-job-title').textContent = internship.title;
+                document.getElementById('detail-duration').textContent = internship.duration;
+                document.getElementById('detail-payment').textContent = internship.payment;
+                
+                // Update requirements
+                document.getElementById('detail-education').textContent = internship.education;
+                const skillsContainer = document.getElementById('detail-skills');
+                skillsContainer.innerHTML = '';
+                internship.skills.forEach(skill => {
+                    const badge = document.createElement('span');
+                    badge.className = 'skill-badge';
+                    badge.textContent = skill;
+                    skillsContainer.appendChild(badge);
+                });
+                
+                // Update application info
+                document.getElementById('detail-applications').textContent = internship.applications;
+                document.getElementById('detail-positions').textContent = internship.positions;
+                document.getElementById('detail-deadline').textContent = internship.deadline;
+                
+                // Update description
+                document.getElementById('detail-description').innerHTML = internship.description;
+                
+                // Open modal
+                document.getElementById('internship-details-modal').style.display = 'flex';
+            }
+            
+            
+            
+            // View internship details
+            viewButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const internshipId = this.closest('tr').getAttribute('data-id');
+                    loadInternshipDetails(internshipId);
+                });
+            });
+            
+            // Row click to view details
+            rows.forEach(row => {
+                row.addEventListener('click', function(e) {
+                    // Don't trigger if clicking on a button
+                    if (!e.target.closest('button')) {
+                        const internshipId = this.getAttribute('data-id');
+                        loadInternshipDetails(internshipId);
+                    }
+                });
+            });
+            
+            // Close modal
+            closeModalBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    modal.style.display = 'none';
+                });
+            });
+            
+            // Close modal when clicking outside
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+            
+            // Initial filter
+            filterInternships();
+        });
+    </script>
+    
+    <!-- Logout Confirmation Modal -->
+    <div class="modal" id="logout-modal">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header">
+                <h3>Confirm Logout</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to log out?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancel-logout">Cancel</button>
+                <button class="btn btn-danger" id="confirm-logout">Log Out</button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

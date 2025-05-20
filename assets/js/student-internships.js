@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
+    localStorage.removeItem('appliedInternships');
     // Sample internship data
     const internships = [
         {

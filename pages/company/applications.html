@@ -8,19 +8,18 @@
     <link rel="stylesheet" href="../../assets/css/dashboard.css">
     <link rel="stylesheet" href="../../assets/css/applications.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
 </head>
 <body>
     <!-- Top Navigation Bar -->
     <nav class="navbar">
         <div class="navbar-container">
             <div class="navbar-brand">
-                <img src="..\..\assets\images\guc-logo.png" alt="SCAD Logo" class="logo">
+                <img src="../../assets/images/guc-logo.png" alt="SCAD Logo" class="logo">
                 <span class="system-name">SCAD Internship System</span>
             </div>
             <div class="nav-menu">
                 <a href="notifications.html" class="nav-link"><i class="fas fa-bell"></i><span class="notification-badge">3</span></a>
-                <a href="#" class="nav-link logout-btn"><i class="fas fa-sign-out-alt"></i></a>
+                <a href="#" class="nav-link logout-btn" id="logout-btn"><i class="fas fa-sign-out-alt"></i></a>
             </div>
             <div class="hamburger-menu">
                 <div class="bar"></div>
@@ -35,7 +34,7 @@
         <!-- Sidebar Navigation -->
         <aside class="sidebar">
             <div class="user-profile">
-                <img src="..\..\assets\images\company-avatar.png" alt="Company Logo" class="avatar">
+                <img src="../../assets/images/company-avatar.png" alt="Company Logo" class="avatar">
                 <div class="profile-status">
                     <span class="status-badge company">Company</span>
                 </div>
@@ -48,6 +47,7 @@
                 <ul>
                     <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
                     <li><a href="job-post.html"><i class="fas fa-briefcase"></i> My Internship Posts</a></li>
+                    <li><a href="internships.html"><i class="fas fa-briefcase"></i> Available Internships</a></li>
                     <li><a href="applications.html" class="active"><i class="fas fa-file-alt"></i> Applications</a></li>
                     <li><a href="current-interns.html"><i class="fas fa-users"></i> Current Interns</a></li>
                     <li><a href="past-interns.html"><i class="fas fa-user-graduate"></i> Past Interns</a></li>
@@ -101,111 +101,152 @@
             
             <!-- Filter Section -->
             <div class="filter-section">
-    <div class="search-box">
-        <i class="fas fa-search"></i>
-        <input type="text" id="search-input" placeholder="Search applicants...">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="search-input" placeholder="Search applicants...">
+                </div>
+                
+                <select class="form-control" id="post-filter">
+                    <option value="all">All Posts</option>
+                    <option value="frontend">Frontend Developer</option>
+                    <option value="data">Data Science</option>
+                    <option value="backend">Backend Developer</option>
+                </select>
+                
+                <div class="status-filters">
+                    <button class="status-filter-btn active" data-status="all">All</button>
+                    <button class="status-filter-btn" data-status="pending">Pending</button>
+                    <button class="status-filter-btn" data-status="accepted">Accepted</button>
+                    <button class="status-filter-btn" data-status="rejected">Rejected</button>
+                    <button class="status-filter-btn" data-status="finalized">Finalized</button>
+                </div>
+            </div>
+            
+            <!-- Applications List -->
+            <div class="applications-list list-view">
+                <!-- Application 1 -->
+                <div class="application-card list-view" data-id="app1" data-status="pending" data-post="frontend">
+                    <div class="applicant-info">
+                        <div class="applicant-main">
+                            <div class="applicant-name">Ahmed Mohamed</div>
+                            <div class="applicant-program">Computer Science, GUC</div>
+                            <div class="applicant-skills">
+                                <span class="skill-tag">HTML</span>
+                                <span class="skill-tag">CSS</span>
+                                <span class="skill-tag">JavaScript</span>
+                            </div>
+                        </div>
+                        
+                        <div class="application-meta list-view">
+                            <span><i class="far fa-calendar"></i> Applied: Oct 15, 2023</span>
+                            <span><i class="fas fa-briefcase"></i> Frontend Developer</span>
+                            <span><i class="fas fa-envelope"></i> ahmed.mohamed@guc.edu.eg</span>
+                        </div>
+                        
+                        <span class="status-badge list-view pending">Pending</span>
+                    </div>
+                    
+                    <div class="application-actions list-view">
+    <!-- View button always visible at the top -->
+    <button class="btn-action btn-view full-width">
+        <i class="fas fa-eye"></i> View Application
+    </button>
+    
+    <!-- Status action buttons grouped together -->
+    <div class="action-buttons-group">
+        <button class="btn-action btn-accept">
+            <i class="fas fa-check"></i> Accept
+        </button>
+        <button class="btn-action btn-reject">
+            <i class="fas fa-times"></i> Reject
+        </button>
     </div>
     
-    <select class="form-control" id="post-filter">
-        <option value="all">All Posts</option>
-        <option value="frontend">Frontend Developer</option>
-        <option value="data">Data Science</option>
-        <option value="backend">Backend Developer</option>
-    </select>
-    
-    <div class="status-filters">
-        <button class="status-filter-btn active" data-status="all">All</button>
-        <button class="status-filter-btn" data-status="pending">Pending</button>
-        <button class="status-filter-btn" data-status="accepted">Accepted</button>
-        <button class="status-filter-btn" data-status="rejected">Rejected</button>
-        <button class="status-filter-btn" data-status="finalized">Finalized</button>
+    <!-- Secondary actions -->
+    <div class="action-buttons-group">
+        <button class="btn-action btn-finalize">
+            <i class="fas fa-check-double"></i> Finalize
+        </button>
+        <button class="btn-action btn-message">
+            <i class="fas fa-envelope"></i> Message
+        </button>
     </div>
 </div>
-                
-                <!-- Applications List -->
-                <div class="applications-list">
-                    <!-- Application Card 1 -->
-                    <div class="application-card" data-status="pending" data-post="frontend">
-                        <div class="application-header">
-                            <div class="application-meta">
-                                <span><i class="far fa-calendar"></i> Applied: Oct 15, 2023</span>
-                                <span><i class="fas fa-briefcase"></i> Frontend Developer</span>
-                            </div>
-                            <span class="status-badge pending">Pending Review</span>
-                        </div>
-                        
-                        <div class="application-content">
-                            
-                            
-                            <div class="applicant-details">
-                                <h3>Ahmed Mohamed</h3>
-                                <p>Computer Science, German University in Cairo</p>
-                                <p class="applicant-email"><i class="fas fa-envelope"></i> ahmed.mohamed@guc.edu.eg</p>
-                                
-                                <div class="skills-tags">
-                                    <span class="skill-tag">HTML</span>
-                                    <span class="skill-tag">CSS</span>
-                                    <span class="skill-tag">JavaScript</span>
-                                    <span class="skill-tag">React</span>
-                                </div>
-                            </div>
-                            
-                            <div class="application-actions">
-                                <button class="btn btn-sm btn-primary view-btn">View</button>
-                                <div class="dropdown">
-                                    <button class="btn btn-sm btn-secondary dropdown-toggle">Actions</button>
-                                    <div class="dropdown-menu">
-                                        <a href="#" class="dropdown-item accept-btn"><i class="fas fa-check"></i> Accept</a>
-                                        <a href="#" class="dropdown-item reject-btn"><i class="fas fa-times"></i> Reject</a>
-                                        <a href="#" class="dropdown-item"><i class="fas fa-envelope"></i> Message</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Application Card 2 -->
-                    <div class="application-card" data-status="accepted" data-post="data-science">
-                        <div class="application-header">
-                            <div class="application-meta">
-                                <span><i class="far fa-calendar"></i> Applied: Oct 10, 2023</span>
-                                <span><i class="fas fa-briefcase"></i> Data Science</span>
-                            </div>
-                            <span class="status-badge accepted">Accepted</span>
-                        </div>
-                        
-                        <div class="application-content">
-                            
-                            
-                            <div class="applicant-details">
-                                <h3>Mariam Ali</h3>
-                                <p>Data Science, German University in Cairo</p>
-                                <p class="applicant-email"><i class="fas fa-envelope"></i> mariam.ali@guc.edu.eg</p>
-                                
-                                <div class="skills-tags">
-                                    <span class="skill-tag">Python</span>
-                                    <span class="skill-tag">Machine Learning</span>
-                                    <span class="skill-tag">Pandas</span>
-                                    <span class="skill-tag">SQL</span>
-                                </div>
-                            </div>
-                            
-                            <div class="application-actions">
-                                <button class="btn btn-sm btn-primary view-btn">View</button>
-                                <button class="btn btn-sm btn-success start-btn"><i class="fas fa-user-check"></i> Start Internship</button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- More application cards... -->
                 </div>
                 
-                <!-- Pagination -->
-                <div class="pagination">
-                    <button class="btn btn-sm" disabled><i class="fas fa-chevron-left"></i> Previous</button>
-                    <span class="page-info">Page 1 of 3</span>
-                    <button class="btn btn-sm">Next <i class="fas fa-chevron-right"></i></button>
+                <!-- Application 2 -->
+                <div class="application-card list-view" data-id="app2" data-status="accepted" data-post="data">
+                    <div class="applicant-info">
+                        <div class="applicant-main">
+                            <div class="applicant-name">Mariam Ali</div>
+                            <div class="applicant-program">Data Science, GUC</div>
+                            <div class="applicant-skills">
+                                <span class="skill-tag">Python</span>
+                                <span class="skill-tag">Machine Learning</span>
+                                <span class="skill-tag">Pandas</span>
+                            </div>
+                        </div>
+                        
+                        <div class="application-meta list-view">
+                            <span><i class="far fa-calendar"></i> Applied: Oct 10, 2023</span>
+                            <span><i class="fas fa-briefcase"></i> Data Science</span>
+                            <span><i class="fas fa-envelope"></i> mariam.ali@guc.edu.eg</span>
+                        </div>
+                        
+                        <span class="status-badge list-view accepted">Accepted</span>
+                    </div>
+                    
+                    <div class="application-actions list-view">
+                        <button class="btn-action btn-view">
+                            <i class="fas fa-eye"></i> View
+                        </button>
+                        <button class="btn-action btn-start">
+                            <i class="fas fa-user-check"></i> Start
+                        </button>
+                        <button class="btn-action btn-message">
+                            <i class="fas fa-envelope"></i> Message
+                        </button>
+                    </div>
                 </div>
+                
+                <!-- Application 3 -->
+                <div class="application-card list-view" data-id="app3" data-status="rejected" data-post="backend">
+                    <div class="applicant-info">
+                        <div class="applicant-main">
+                            <div class="applicant-name">Omar Hassan</div>
+                            <div class="applicant-program">Computer Engineering, GUC</div>
+                            <div class="applicant-skills">
+                                <span class="skill-tag">Node.js</span>
+                                <span class="skill-tag">Express</span>
+                                <span class="skill-tag">MongoDB</span>
+                            </div>
+                        </div>
+                        
+                        <div class="application-meta list-view">
+                            <span><i class="far fa-calendar"></i> Applied: Oct 5, 2023</span>
+                            <span><i class="fas fa-briefcase"></i> Backend Developer</span>
+                            <span><i class="fas fa-envelope"></i> omar.hassan@guc.edu.eg</span>
+                        </div>
+                        
+                        <span class="status-badge list-view rejected">Rejected</span>
+                    </div>
+                    
+                    <div class="application-actions list-view">
+                        <button class="btn-action btn-view">
+                            <i class="fas fa-eye"></i> View
+                        </button>
+                        <button class="btn-action btn-feedback">
+                            <i class="fas fa-comment"></i> Feedback
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Pagination -->
+            <div class="pagination">
+                <button class="btn btn-sm" disabled><i class="fas fa-chevron-left"></i> Previous</button>
+                <span class="page-info">Page 1 of 3</span>
+                <button class="btn btn-sm">Next <i class="fas fa-chevron-right"></i></button>
             </div>
         </main>
     </div>
@@ -218,123 +259,71 @@
                 <button class="close-modal">&times;</button>
             </div>
             <div class="modal-body">
-                <!-- Modal content same as before -->
+                <div class="applicant-info-modal">
+                    <div class="applicant-header">
+                        <h2 id="modal-name">Applicant Name</h2>
+                        <span id="modal-status" class="status-badge">Status</span>
+                    </div>
+                    
+                    <div class="applicant-details">
+                        <p id="modal-major"><i class="fas fa-graduation-cap"></i> Major</p>
+                        <p id="modal-email"><i class="fas fa-envelope"></i> Email</p>
+                        <p id="modal-position"><i class="fas fa-briefcase"></i> Position</p>
+                        <p id="modal-date"><i class="far fa-calendar"></i> Applied Date</p>
+                    </div>
+                    
+                    <div class="skills-section">
+                        <h3><i class="fas fa-code"></i> Skills</h3>
+                        <div id="modal-skills" class="skills-container">
+                            <!-- Skills will be inserted here -->
+                        </div>
+                    </div>
+                    
+                    <div class="cover-letter-section">
+                        <h3><i class="fas fa-file-alt"></i> Cover Letter</h3>
+                        <div id="modal-cover-letter" class="cover-letter-content">
+                            <!-- Cover letter will be inserted here -->
+                        </div>
+                    </div>
+                    
+                    <div class="documents-section">
+                        <h3><i class="fas fa-file"></i> Documents</h3>
+                        <div id="modal-documents" class="documents-list">
+                            <!-- Documents will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-actions">
+                    <button id="modal-accept-btn" class="btn btn-success"><i class="fas fa-check"></i> Accept</button>
+                    <button id="modal-reject-btn" class="btn btn-danger"><i class="fas fa-times"></i> Reject</button>
+                    <button id="modal-finalize-btn" class="btn btn-primary"><i class="fas fa-check-double"></i> Finalize</button>
+                    <button id="modal-start-btn" class="btn btn-warning"><i class="fas fa-user-check"></i> Start</button>
+                    <button id="modal-complete-btn" class="btn btn-info"><i class="fas fa-graduation-cap"></i> Complete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logout Confirmation Modal -->
+    <div class="modal" id="logout-modal">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header">
+                <h3>Confirm Logout</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to log out?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancel-logout">Cancel</button>
+                <button class="btn btn-danger" id="confirm-logout">Log Out</button>
             </div>
         </div>
     </div>
 
     <script src="../../assets/js/auth.js"></script>
     <script src="../../assets/js/company-dashboard.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Filter applications by status
-            const statusFilterBtns = document.querySelectorAll('.status-filter-btn');
-            statusFilterBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    statusFilterBtns.forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    const status = this.dataset.status;
-                    const applications = document.querySelectorAll('.application-card');
-                    
-                    applications.forEach(app => {
-                        if(status === 'all' || app.dataset.status === status) {
-                            app.style.display = 'block';
-                        } else {
-                            app.style.display = 'none';
-                        }
-                    });
-                });
-            });
-            
-            // Filter by post
-            const postFilter = document.getElementById('post-filter');
-            const postItems = document.querySelectorAll('#post-filter .dropdown-item');
-            postItems.forEach(item => {
-                item.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    postItems.forEach(i => i.classList.remove('active'));
-                    this.classList.add('active');
-                    postFilter.querySelector('.dropdown-toggle').innerHTML = 
-                        `<i class="fas fa-briefcase"></i> ${this.textContent}`;
-                    
-                    const post = this.textContent.toLowerCase();
-                    const applications = document.querySelectorAll('.application-card');
-                    
-                    applications.forEach(app => {
-                        if(post === 'all posts' || app.dataset.post.includes(post.replace(' ', '-'))) {
-                            app.style.display = 'block';
-                        } else {
-                            app.style.display = 'none';
-                        }
-                    });
-                });
-            });
-            
-            // Search functionality
-            const searchInput = document.getElementById('search-input');
-            searchInput.addEventListener('input', function() {
-                const searchTerm = this.value.toLowerCase();
-                const applications = document.querySelectorAll('.application-card');
-                
-                applications.forEach(app => {
-                    const text = app.textContent.toLowerCase();
-                    if(text.includes(searchTerm)) {
-                        app.style.display = 'block';
-                    } else {
-                        app.style.display = 'none';
-                    }
-                });
-            });
-            
-            // View application modal
-            document.querySelectorAll('.view-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    document.getElementById('application-modal').style.display = 'block';
-                });
-            });
-            
-            // Close modal
-            document.querySelectorAll('.close-modal').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    document.getElementById('application-modal').style.display = 'none';
-                });
-            });
-            
-            // Status change actions
-            document.querySelectorAll('.accept-btn').forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const card = this.closest('.application-card');
-                    card.dataset.status = 'accepted';
-                    card.querySelector('.status-badge').className = 'status-badge accepted';
-                    card.querySelector('.status-badge').textContent = 'Accepted';
-                    alert('Application status changed to Accepted');
-                });
-            });
-            
-            document.querySelectorAll('.reject-btn').forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const card = this.closest('.application-card');
-                    card.dataset.status = 'rejected';
-                    card.querySelector('.status-badge').className = 'status-badge rejected';
-                    card.querySelector('.status-badge').textContent = 'Rejected';
-                    alert('Application status changed to Rejected');
-                });
-            });
-            
-            // Start internship
-            document.querySelectorAll('.start-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    if(confirm('Move this applicant to Current Interns?')) {
-                        alert('Applicant moved to Current Interns');
-                        // Here you would update the status and move to current interns
-                    }
-                });
-            });
-        });
-    </script>
     <script src="../../assets/js/company-applications.js"></script>
 </body>
 </html>

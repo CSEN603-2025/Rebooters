@@ -3,62 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Appointments | GUC Internship System</title>
+    <title>SCAD Office Dashboard | SCAD System</title>
     <link rel="stylesheet" href="../../assets/css/style.css">
     <link rel="stylesheet" href="../../assets/css/dashboard.css">
     <link rel="stylesheet" href="../../assets/css/appointments.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <!-- Top Navigation Bar -->
     <nav class="navbar">
         <div class="navbar-container">
             <div class="navbar-brand">
-                <img src="..\..\assets\images\guc-logo.png" alt="GUC Logo" class="logo">
+                <img src="../../assets/images/guc-logo.png" alt="SCAD Logo" class="logo">
                 <span class="system-name">GUC Internship System</span>
             </div>
             <div class="nav-menu">
-                <a href="notifications.html" class="nav-link"><i class="fas fa-bell"></i></a>
+                <a href="notifications.html" class="nav-link"><i class="fas fa-bell"></i><span class="notification-badge">5</span></a>
                 <a href="#" class="nav-link logout-btn" id="logout-btn"><i class="fas fa-sign-out-alt"></i></a>
-            </div>
-            <div class="hamburger-menu">
-                <div class="bar"></div>
-                <div class="bar"></div>
-                <div class="bar"></div>
             </div>
         </div>
     </nav>
 
-    <!-- Dashboard Layout -->
     <div class="dashboard-container">
-        <!-- Sidebar Navigation -->
         <aside class="sidebar">
             <div class="user-profile">
-                <img src="..\..\assets\images\default-avatar.png" alt="Student Avatar" class="avatar">
+                <img src="../../assets/images/guc-logo.png" alt="Admin Avatar" class="avatar">
                 <div class="profile-status">
-                    <span class="status-badge student">Student</span>
-                    <span class="pro-badge" id="pro-badge">PRO</span>
+                    <span class="status-badge admin">SCAD Office</span>
                 </div>
-                <h3>Farah Mokhtar</h3>
-                <p>Business Informatics</p>
+                <h3>Admin User</h3>
+                <p>System Administrator</p>
             </div>
             <nav class="sidebar-nav">
                 <ul>
-                    <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
-                    <li><a href="internships.html"><i class="fas fa-briefcase"></i> Internships</a></li>
-                    <li><a href="applications.html" ><i class="fas fa-file-alt"></i> My Applications</a></li>
-                    <li><a href="reports.html"><i class="fas fa-clipboard-list"></i> Reports</a></li>
-                     <!-- PRO Features (hidden by default) -->
-        <li class="pro-feature" style="display:none;"><a href="appointments.html" class="active"><i class="fas fa-calendar-check"></i> Appointments</a></li>
-        <li class="pro-feature" style="display:none;"><a href="assessments.html"><i class="fas fa-tasks"></i> Assessments</a></li>
-        <li class="pro-feature" style="display:none;"><a href="workshops.html"><i class="fas fa-chalkboard-teacher"></i> Workshops</a></li>
-        <li><a href="profile.html"><i class="fas fa-user-edit"></i> Profile</a></li>
+                    <li><a href="dashboard.html" ><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="companies.html" ><i class="fas fa-building"></i> Company Applications</a></li>
+                    <li><a href="students.html"><i class="fas fa-users"></i> Student Management</a></li>
+                    <li><a href="reports.html" ><i class="fas fa-file-alt"></i> Internship Reports</a></li>
+                    <li><a href="appointments.html" class="active"><i class="fas fa-calendar-alt"></i> Appointments</a></li>
+                    <li><a href="internships.html" ><i class="fas fa-briefcase"></i> Available Internships</a></li>
+                    <li><a href="workshops.html"><i class="fas fa-chalkboard-teacher"></i> Workshops</a></li>
                 </ul>
             </nav>
         </aside>
         <main class="main-content">
         <div class="dashboard-header">
-            <h1>Appointments</h1>
+            <h1>SCAD Appointments</h1>
             <button class="btn btn-primary" id="requestAppointmentBtn">
                 <i class="fas fa-plus"></i> Request New Appointment
             </button>

@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCAD Office Dashboard | SCAD System</title>
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <img src="../../assets/images/guc-logo.png" alt="SCAD Logo" class="logo">
+                <span class="system-name">GUC Internship System</span>
+            </div>
+            <div class="nav-menu">
+                <a href="notifications.html" class="nav-link"><i class="fas fa-bell"></i><span class="notification-badge">5</span></a>
+                <a href="#" class="nav-link logout-btn" id="logout-btn"><i class="fas fa-sign-out-alt"></i></a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="user-profile">
+                <img src="../../assets/images/guc-logo.png" alt="Admin Avatar" class="avatar">
+                <div class="profile-status">
+                    <span class="status-badge admin">SCAD Office</span>
+                </div>
+                <h3>Admin User</h3>
+                <p>System Administrator</p>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="dashboard.html" ><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="companies.html" ><i class="fas fa-building"></i> Company Applications</a></li>
+                    <li><a href="students.html" class="active"><i class="fas fa-users"></i> Student Management</a></li>
+                    <li><a href="reports.html"><i class="fas fa-file-alt"></i> Internship Reports</a></li>
+                    <li><a href="appointments.html"><i class="fas fa-calendar-alt"></i> Appointments</a></li>
+                    <li><a href="internships.html" ><i class="fas fa-briefcase"></i> Available Internships</a></li>
+                    <li><a href="workshops.html"><i class="fas fa-chalkboard-teacher"></i> Workshops</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+<main class="main-content">
+            <div class="dashboard-header">
+                <h1>Student Management</h1>
+                <div class="header-actions">
+                    <button class="btn btn-primary" id="export-students-btn"><i class="fas fa-download"></i> Export</button>
+                </div>
+            </div>
+
+            <!-- Filter Controls -->
+            <div class="filter-controls">
+                <div class="search-group">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="student-search" class="form-control" placeholder="Search by student name or ID...">
+                </div>
+                
+                <div class="filter-group">
+                    <label for="status-filter">Internship Status:</label>
+                    <select id="status-filter" class="form-control">
+                        <option value="all">All Statuses</option>
+                        <option value="active">Currently Interning</option>
+                        <option value="pending">Pending Approval</option>
+                        <option value="completed">Completed</option>
+                        <option value="not-applied">Not Applied</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="major-filter">Major:</label>
+                    <select id="major-filter" class="form-control">
+                        <option value="all">All Majors</option>
+                        <option value="Computer Science">Computer Science</option>
+                        <option value="Business">Business</option>
+                        <option value="Engineering">Engineering</option>
+                        <option value="Design">Design</option>
+                    </select>
+                </div>
+                
+                <button class="btn btn-secondary" id="reset-filters">
+                    <i class="fas fa-undo"></i> Reset
+                </button>
+            </div>
+
+            <div class="dashboard-section">
+                <div class="table-responsive">
+                    <table class="students-table" id="students-table">
+                        <thead>
+                            <tr>
+                                <th class="col-name">Student Name</th>
+                                <th class="col-id">Student ID</th>
+                                <th class="col-major">Major</th>
+                                <th class="col-year">Year</th>
+                                <th class="col-gpa">GPA</th>
+                                <th class="col-credits">Credits</th>
+                                <th class="col-status">Internship Status</th>
+                                <th class="col-actions">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Sample student data -->
+                            <tr data-id="1001" data-status="active" data-major="Computer Science">
+                                <td>Ahmed Mohamed</td>
+                                <td>1001</td>
+                                <td>Computer Science</td>
+                                <td>Junior</td>
+                                <td>3.7</td>
+                                <td>90</td>
+                                <td><span class="status-badge active">Currently Interning</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary btn-view-profile">
+                                        <i class="fas fa-user"></i> Profile
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr data-id="1002" data-status="pending" data-major="Business">
+                                <td>Mariam Hassan</td>
+                                <td>1002</td>
+                                <td>Business</td>
+                                <td>Sophomore</td>
+                                <td>3.5</td>
+                                <td>45</td>
+                                <td><span class="status-badge pending">Pending Approval</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary btn-view-profile">
+                                        <i class="fas fa-user"></i> Profile
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr data-id="1003" data-status="completed" data-major="Engineering">
+                                <td>Omar Ali</td>
+                                <td>1003</td>
+                                <td>Engineering</td>
+                                <td>Senior</td>
+                                <td>3.8</td>
+                                <td>120</td>
+                                <td><span class="status-badge completed">Completed</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary btn-view-profile">
+                                        <i class="fas fa-user"></i> Profile
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr data-id="1004" data-status="not-applied" data-major="Design">
+                                <td>Fatima Khalid</td>
+                                <td>1004</td>
+                                <td>Design</td>
+                                <td>Freshman</td>
+                                <td>3.2</td>
+                                <td>30</td>
+                                <td><span class="status-badge not-applied">Not Applied</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary btn-view-profile">
+                                        <i class="fas fa-user"></i> Profile
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination">
+                    <button class="btn btn-secondary" disabled>Previous</button>
+                    <span class="page-info">Page 1 of 3</span>
+                    <button class="btn btn-secondary">Next</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Student Profile Modal -->
+    <div class="modal" id="student-profile-modal">
+        <div class="modal-content" style="max-width: 800px;">
+            <div class="modal-header">
+                <h3 id="modal-student-name">Student Profile</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="student-profile-grid">
+                    <div class="personal-info">
+                        <h4>Personal Information</h4>
+                        <div class="profile-section">
+                            <span class="profile-label">Full Name:</span>
+                            <span class="profile-value" id="profile-full-name">Ahmed Mohamed</span>
+                        </div>
+                        <div class="profile-section">
+                            <span class="profile-label">Student ID:</span>
+                            <span class="profile-value" id="profile-student-id">1001</span>
+                        </div>
+                        <div class="profile-section">
+                            <span class="profile-label">Email:</span>
+                            <span class="profile-value" id="profile-email">1001@guc.edu.eg</span>
+                        </div>
+                        <div class="profile-section">
+                            <span class="profile-label">Phone:</span>
+                            <span class="profile-value" id="profile-phone">+20 100 000 0001</span>
+                        </div>
+                    </div>
+                    
+                    <div class="academic-info">
+                        <h4>Academic Information</h4>
+                        <div class="profile-section">
+                            <span class="profile-label">Major:</span>
+                            <span class="profile-value" id="profile-major">Computer Science</span>
+                        </div>
+                        <div class="profile-section">
+                            <span class="profile-label">Year:</span>
+                            <span class="profile-value" id="profile-year">Junior</span>
+                        </div>
+                        <div class="profile-section">
+                            <span class="profile-label">GPA:</span>
+                            <span class="profile-value" id="profile-gpa">3.7</span>
+                        </div>
+                        <div class="profile-section">
+                            <span class="profile-label">Credits Completed:</span>
+                            <span class="profile-value" id="profile-credits">90</span>
+                        </div>
+                    </div>
+                    
+                    <div class="internship-info">
+                        <h4>Internship Status</h4>
+                        <div class="profile-section">
+                            <span class="profile-label">Current Status:</span>
+                            <span class="profile-value"><span class="status-badge active" id="profile-status">Currently Interning</span></span>
+                        </div>
+                        <div class="profile-section">
+                            <span class="profile-label">Company:</span>
+                            <span class="profile-value" id="profile-company">Tech Solutions Inc.</span>
+                        </div>
+                        <div class="profile-section">
+                            <span class="profile-label">Position:</span>
+                            <span class="profile-value" id="profile-position">Software Developer Intern</span>
+                        </div>
+                        <div class="profile-section">
+                            <span class="profile-label">Duration:</span>
+                            <span class="profile-value" id="profile-duration">June 1, 2023 - August 31, 2023</span>
+                        </div>
+                    </div>
+                    
+                    <div class="skills-info">
+                        <h4>Skills & Qualifications</h4>
+                        <div class="profile-section">
+                            <span class="profile-label">Technical Skills:</span>
+                            <div class="skills-list" id="profile-tech-skills">
+                                <span class="skill-badge">JavaScript</span>
+                                <span class="skill-badge">Python</span>
+                                <span class="skill-badge">React</span>
+                                <span class="skill-badge">SQL</span>
+                            </div>
+                        </div>
+                        <div class="profile-section">
+                            <span class="profile-label">Languages:</span>
+                            <div class="skills-list" id="profile-languages">
+                                <span class="skill-badge">Arabic (Native)</span>
+                                <span class="skill-badge">English (Fluent)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="additional-info">
+                    <h4>Additional Information</h4>
+                    <div class="profile-section">
+                        <span class="profile-label">Internship History:</span>
+                        <div class="profile-value" id="profile-history">
+                            <ul>
+                                <li>Summer 2022: Web Developer Intern at Startup Cairo (8 weeks)</li>
+                                <li>Winter 2021: IT Assistant at GUC Computer Center</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="profile-section">
+                        <span class="profile-label">Faculty Advisor:</span>
+                        <span class="profile-value" id="profile-advisor">Dr. Mohamed ElSayed (m.elsayed@guc.edu.eg)</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary close-modal">Close</button>
+                
+                <button class="btn btn-danger" id="btn-send-message"><i class="fas fa-envelope"></i> Send Message</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sample student data (in a real app, this would come from your backend)
+            const studentsData = {
+                1001: {
+                    fullName: "Ahmed Mohamed",
+                    studentId: "1001",
+                    email: "1001@guc.edu.eg",
+                    phone: "+20 100 000 0001",
+                    major: "Computer Science",
+                    year: "Junior",
+                    gpa: "3.7",
+                    credits: "90",
+                    status: "active",
+                    statusText: "Currently Interning",
+                    company: "Tech Solutions Inc.",
+                    position: "Software Developer Intern",
+                    duration: "June 1, 2023 - August 31, 2023",
+                    techSkills: ["JavaScript", "Python", "React", "SQL"],
+                    languages: ["Arabic (Native)", "English (Fluent)"],
+                    history: [
+                        "Summer 2022: Web Developer Intern at Startup Cairo (8 weeks)",
+                        "Winter 2021: IT Assistant at GUC Computer Center"
+                    ],
+                    advisor: "Dr. Mohamed ElSayed (m.elsayed@guc.edu.eg)"
+                },
+                1002: {
+                    fullName: "Mariam Hassan",
+                    studentId: "1002",
+                    email: "1002@guc.edu.eg",
+                    phone: "+20 100 000 0002",
+                    major: "Business",
+                    year: "Sophomore",
+                    gpa: "3.5",
+                    credits: "45",
+                    status: "pending",
+                    statusText: "Pending Approval",
+                    company: "Global Finance Corp",
+                    position: "Financial Analyst Intern",
+                    duration: "Pending confirmation",
+                    techSkills: ["Excel", "Financial Modeling", "PowerPoint"],
+                    languages: ["Arabic (Native)", "English (Fluent)", "French (Intermediate)"],
+                    history: [],
+                    advisor: "Dr. Ahmed Khalil (a.khalil@guc.edu.eg)"
+                }
+            };
+
+            // DOM Elements
+            const searchInput = document.getElementById('student-search');
+            const statusFilter = document.getElementById('status-filter');
+            const majorFilter = document.getElementById('major-filter');
+            const resetBtn = document.getElementById('reset-filters');
+            const studentsTable = document.getElementById('students-table');
+            const rows = studentsTable.querySelectorAll('tbody tr');
+            const viewButtons = document.querySelectorAll('.btn-view-profile');
+            const modal = document.getElementById('student-profile-modal');
+            const closeModalBtns = document.querySelectorAll('.close-modal');
+            
+            // Filter students
+            function filterStudents() {
+                const searchTerm = searchInput.value.toLowerCase();
+                const statusValue = statusFilter.value;
+                const majorValue = majorFilter.value;
+                
+                rows.forEach(row => {
+                    const name = row.cells[0].textContent.toLowerCase();
+                    const id = row.cells[1].textContent.toLowerCase();
+                    const major = row.getAttribute('data-major');
+                    const status = row.getAttribute('data-status');
+                    
+                    const matchesSearch = name.includes(searchTerm) || id.includes(searchTerm);
+                    const matchesStatus = statusValue === 'all' || status === statusValue;
+                    const matchesMajor = majorValue === 'all' || major === majorValue;
+                    
+                    if (matchesSearch && matchesStatus && matchesMajor) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Load student profile into modal
+            function loadStudentProfile(studentId) {
+                const student = studentsData[studentId];
+                if (!student) {
+                    alert("Student data not found");
+                    return;
+                }
+                
+                // Update modal title
+                document.getElementById('modal-student-name').textContent = student.fullName;
+                
+                // Update personal info
+                document.getElementById('profile-full-name').textContent = student.fullName;
+                document.getElementById('profile-student-id').textContent = student.studentId;
+                document.getElementById('profile-email').textContent = student.email;
+                document.getElementById('profile-phone').textContent = student.phone;
+                
+                // Update academic info
+                document.getElementById('profile-major').textContent = student.major;
+                document.getElementById('profile-year').textContent = student.year;
+                document.getElementById('profile-gpa').textContent = student.gpa;
+                document.getElementById('profile-credits').textContent = student.credits;
+                
+                // Update internship info
+                const statusBadge = document.getElementById('profile-status');
+                statusBadge.textContent = student.statusText;
+                statusBadge.className = 'status-badge ' + student.status;
+                document.getElementById('profile-company').textContent = student.company;
+                document.getElementById('profile-position').textContent = student.position;
+                document.getElementById('profile-duration').textContent = student.duration;
+                
+                // Update skills
+                const techSkillsContainer = document.getElementById('profile-tech-skills');
+                techSkillsContainer.innerHTML = '';
+                student.techSkills.forEach(skill => {
+                    const badge = document.createElement('span');
+                    badge.className = 'skill-badge';
+                    badge.textContent = skill;
+                    techSkillsContainer.appendChild(badge);
+                });
+                
+                const languagesContainer = document.getElementById('profile-languages');
+                languagesContainer.innerHTML = '';
+                student.languages.forEach(lang => {
+                    const badge = document.createElement('span');
+                    badge.className = 'skill-badge';
+                    badge.textContent = lang;
+                    languagesContainer.appendChild(badge);
+                });
+                
+                // Update history
+                const historyContainer = document.getElementById('profile-history');
+                historyContainer.innerHTML = '';
+                if (student.history.length > 0) {
+                    const ul = document.createElement('ul');
+                    student.history.forEach(item => {
+                        const li = document.createElement('li');
+                        li.textContent = item;
+                        ul.appendChild(li);
+                    });
+                    historyContainer.appendChild(ul);
+                } else {
+                    historyContainer.textContent = "No previous internships";
+                }
+                
+                // Update advisor
+                document.getElementById('profile-advisor').textContent = student.advisor;
+                
+                // Open modal
+                modal.style.display = 'flex';
+            }
+            
+            // Event listeners for filters
+            searchInput.addEventListener('input', filterStudents);
+            statusFilter.addEventListener('change', filterStudents);
+            majorFilter.addEventListener('change', filterStudents);
+            
+            // Reset all filters
+            resetBtn.addEventListener('click', function() {
+                searchInput.value = '';
+                statusFilter.value = 'all';
+                majorFilter.value = 'all';
+                filterStudents();
+            });
+            
+            // View student profile
+            viewButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const studentId = this.closest('tr').getAttribute('data-id');
+                    loadStudentProfile(studentId);
+                });
+            });
+            
+            // Row click to view profile
+            rows.forEach(row => {
+                row.addEventListener('click', function(e) {
+                    // Don't trigger if clicking on a button
+                    if (!e.target.closest('button')) {
+                        const studentId = this.getAttribute('data-id');
+                        loadStudentProfile(studentId);
+                    }
+                });
+            });
+            
+            // Close modal
+            closeModalBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    modal.style.display = 'none';
+                });
+            });
+            
+            // Close modal when clicking outside
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+            
+            // Initial filter
+            filterStudents();
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <script src="../../assets/js/auth.js"></script>
+    <script src="../../assets/js/scad-dashboard.js"></script>
+    <!-- Logout Confirmation Modal -->
+<div class="modal" id="logout-modal">
+    <div class="modal-content" style="max-width: 400px;">
+        <div class="modal-header">
+            <h3>Confirm Logout</h3>
+            <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p>Are you sure you want to log out?</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" id="cancel-logout">Cancel</button>
+            <button class="btn btn-danger" id="confirm-logout">Log Out</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>

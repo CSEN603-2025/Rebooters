@@ -3,21 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faculty Dashboard | SCAD System</title>
-    <link rel="stylesheet" href="..\..\assets\css\style.css">
-    <link rel="stylesheet" href="..\..\assets\css\dashboard.css">
+    <title>Reports | SCAD System</title>
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/dashboard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.css">
 </head>
 <body>
     <nav class="navbar">
-        <div class="navbar-container">`
+        <div class="navbar-container">
             <div class="navbar-brand">
                 <img src="../../assets/images/guc-logo.png" alt="SCAD Logo" class="logo">
-                <span class="system-name">Faculty Dashboard</span>
+                <span class="system-name">GUC Internship System</span>
             </div>
             <div class="nav-menu">
-                <a href="notifications.html" class="nav-link"><i class="fas fa-bell"></i><span class="notification-badge">2</span></a>
-                <a href="#" class="nav-link logout-btn"><i class="fas fa-sign-out-alt"></i></a>
+                <a href="notifications.html" class="nav-link"><i class="fas fa-bell"></i><span class="notification-badge">5</span></a>
+                <a href="#" class="nav-link logout-btn" id="logout-btn"><i class="fas fa-sign-out-alt"></i></a>
             </div>
         </div>
     </nav>
@@ -25,9 +26,9 @@
     <div class="dashboard-container">
         <aside class="sidebar">
             <div class="user-profile">
-                <img src="../../assets/images/default-avatar.png" alt="Faculty Avatar" class="avatar">
+                <img src="../../assets/images/default-avatar.png" alt="Admin Avatar" class="avatar">
                 <div class="profile-status">
-                    <span class="status-badge faculty">Faculty</span>
+                    <span class="status-badge admin">Faculty</span>
                 </div>
                 <h3>Dr. Sarah Johnson</h3>
                 <p>Computer Science Department</p>
@@ -35,10 +36,8 @@
             <nav class="sidebar-nav">
                 <ul>
                     <li><a href="dashboard.html" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
-                    <li><a href="reports.html"><i class="fas fa-file-alt"></i> Internship Reports</a></li>
                     <li><a href="evaluations.html"><i class="fas fa-clipboard-check"></i> Student Evaluations</a></li>
-                    <li><a href="students.html"><i class="fas fa-users"></i> My Students</a></li>
-                    <li><a href="courses.html"><i class="fas fa-book"></i> Course Mapping</a></li>
+                    <li><a href="reports.html" ><i class="fas fa-file-alt"></i> Internship Reports</a></li>
                     <li><a href="profile.html"><i class="fas fa-user-edit"></i> Profile</a></li>
                 </ul>
             </nav>

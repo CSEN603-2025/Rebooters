@@ -168,8 +168,8 @@
 }
 
 .rating-stars {
-    display: flex;
-    gap: 0.25rem;
+    font-size: 24px;
+    margin: 10px 0;
 }
 
 .rating-stars i {
@@ -219,6 +219,25 @@
     background-color: white;
     transition: .4s;
     border-radius: 50%;
+}
+/* Courses checklist */
+.courses-checklist {
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #eee;
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.form-group textarea {
+    min-height: 100px;
+    resize: vertical;
 }
 
 input:checked + .toggle-slider {
@@ -852,4 +871,386 @@ input:checked + .slider:before {
 .status-badge.completed {
     background-color: #d1ecf1;
     color: #0c5460;
+}
+/* Applications List - List View */
+.applications-list.list-view {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.application-card.list-view {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    padding: 1.5rem;
+    border-radius: 8px;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: transform 0.2s;
+}
+
+.application-card.list-view:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
+.applicant-info {
+    display: grid;
+    grid-template-columns: 120px 1fr auto;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.applicant-main {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.applicant-name {
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 1.05rem;
+}
+
+.applicant-program {
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.applicant-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.skill-tag {
+    background: #e8f4fd;
+    color: #2980b9;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.application-meta.list-view {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.application-meta.list-view span {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.status-badge.list-view {
+    padding: 0.35rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    width: fit-content;
+}
+
+.application-actions.list-view {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: nowrap;
+}
+
+.btn-action {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+}
+
+.btn-view {
+    background: #f8f9fa;
+    color: #2c3e50;
+    border: 1px solid #ddd;
+}
+
+.btn-accept {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.btn-reject {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.btn-start {
+    background: #e2f3ff;
+    color: #0d6efd;
+    border: 1px solid #b6d4fe;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .applicant-info {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .application-actions.list-view {
+        flex-wrap: wrap;
+        justify-content: flex-end;
+    }
+}
+
+@media (max-width: 768px) {
+    .application-card.list-view {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .application-actions.list-view {
+        justify-content: flex-start;
+    }
+}
+/* Modal Styles */
+.modal-body {
+    padding: 20px;
+}
+
+.applicant-info-modal {
+    margin-bottom: 20px;
+}
+
+.applicant-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.applicant-details p {
+    margin: 5px 0;
+    display: flex;
+    align-items: center;
+}
+
+.applicant-details i {
+    margin-right: 8px;
+    width: 20px;
+    text-align: center;
+}
+
+.cover-letter {
+    margin: 20px 0;
+    padding: 15px;
+    background: #f5f5f5;
+    border-radius: 5px;
+}
+
+.documents-list {
+    margin-top: 10px;
+}
+
+.document-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.document-item i {
+    margin-right: 10px;
+    font-size: 1.5em;
+}
+
+.document-info {
+    flex-grow: 1;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+/* Application Actions Styling */
+.application-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+.btn-action {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+/* Primary View Button */
+.btn-view {
+    background-color: #e9ecef;
+    border-color: #ced4da;
+}
+
+/* Status Action Buttons */
+.btn-accept {
+    background-color: #e8f5e9;
+    border-color: #c8e6c9;
+}
+
+.btn-reject {
+    background-color: #ffebee;
+    border-color: #ffcdd2;
+}
+
+.btn-finalize {
+    background-color: #f3e5f5;
+    border-color: #e1bee7;
+}
+
+/* State Action Buttons */
+.btn-start {
+    background-color: #e3f2fd;
+    border-color: #bbdefb;
+}
+
+.btn-complete {
+    background-color: #e0f7fa;
+    border-color: #b2ebf2;
+}
+
+/* Communication Buttons */
+.btn-message {
+    background-color: #e8eaf6;
+    border-color: #c5cae9;
+}
+
+.btn-feedback {
+    background-color: #f5f5f5;
+    border-color: #e0e0e0;
+}
+
+/* Button Groups */
+.action-buttons-group {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+}
+
+.action-buttons-group .btn-action {
+    flex: 1;
+}
+
+.full-width {
+    width: 100%;
+}
+
+/* Hover and Active States */
+.btn-action:hover {
+    background-color: #e9ecef;
+    transform: translateY(-1px);
+}
+
+.btn-action:active {
+    transform: translateY(0);
+    background-color: #dee2e6;
+}
+
+/* Status Badges (for reference) */
+.status-badge {
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.pending {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.accepted {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.rejected {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.finalized {
+    background-color: #e2e3e5;
+    color: #383d41;
+}
+
+.current {
+    background-color: #cce5ff;
+    color: #004085;
+}
+
+.completed {
+    background-color: #d1ecf1;
+    color: #0c5460;
+}
+.modal {
+  position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: flex-start; /* Changed from center to flex-start */
+    padding: 20px 0;
+    overflow-y: auto;
+    z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 700px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.close-modal {
+  color: #aaa;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close-modal:hover {
+  color: black;
 }

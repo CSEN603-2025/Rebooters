@@ -6,6 +6,7 @@
     <title>Job Posts | SCAD System</title>
     <link rel="stylesheet" href="..\..\assets\css\style.css">
     <link rel="stylesheet" href="..\..\assets\css\dashboard.css">
+    <link rel="stylesheet" href="..\..\assets\css\tables.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
@@ -18,7 +19,7 @@
             </div>
             <div class="nav-menu">
                 <a href="notifications.html" class="nav-link"><i class="fas fa-bell"></i><span class="notification-badge">3</span></a>
-                <a href="#" class="nav-link logout-btn"><i class="fas fa-sign-out-alt"></i></a>
+                <a href="#" class="nav-link logout-btn" id="logout-btn"><i class="fas fa-sign-out-alt"></i></a>
             </div>
             <div class="hamburger-menu">
                 <div class="bar"></div>
@@ -44,7 +45,8 @@
             <nav class="sidebar-nav">
                 <ul>
                     <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
-                    <li><a href="internship-posts.html" class="active"><i class="fas fa-briefcase"></i> My Internship Posts</a></li>
+                    <li><a href="job-post.html" class="active"><i class="fas fa-briefcase"></i> My Internship Posts</a></li>
+                    <li><a href="internships.html"><i class="fas fa-briefcase"></i> Available Internships</a></li>
                     <li><a href="applications.html"><i class="fas fa-file-alt"></i> Applications</a></li>
                     <li><a href="current-interns.html"><i class="fas fa-users"></i> Current Interns</a></li>
                     <li><a href="past-interns.html"><i class="fas fa-user-graduate"></i> Past Interns</a></li>
@@ -110,6 +112,7 @@
                                 <td>
                                     <button class="btn btn-sm btn-primary">View</button>
                                     <button class="btn btn-sm btn-secondary">Edit</button>
+                                    <button class="btn btn-sm btn-danger btn-delete">Delete</button>
                                 </td>
                             </tr>
                             <tr>
@@ -122,6 +125,7 @@
                                 <td>
                                     <button class="btn btn-sm btn-primary">View</button>
                                     <button class="btn btn-sm btn-secondary">Edit</button>
+                                    <button class="btn btn-sm btn-danger btn-delete">Delete</button>
                                 </td>
                             </tr>
                             <tr>
@@ -134,6 +138,7 @@
                                 <td>
                                     <button class="btn btn-sm btn-primary">View</button>
                                     <button class="btn btn-sm btn-secondary">Edit</button>
+                                    <button class="btn btn-sm btn-danger btn-delete">Delete</button>
                                 </td>
                             </tr>
                             <tr>
@@ -146,6 +151,7 @@
                                 <td>
                                     <button class="btn btn-sm btn-primary">View</button>
                                     <button class="btn btn-sm btn-secondary">Edit</button>
+                                    <button class="btn btn-sm btn-danger btn-delete">Delete</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -174,6 +180,7 @@
                     <div class="form-group">
                         <label for="job-title">Job Title*</label>
                         <input type="text" id="job-title" required placeholder="e.g., Frontend Developer Intern">
+                        <input type="hidden" id="job-id" name="job-id">
                     </div>
                     
                     <div class="form-row">
@@ -271,54 +278,29 @@
                         <li>Ability to work in a team environment</li>
                     </ul>
                 </div>
-                
-                <div class="modal-actions">
-                    <button class="btn btn-secondary close-modal">Close</button>
-                    <button class="btn btn-primary">View Applications</button>
-                    <button class="btn btn-warning">Edit Post</button>
-                    <button class="btn btn-danger">Close Post</button>
-                </div>
             </div>
         </div>
     </div>
 
     <script src="..\..\assets\js\auth.js"></script>
     <script src="..\..\assets\js\company-dashboard.js"></script>
-    <script>
-        // Script for job-post.html specific functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            // View job post modal
-            const viewButtons = document.querySelectorAll('.job-posts-table .btn-primary');
-            const viewModal = document.getElementById('view-job-modal');
-            
-            viewButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    viewModal.style.display = 'block';
-                });
-            });
-            
-            // Close modals
-            const closeButtons = document.querySelectorAll('.close-modal');
-            closeButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    document.querySelectorAll('.modal').forEach(modal => {
-                        modal.style.display = 'none';
-                    });
-                });
-            });
-            
-            // Filter functionality
-            const statusFilter = document.getElementById('status-filter');
-            const dateFilter = document.getElementById('date-filter');
-            
-            statusFilter.addEventListener('change', filterPosts);
-            dateFilter.addEventListener('change', filterPosts);
-            
-            function filterPosts() {
-                // Implementation for filtering posts
-                console.log('Filtering posts...');
-            }
-        });
-    </script>
+    <script src="..\..\assets\js\company-job-post.js"></script>
+    <!-- Logout Confirmation Modal -->
+<div class="modal" id="logout-modal">
+    <div class="modal-content" style="max-width: 400px;">
+        <div class="modal-header">
+            <h3>Confirm Logout</h3>
+            <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p>Are you sure you want to log out?</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" id="cancel-logout">Cancel</button>
+            <button class="btn btn-danger" id="confirm-logout">Log Out</button>
+        </div>
+    </div>
+</div>
+        
 </body>
 </html>

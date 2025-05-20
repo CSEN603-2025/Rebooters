@@ -6,7 +6,7 @@
     <title>Internships | GUC Internship System</title>
     <link rel="stylesheet" href="..\..\assets\css\style.css">
     <link rel="stylesheet" href="..\..\assets\css\dashboard.css">
-    <link rel="stylesheet" href="..\..\assets\css\tables.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
@@ -19,7 +19,7 @@
             </div>
             <div class="nav-menu">
                 <a href="notifications.html" class="nav-link"><i class="fas fa-bell"></i></a>
-                <a href="#" class="nav-link logout-btn"><i class="fas fa-sign-out-alt"></i></a>
+                <a href="#" class="nav-link logout-btn" id="logout-btn"><i class="fas fa-sign-out-alt"></i></a>
             </div>
             <div class="hamburger-menu">
                 <div class="bar"></div>
@@ -36,6 +36,7 @@
                 <img src="..\..\assets\images\default-avatar.png" alt="Student Avatar" class="avatar">
                 <div class="profile-status">
                     <span class="status-badge student">Student</span>
+                    <span class="pro-badge" id="pro-badge">PRO</span>
                 </div>
                 <h3>Farah Mokhtar</h3>
                 <p>Business Informatics</p>
@@ -46,9 +47,12 @@
                     <li><a href="internships.html" class="active"><i class="fas fa-briefcase"></i> Internships</a></li>
                     <li><a href="applications.html"><i class="fas fa-file-alt"></i> My Applications</a></li>
                     <li><a href="reports.html"><i class="fas fa-clipboard-list"></i> Reports</a></li>
-                    <li><a href="appointments.html"><i class="fas fa-calendar-check"></i> Appointments</a></li>
-                    <li><a href="workshops.html"><i class="fas fa-chalkboard-teacher"></i> Workshops</a></li>
-                    <li><a href="profile.html" ><i class="fas fa-user-edit"></i> Profile</a></li>
+                    
+                     <!-- PRO Features (hidden by default) -->
+        <li class="pro-feature" style="display:none;"><a href="appointments.html"><i class="fas fa-calendar-check"></i> Appointments</a></li>
+        <li class="pro-feature" style="display:none;"><a href="assessments.html"><i class="fas fa-tasks"></i> Assessments</a></li>
+        <li class="pro-feature" style="display:none;"><a href="workshops.html"><i class="fas fa-chalkboard-teacher"></i> Workshops</a></li>
+        <li><a href="profile.html"><i class="fas fa-user-edit"></i> Profile</a></li>
                 </ul>
             </nav>
         </aside>
@@ -56,7 +60,22 @@
         <section class="main-content">
             <div class="dashboard-header">
                 <h1>Available Internships</h1>
-                <div class="dashboard-actions">
+                <!-- Video Section -->
+            <div class="internship-video-section">
+                <div class="video-container">
+                    <video id="majorVideo" controls>
+                        <source src="" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="video-description">
+                    <p id="majorDescription"></p>
+                </div>
+            </div>
+                
+
+            </div>
+            <div class="dashboard-actions">
                     <div class="search-box">
                         <input type="text" placeholder="Search internships..." id="internshipSearch">
                         <button class="search-btn"><i class="fas fa-search"></i></button>
@@ -69,17 +88,13 @@
                             <option value="Finance">Finance</option>
                             <option value="Healthcare">Healthcare</option>
                         </select>
-                    </div>
-
-                     <div class="filter-dropdown">
+                    
                         <select id="internshipFilterDuration">
                             <option value="">All Durations</option>
                             <option value="1">1 month</option>
                             <option value="2">2+ months</option>
                         </select>
-                    </div>
-
-                     <div class="filter-dropdown">
+                    
                         <select id="internshipFilterPaid">
                             <option value="">All Types</option>
                             <option value="paid">Paid</option>
@@ -87,8 +102,6 @@
                         </select>
                     </div>
                 </div>
-
-            </div>
             
             <div class="dashboard-section">
                 <div class="internship-list" id="internshipList">
@@ -111,6 +124,24 @@
 
 
     <script src="..\..\assets\js\main.js"></script>
+    <script src="..\..\assets\js\auth.js"></script>
     <script src="..\..\assets\js\student-internships.js"></script>
+    
+    <!-- Logout Confirmation Modal -->
+    <div class="modal" id="logout-modal">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header">
+                <h3>Confirm Logout</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to log out?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancel-logout">Cancel</button>
+                <button class="btn btn-danger" id="confirm-logout">Log Out</button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
